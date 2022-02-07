@@ -20,6 +20,7 @@ function App() {
         <p>Hello world - Mitchell</p>
         <p>Hello World - Matthew</p>
         <p>Hello World - Duncan</p>
+        <p>Hello World - Bryce</p>
       </header>
     </div>
   );
