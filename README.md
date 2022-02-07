@@ -1,0 +1,2 @@
+# paper-trader
+trading paper
