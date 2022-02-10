@@ -3,18 +3,35 @@ import logo from './icons/logo.svg';
 
 function App() {
   return (
-    <Navbar></Navbar>
+    <Navbar>
+      <NavItem icon = "Log In" />
+      <NavItem icon = "Sign Up" />
+    </Navbar>
   );
 }
 
-function Navbar(){
+function Navbar(props){
   return(
     <nav className = "navbar">
-      <ul className = "navbar-nav">
       <img className="logo" src={logo}/>
+      <ul className = "navbar-buttons"> { props.children } </ul>
+      <ul className="navbar-links">
+        <p>links</p>
+
       </ul>
     </nav>
   );
 }
 
+function NavItem(props){
+  return(
+    <li className="nav-item">
+      <a href="#" className="icon-button">
+        {props.icon}
+      </a>
+
+    </li>
+
+  );
+}
 export default App;
