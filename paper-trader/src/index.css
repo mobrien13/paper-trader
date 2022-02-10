@@ -50,7 +50,6 @@ a{
 }
 
 .navbar-buttons{
-    max-width: 100%;
     height: 100%;
     display: flex;
     justify-content: flex-end;
@@ -63,14 +62,13 @@ a{
 }
 
 .nav-item{
-    width: calc(var(--nav-size) * 1);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .icon-button{
-    width: 200px;
+    width: 70px;
     height: 40px;
     margin: 5px;
     align-items: center;
@@ -79,5 +77,5 @@ a{
     color: var(--bc);
     background-color: white;
     font-weight: bold;
-    border-radius: 25%;
+    border-radius: 15%;
 }
