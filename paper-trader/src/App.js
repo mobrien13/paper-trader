@@ -16,8 +16,6 @@ function Navbar(props){
       <img className="logo" src={logo}/>
       <ul className = "navbar-buttons"> { props.children } </ul>
       <ul className="navbar-links">
-        <p>links</p>
-
       </ul>
     </nav>
   );
