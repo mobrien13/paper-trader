@@ -3,9 +3,9 @@ import './Button.css'
 function Button(props){
     return(
       <li className="button">
-        <a href="#" className="icon-button">
-          <span id='innermost'>{props.text}</span>
-        </a>
+        <p className="icon-button">
+          <span>{props.text}</span>
+        </p>
       </li>
   
     );
