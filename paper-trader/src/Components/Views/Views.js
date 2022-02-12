@@ -4,7 +4,7 @@ import '../Pages/Pages.css';
 import Dashboard from "../Pages/Dashboard";
 import Home from "../Pages/Home";
 import Settings from "../Pages/Settings";
-import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //function
 function Views() {
