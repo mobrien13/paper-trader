@@ -15,8 +15,11 @@ function App() {
       <Link to='signup' className='nav-link'><Button text = "Sign Up" /></Link>
     </Navbar>
 
-    {/*Views is the container for all site content*/}
-    <Views/>
+    {/*Views is the container for all site content.
+    The container div gives the Views a 10% padding on the left and right sides*/}
+    <div className='container'>
+      <Views/>
+    </div>
 
   </BrowserRouter>
   );
