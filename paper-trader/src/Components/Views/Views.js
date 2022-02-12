@@ -10,17 +10,14 @@ import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
 function Views() {
     return (
     <>
-    <a href="/dashboard" >test</a>
-
     {/*Routes the pages*/}
-    <BrowserRouter>
-        <Routes>
-            <Route index element={<Home></Home>}/>
-            <Route path='/home' element={<Home></Home>}/>
-            <Route path='/dashboard' element={<Dashboard></Dashboard>}/>
-            <Route path='/settings' element={<Settings></Settings>}/>
-        </Routes>
-    </BrowserRouter>
+    <Routes>
+        <Route index element={<Home></Home>}/>
+        <Route path='/home' element={<Home></Home>}/>
+        <Route path='/dashboard' element={<Dashboard></Dashboard>}/>
+        <Route path='/settings' element={<Settings></Settings>}/>
+        <Route path='*' element={<div><h1>404<br/>Error, Page Not Found</h1></div>}/>
+    </Routes>
     </>
     );
   }

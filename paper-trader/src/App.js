@@ -2,23 +2,23 @@ import React from 'react';
 import Button from './Components/Button/Button';
 import Navbar from './Components/Navbar/Navbar';
 import Views from './Components/Views/Views';
-import {Link} from 'react-router-dom';
+import {BrowserRouter, Link} from 'react-router-dom';
 
 function App() {
   return (
-  <>
+  <BrowserRouter>
     <Navbar>
-      <Button text = "Log In" />
-      <Button text = "Sign Up" />
+      {/*When using the Link tag, be sure to replace the 'to' prop with the onClick prop in order to show the login and signup modals*/}
+      <Link to='dashboard' className='nav-link'><Button text = "Dashboard" /></Link>
+      <Link to='settings' className='nav-link'><Button text = "Settings" /></Link>
+      <Link to='login' className='nav-link'><Button text = "Log In" /></Link>
+      <Link to='signup' className='nav-link'><Button text = "Sign Up" /></Link>
     </Navbar>
-
-
-    {/*Test menu for switching between pages (to prevent editing the Navbar and causing merge conflicts*/}
-    
 
     {/*Views is the container for all site content*/}
     <Views/>
-  </>
+
+  </BrowserRouter>
   );
 }
 

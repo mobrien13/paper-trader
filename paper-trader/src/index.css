@@ -21,6 +21,8 @@ code {
     --border-radius: 8px;
     --speed: 500ms;
 }
-
+.nav-link{
+  margin:5px;
+}
 
 
