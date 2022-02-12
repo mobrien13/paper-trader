@@ -4,7 +4,7 @@ function Button(props){
     return(
       <li className="button">
         <a href="#" className="icon-button">
-          {props.text}
+          <span id='innermost'>{props.text}</span>
         </a>
       </li>
   

@@ -1,10 +1,11 @@
 import './Navbar.css';
 import logo from '../../icons/logo.svg';
+import {Link} from 'react-router-dom';
 
 function Navbar(props){
     return(
       <nav className = "navbar">
-        <a href="home"><img className="logo" src={logo}/></a>
+        <Link to='home'><img className="logo" src={logo}/></Link>
         <ul className = "navbar-buttons"> { props.children } </ul>
         <ul className="navbar-links">
         </ul>

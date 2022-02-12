@@ -5,7 +5,9 @@
 }
 
 .icon-button{
-    width: 70px;
+    /*width was previously 70px*. i personally would advise not to use pixels for these. 
+    I had to make them larger to fit the dashboard text into them - mitchell*/
+    width: 90px;
     height: 40px;
     margin: 5px;
     align-items: center;
