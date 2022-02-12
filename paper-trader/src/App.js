@@ -3,6 +3,7 @@ import Button from './Components/Button/Button';
 import Navbar from './Components/Navbar/Navbar';
 import Views from './Components/Views/Views';
 import {BrowserRouter, Link} from 'react-router-dom';
+import Modal from './Components/Modal/Modal';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Views style={{ flex:1 }}/>
     </div>
 
+    <Modal></Modal>
   </BrowserRouter>
   );
 }
