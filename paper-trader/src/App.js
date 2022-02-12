@@ -18,7 +18,7 @@ function App() {
     {/*Views is the container for all site content.
     The container div gives the Views a 10% padding on the left and right sides*/}
     <div className='container'>
-      <Views/>
+      <Views style={{ flex:1 }}/>
     </div>
 
   </BrowserRouter>
