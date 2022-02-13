@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState, useImperativeHandle } from 'react'
 import './Modal.css'
 import {motion, AnimatePresence} from "framer-motion"
 
 
-const Modal = (props) => {
-    const [open, setOpen] = useState(true)
+const Modal = forwardRef((props, ref) => {
+    const [open, setOpen] = useState(false)
+
+    useImperativeHandle(ref, () => {
+        return{
+            open: () => setOpen(true),
+            close: () => setOpen(false)
+        }
+    })
 
     return( 
         <AnimatePresence>
@@ -48,6 +55,6 @@ const Modal = (props) => {
         </AnimatePresence>
         
     )
-}
+})
 
 export default Modal
