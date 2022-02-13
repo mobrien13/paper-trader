@@ -1,14 +1,21 @@
 import './Button.css'
 import React from "react"
 
-function Button(props){
-    return(
-      <li className="button">
-        <p className="icon-button">
-          <span>{props.text}</span>
-        </p>
-      </li>
-    );
-  }
+
+const Button = ({
+  children,
+  type,
+  onClick,
+  buttonStyle,
+  buttonSize,
+  text
+}) => {
+  return (
+    <button className="icon-button"onClick ={onClick} type={type}>
+      
+      <p>{children}</p>
+    </button> 
+  )
+}
 
 export default Button
