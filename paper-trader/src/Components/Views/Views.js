@@ -5,6 +5,7 @@ import Dashboard from "../Pages/Dashboard";
 import Home from "../Pages/Home";
 import Settings from "../Pages/Settings";
 import { Routes, Route } from "react-router-dom";
+import Modal from '../Modal/Modal';
 
 //function
 function Views() {
