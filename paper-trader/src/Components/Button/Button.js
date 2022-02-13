@@ -1,6 +1,12 @@
 import './Button.css'
 import React from "react"
 
+const STYLES =[
+  "btn--primary--solid",
+  "btn--primary--outline"
+]
+
+const SIZES =["btn--medium, btn--small"]
 
 const Button = ({
   children,
@@ -8,12 +14,19 @@ const Button = ({
   onClick,
   buttonStyle,
   buttonSize,
-  text
 }) => {
+ 
+  const checkButtonStyle = STYLES.includes(buttonStyle) 
+    ? buttonStyle
+    : STYLES[0];
+    
+  const checkButtonSize = STYLES.includes(buttonSize) 
+    ? buttonSize
+    : SIZES[0];
+
   return (
-    <button className="icon-button"onClick ={onClick} type={type}>
-      
-      <p>{children}</p>
+    <button className = {`btn ${checkButtonStyle} ${checkButtonSize}`} onClick ={onClick} type={type}>
+      {children}
     </button> 
   )
 }

@@ -15,10 +15,10 @@ function App() {
       {/*When using the Link tag, be sure to replace the 'to' prop 
       with the onClick prop in order to show the login and signup 
       modals*/}
-      <Link to='dashboard' className='nav-link'><Button text = "Dashboard">Dashboard</Button></Link>
-      <Link to='settings' className='nav-link'><Button text = "Settings" >Settings</Button></Link>
-      <Button className='nav-link' onClick={()=> setModalActive(true)}>Log In</Button>
-      <Button  className='nav-link' text = "Sign Up" onClick={()=> setModalActive(true)}>Sign Up</Button>
+      <Link className="link-margin" to='dashboard'><Button text = "Dashboard">Dashboard</Button></Link>
+      <Link className="link-margin" to='settings'><Button text = "Settings" >Settings</Button></Link>
+      <Link className="link-margin" to><Button onClick={()=> setModalActive(true)}>Log In</Button></Link>
+      <Link className="link-margin" to><Button onClick={()=> setModalActive(true)}>Sign Up</Button></Link>
       
     </Navbar>
 
