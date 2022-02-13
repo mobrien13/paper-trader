@@ -4,7 +4,7 @@ import {motion, AnimatePresence} from "framer-motion"
 
 
 const Modal = (props) => {
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState(false)
     return( 
         <AnimatePresence>
             {open && ( 

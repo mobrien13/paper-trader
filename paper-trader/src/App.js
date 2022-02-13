@@ -22,7 +22,7 @@ function App() {
       <Link to='dashboard' className='nav-link'><Button text = "Dashboard" /></Link>
       <Link to='settings' className='nav-link'><Button text = "Settings" /></Link>
       <Button text = "Log In" />
-      <Button text = "Sign Up" />
+      <Button  text = "Sign Up" />
       
     </Navbar>
 

@@ -1,4 +1,5 @@
 import './Button.css'
+import React from "react"
 
 function Button(props){
     return(
@@ -7,8 +8,7 @@ function Button(props){
           <span>{props.text}</span>
         </p>
       </li>
-  
     );
   }
 
-  export default Button
+export default Button
