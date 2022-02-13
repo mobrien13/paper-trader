@@ -16,7 +16,9 @@ function App() {
   return (
   <BrowserRouter>
     <Navbar>
-      {/*When using the Link tag, be sure to replace the 'to' prop with the onClick prop in order to show the login and signup modals*/}
+      {/*When using the Link tag, be sure to replace the 'to' prop 
+      with the onClick prop in order to show the login and signup 
+      modals*/}
       <Link to='dashboard' className='nav-link'><Button text = "Dashboard" /></Link>
       <Link to='settings' className='nav-link'><Button text = "Settings" /></Link>
       <Button text = "Log In" />
@@ -25,7 +27,8 @@ function App() {
     </Navbar>
 
     {/*Views is the container for all site content.
-    The container div gives the Views a 10% padding on the left and right sides*/}
+    The container div gives the Views a 10% padding 
+    on the left and right sides*/}
     <div className='container'>
       <Views style={{ flex:1 }}/>
     </div>
