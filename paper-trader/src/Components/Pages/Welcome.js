@@ -1,16 +1,16 @@
 import React from 'react';
-import './Home.css';
+import './Welcome.css';
 import './Pages.css';
 import {Link} from 'react-router-dom';
 
-function Home() {
+function Welcome() {
     return (
     <>
-        <h1>Home</h1>
+        <h1>Welcome</h1>
         
     </>
     );
   }
   
   
-  export default Home;
+  export default Welcome;
