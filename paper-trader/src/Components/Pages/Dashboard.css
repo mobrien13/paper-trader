@@ -7,14 +7,14 @@
 }
 
 .graph{
-    width: 70%;
-    height: 75%;
+    width: 55%;
+    height: 65%;
     
 }
 
 .watchlist{
     float:right;
     width:  30%;
-    height: 75%;
-    margin: 10px;
+    height: 65%;
+    margin: 10px
 }
