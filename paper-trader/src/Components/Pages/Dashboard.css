@@ -1,0 +1,20 @@
+.rectangle{
+    border-radius: 15px;
+    border: 2px soild black;
+    margin: 10px;
+
+
+}
+
+.graph{
+    width: 70%;
+    height: 75%;
+    
+}
+
+.watchlist{
+    float:right;
+    width:  30%;
+    height: 75%;
+    margin: 10px;
+}
