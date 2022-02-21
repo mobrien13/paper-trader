@@ -1,15 +1,13 @@
 .rectangle{
     border-radius: 15px;
-    border: 2px soild black;
+    border: 10px soild black;
     margin: 10px;
-
-
+    color: blue;
 }
-
 .graph{
     width: 55%;
     height: 65%;
-    
+    float:left;
 }
 
 .watchlist{

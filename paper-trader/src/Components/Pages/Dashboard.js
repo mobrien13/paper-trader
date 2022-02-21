@@ -2,6 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import './Pages.css';
 import graph from './graph.svg';
+// try unordred list 
 
 function Dashboard() {
     return (
@@ -12,22 +13,22 @@ function Dashboard() {
 
         <div className='watchlist'>
           <div>
-            <container>
+            <Container>
               Stock: APPL
               Price: $135
-            </container>
+            </Container>
           </div>
           <div>
-            <container>
+            <Container>
               Stock: APPL
               Price: $135
-            </container>
+            </Container>
           </div>
           <div>
-            <container>
+            <Container>
               Stock: APPL
               Price: $135
-            </container>
+            </Container>
           </div>
         </div>
       
@@ -38,7 +39,7 @@ function Dashboard() {
   
   export default Dashboard;
 
-function container(props){
+function Container(props){
   return(
     <p className='rectangle'>{props.children}</p>
   );
