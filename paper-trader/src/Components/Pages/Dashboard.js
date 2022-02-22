@@ -2,45 +2,47 @@ import React from 'react';
 import './Dashboard.css';
 import './Pages.css';
 import graph from './graph.svg';
-// try unordred list 
+
 
 function Dashboard() {
     return (
       <>
-        <div className='graph'>
-          <img src ={graph}></img>
-        </div>
+        <body className='backround'>
+          <div className='graph-box'>
+            <div className='graph'>
+              <img src ={graph}></img>
+            </div>
+          </div>
+        
+        
+          <div className='watchlist'>
+          <div className='watchlist-title'>Watchlist</div>
+            <ul>
+              <li className='watchlist-body'>APPL PPRICE: $135</li>
+              <li className='watchlist-body'>APPL PPRICE: $135</li>
+              <li className='watchlist-body'>APPL PPRICE: $135</li>
+              <li className='watchlist-body'>APPL PPRICE: $135</li>
+            </ul>
+          </div>
+         
 
-        <div className='watchlist'>
-          <div>
-            <Container>
-              Stock: APPL
-              Price: $135
-            </Container>
+          <div className='holdings'>
+            <div className='holdings-title'>
+              Current Holdings:
+            </div>
+            <div className='holdings-body'>
+              <ul>
+                <li> COMPANY <span> PRICE </span><span> HOLDING </span></li>
+                <li>COMPANY <span> PRICE </span><span> HOLDING </span></li>
+                <li>COMPANY <span> PRICE </span><span> HOLDING </span></li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <Container>
-              Stock: APPL
-              Price: $135
-            </Container>
-          </div>
-          <div>
-            <Container>
-              Stock: APPL
-              Price: $135
-            </Container>
-          </div>
-        </div>
-      
-
+        </body>
+        
+        
       </>
     );
   }
   
   export default Dashboard;
-
-function Container(props){
-  return(
-    <p className='rectangle'>{props.children}</p>
-  );
-}
