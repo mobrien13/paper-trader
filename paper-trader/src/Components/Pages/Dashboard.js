@@ -2,7 +2,6 @@ import React from 'react';
 import './Dashboard.css';
 import './Pages.css';
 
-
 function Dashboard() {
     return (
       <>
@@ -83,24 +82,41 @@ function Dashboard() {
               GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
               GRAPH 
             </div>
+            
           </div>
         
-        
-          <div className='watchlist'>
-            <div className='watchlist-title'>Watchlist</div>
+           {/* Watchlist placeholder*/}
+          <div className='scroll-list'>
+            <div className='list-title'>Watchlist</div>
             <ul>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
-              <li className='watchlist-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+            </ul>
+          </div>
+
+
+          {/* Search placeholder*/}
+          <div className='scroll-list'>
+            <div className='list-title'>Search</div>
+            <ul>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
+              <li className='list-body'>APPL PPRICE: $135</li>
             </ul>
           </div>
          
-
+          {/* holdings placeholder*/}
           <div className='holdings'>
             <div className='holdings-title'>
               Current Holdings:
@@ -113,8 +129,22 @@ function Dashboard() {
               </ul>
             </div>
           </div>
-        </div>
+          
+          {/* News placeholder*/}
+          <div className='news'>
+            <div className='list-title'>News</div>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+              <li className='news-item'>APPL PPRICE: $135</li>
+            </div>
+        </div>   
         
+       
         
       </>
     );
