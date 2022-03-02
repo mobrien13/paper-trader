@@ -1,0 +1,39 @@
+.scroll-list{
+    display:flex;
+    flex-direction: column;
+    overflow: scroll;
+    float:left;
+    align-items: center;
+
+    margin-left: 5px;
+    max-height: 500px;
+    min-height: 500px;
+    max-width: 200px;
+    height: 50%;
+
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.list-body{
+    text-align: left;
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    padding: 10%;
+    margin: 5px;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',monospace;
+    color: var(--text-color);
+    background-color: var(--bc);
+}
+
+.list-title{
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',monospace;
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+    font-weight: bold;
+}

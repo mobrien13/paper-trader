@@ -1,6 +1,10 @@
 import React from 'react';
+import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
+
+
+
 
 function Dashboard() {
     return (
@@ -56,65 +60,15 @@ function Dashboard() {
               GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
               GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
               GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH  GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH GRAPH
-              GRAPH 
             </div>
-            
           </div>
         
            {/* Watchlist placeholder*/}
-          <div className='scroll-list'>
-            <div className='list-title'>Watchlist</div>
-            <ul>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-            </ul>
-          </div>
+          <ScrollList title="Watch List" stockName="APPL" price = "$135"> </ScrollList>
 
 
           {/* Search placeholder*/}
-          <div className='scroll-list'>
-            <div className='list-title'>Search</div>
-            <ul>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-              <li className='list-body'>APPL PPRICE: $135</li>
-            </ul>
-          </div>
+          <ScrollList title="Search" stockName="APPL" price = "$135"> </ScrollList>
          
           {/* holdings placeholder*/}
           <div className='holdings'>
