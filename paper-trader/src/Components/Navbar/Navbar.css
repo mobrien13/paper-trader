@@ -36,3 +36,54 @@ a{
     display: flex;
     justify-content: center;
 }
+
+/* Mobile Navbar */
+.mobileNav {
+    background-color: var(--bc);
+    top:0;
+    left:0;
+    right:0;
+    height: 30px;
+    display: none;
+}
+.mobileNav .navbar-buttons{
+    background-color: var(--bc);
+}
+.openMobileNav{
+    background-color: var(--bc);
+    height: 100vh;
+    width: 96vw;
+}
+ul{
+    display: list-item;
+    text-align: center;
+}
+#hamburger{
+    float: right;
+    color: white;
+    margin-right: 8px;
+    font-size: 35px;
+    background-color: transparent;
+    border: none;
+    margin-top: 5px;
+}
+.mobileTopBar{
+    background-color: var(--bc);
+    height: 60px;
+}
+i{
+    color: white;
+}
+i:hover{
+    cursor:pointer;
+}
+
+/* Responsive Navbar */
+@media screen and (max-width: 600px){
+    .navbar{
+        display: none;
+    }
+    .mobileNav{
+        display: contents;
+    }
+}
