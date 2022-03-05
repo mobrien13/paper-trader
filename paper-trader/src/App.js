@@ -34,8 +34,8 @@ function App() {
 
     {/*Displays modal component if and only if the corresponding button is clicked*/}
     <Modal ref={modalRef}>
-      {modal=="login" && <Login/>}
-      {modal=="signup" && <Signup/>}
+      {modal==="login" && <Login/>}
+      {modal==="signup" && <Signup/>}
     </Modal>
 
   </BrowserRouter>
