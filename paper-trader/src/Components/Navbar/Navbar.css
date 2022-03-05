@@ -45,23 +45,23 @@ a{
     right:0;
     height: 30px;
     display: none;
+    width:100vw;
+    
 }
 .mobileNav .navbar-buttons{
     background-color: var(--bc);
+    display: list-item;
+    text-align: center;
 }
 .openMobileNav{
     background-color: var(--bc);
     height: 100vh;
-    width: 96vw;
+    width: 100vw;
 }
-ul{
-    display: list-item;
-    text-align: center;
-}
+
 #hamburger{
-    float: right;
     color: white;
-    margin-right: 8px;
+    margin-right:8px;
     font-size: 35px;
     background-color: transparent;
     border: none;
@@ -69,13 +69,21 @@ ul{
 }
 .mobileTopBar{
     background-color: var(--bc);
-    height: 60px;
+    height: 60px;   
 }
 i{
     color: white;
 }
 i:hover{
     cursor:pointer;
+}
+.mobileNavbarUl{
+    list-style-type: none;
+    display: flex;
+    justify-content:space-between;
+}
+#mobileNavbarSearch{
+    margin-left: 40%;
 }
 
 /* Responsive Navbar */

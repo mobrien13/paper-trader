@@ -17,7 +17,6 @@ function App() {
   <BrowserRouter>
     <Navbar>
       {/*Navbar Items and Links*/}
-      <Search/>
       <Link className="link-margin" to='dashboard'><Button text = "Dashboard">Dashboard</Button></Link>
       <Link className="link-margin" to='settings'><Button text = "Settings" >Settings</Button></Link>
       <Link className="link-margin" to><Button onClick={() => {modalRef.current.open(); setModal("login")}}>Log In</Button></Link>

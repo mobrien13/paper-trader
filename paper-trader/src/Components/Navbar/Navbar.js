@@ -3,6 +3,7 @@ import './Navbar.css';
 import logo from '../../icons/logo.svg';
 import { Link } from 'react-router-dom';
 import Button from '../../Components/Button/Button.js';
+import Search from '../Search/Search';
 
 function Navbar(props) {
 
@@ -13,7 +14,9 @@ function Navbar(props) {
     <>
       <nav className="navbar">
         <Link to='/'><img className="logo" src={logo} /></Link>
-        <ul className="navbar-buttons"> {props.children} </ul>
+        <ul className="navbar-buttons">
+          <Search/>
+          {props.children} </ul>
         <ul className="navbar-links">
         </ul>
       </nav>
@@ -21,8 +24,11 @@ function Navbar(props) {
 
       <nav className='mobileNav'>
         <div className='mobileTopBar'>
-          <Link to='/'><img className="logo" src={logo} /></Link>
-          <button id='hamburger' onClick={ () => setOpen(!open) }><i className='fa fa-bars'></i></button>
+          <ul className='mobileNavbarUl'>
+            <span id='mobileLogo'><Link to='/'><img className="logo" src={logo} /></Link></span>
+            <span id='mobileNavbarSearch'><Search/></span>
+            <button id='hamburger' onClick={() => setOpen(!open)}><i className='fa fa-bars'></i></button>
+          </ul>
         </div>
         <ul className='navbar-buttons'>
           {open &&
