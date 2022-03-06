@@ -37,6 +37,9 @@ a{
     justify-content: center;
 }
 
+
+
+
 /* Mobile Navbar */
 .mobileNav {
     background-color: var(--bc);
@@ -46,7 +49,6 @@ a{
     height: 30px;
     display: none;
     width:100vw;
-    
 }
 .mobileNav .navbar-buttons{
     background-color: var(--bc);
@@ -56,7 +58,7 @@ a{
 .openMobileNav{
     background-color: var(--bc);
     height: 100vh;
-    width: 100vw;
+    width: 96vw;
 }
 
 #hamburger{
@@ -65,7 +67,7 @@ a{
     font-size: 35px;
     background-color: transparent;
     border: none;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .mobileTopBar{
     background-color: var(--bc);
@@ -93,5 +95,10 @@ i:hover{
     }
     .mobileNav{
         display: contents;
+    }
+}
+@media screen and (max-width: 400px){
+    #mobileNavbarSearch{
+        margin-left: 20%;
     }
 }
