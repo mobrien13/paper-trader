@@ -25,11 +25,11 @@ function Login(){
         <>
         <h1>Log In</h1>
         <div>
-            <input ref = {emailRef} placeholder = "Email" />
-            <input ref = {passwordRef} type = "password" placeholder = "Password" />
+            <input className='signInFields' ref = {emailRef} placeholder = "  Email" /><br/>
+            <input className='signInFields' ref = {passwordRef} type = "password" placeholder = "  Password" /><br/>
         </div>
 
-        <Button class="buttons" disable = {loading} onClick={handleSignup}>Log In</Button>
+        <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleSignup}>Log In</Button>
         
 
         </>

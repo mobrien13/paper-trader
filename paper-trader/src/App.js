@@ -34,8 +34,8 @@ function App() {
         {
           !currentUser &&
           <>
-            <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("login") }}>Log In</Button></Link>
-            <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("signup") }}>Sign Up</Button></Link>
+            <Link className="link-margin" to><Button buttonStyle="btn--login" onClick={() => { modalRef.current.open(); setModal("login") }}>Log In</Button></Link>
+            <Link className="link-margin" to><Button buttonStyle="btn--signup" onClick={() => { modalRef.current.open(); setModal("signup") }}>Sign Up</Button></Link>
           </>
         }
       </Navbar>

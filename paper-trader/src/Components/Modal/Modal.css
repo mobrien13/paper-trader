@@ -9,14 +9,15 @@
 
 .modal-content-wrapper{
     position: fixed;
-    width: 300px;
-    height: 500px;
+    width:fit-content;
+    height: fit-content;
     background: white;
     margin: auto;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 50px; 
+    padding: 50px 50px 50px 50px; 
     border-radius: 20px;;
+    text-align: center;
 }

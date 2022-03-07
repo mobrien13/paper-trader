@@ -17,13 +17,9 @@
 .btn{
     font-weight: 400;
     border-radius: 10px;
-    cursor: pointer;
-    transition: filter 300ms;
+    cursor: pointer;    
 }
 
-.btn:hover{
-    filter: brightness(0.95)
-}
 
 .btn--primary--solid{
     background-color: white;
@@ -31,11 +27,44 @@
     border: none;
 }
 .btn--primary--outline{
+    margin-top:15px;
     background-color: transparent;
-    border: 2px solid white;
+    border: 3px solid var(--bc);
     color: var(--bc);
+    transition: .5s;
 }
-
+.btn--primary--outline:hover{
+    background-color: var(--bc);
+    color:white;
+}
+.btn--login{
+    margin-top:-3px;
+    font-weight: 400;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .5s;
+    border: 3px solid var(--bc);
+    color: white;
+    background-color: var(--bc);
+}
+.btn--login:hover{
+    border: 3px solid white;
+}
+.btn--signup{
+    margin-top:-3px;
+    font-weight: 400;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .5s;
+    border: 3px solid var(--bc);
+    color: var(--bc);
+    background-color: white;
+}
+.btn--signup:hover{
+    background-color: var(--bc);
+    color: white;
+    border: 3px solid white;
+}
 .btn--medium{
     padding: 10px 20px;
     font-size: 11px;

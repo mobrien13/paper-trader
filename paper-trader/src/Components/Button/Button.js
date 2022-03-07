@@ -4,7 +4,9 @@ import React from "react"
 
 const STYLES = [
   "btn--primary--solid",
-  "btn--primary--outline"
+  "btn--primary--outline",
+  "btn--login",
+  "btn--signup"
 ]
 
 const SIZES = ["btn--medium, btn--small"]
