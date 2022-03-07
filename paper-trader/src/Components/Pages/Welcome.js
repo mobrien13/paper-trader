@@ -5,6 +5,8 @@ import image1 from '../../images/MoneyImgPT.jpg'
 import image2 from '../../images/MoneyImg2PT.jpg'
 import image3 from '../../images/Paper.jpg'
 import {Link} from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import {signup, useAuth } from '../../firebase'
 
 function Welcome() {
     return (
@@ -33,6 +35,7 @@ function Welcome() {
             <div>
                 <img src={image2} alt="MoneyPT2" width="500" height="333"/>
             </div>
+
         
         </divH>
     </>
