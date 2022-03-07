@@ -1,4 +1,5 @@
 import './ScrollList.css';
+import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 function ScrollList(props){
     
@@ -6,16 +7,99 @@ function ScrollList(props){
         <>
         <div className='scroll-list'>
             <div className='list-title'>{props.title}</div>
-            <ul>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-                <li className='list-body'>{props.stockName} {props.price}</li>
-            </ul>
+                
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>    
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+
+                <div className='list-body'>
+                        <div>{props.stockName} <br></br>{props.price}</div> 
+                        <div>Up/Down<br></br>{props.upDown}</div>
+                        <Sparklines data={props.data} width={100} height={30} limit={8}>
+                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
+                        </Sparklines>
+                </div>
+        
+        
+        
+        
+        
         </div> 
         </>
         

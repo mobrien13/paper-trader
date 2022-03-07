@@ -2,50 +2,50 @@
     margin-top: 15px;
     display:flex;
     flex-wrap: wrap;
-   
+
 }
 .graph{
     width: 100%;
     height: 100%; 
-    
 }
 
 .graph-box{
-    width: 70%;
+    flex:auto;
+    max-width: 76%;
     max-height: 500px;
+    min-width: 76%;
     min-height: 500px;
     height: 50%;
     float:left;
     overflow: hidden;
-    flex:auto;
-    
     
     
     border-width: 5px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--bg-accent);
     border-radius: 10px;
-    
 }
 
 
 
 .holdings{
     height: 25% ;
-    width: 70%;
+    max-width: 76%;
+    width: 76%;
     overflow: scroll;
 
     margin-top: 5px;
     border-width: 5px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--bg-accent);
+    border-radius: 10px;
 }
 
 
 .news{
     display:flex;
     flex-direction:row;
-    overflow: scroll;
+    overflow: hidden;
     float:left;
     
     
@@ -55,20 +55,26 @@
     margin-top: 5px;
     border-width: 5px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--bg-accent);
+    border-radius: 10px;
 }
 
 .news-item{
     text-align: left;
     border-width: 3px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--bg-accent);
+
+    max-width: 30%;
+    max-height: 85%;
+    
     border-radius: 10px;
     padding: 10%;
     margin: 5px;
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',monospace;
     color: var(--text-color);
-    background-color: var(--bc);
+    background: rgb(0,102,255);
+    background: linear-gradient(45deg, rgba(0,102,255,1) 0%, rgba(0,102,255,0.4458158263305322) 100%);
 }
 .ul {
     display: flex;
