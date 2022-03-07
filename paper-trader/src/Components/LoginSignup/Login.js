@@ -23,6 +23,7 @@ function Login(props){
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
             navigate('/dashboard')
+            props.closeModal();
         } catch{
             alert("Error!")
         }

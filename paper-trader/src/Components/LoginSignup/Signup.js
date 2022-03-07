@@ -3,10 +3,7 @@ import { signup, useAuth } from '../../firebase'
 import Button from '../Button/Button'
 import { useRef, useState } from 'react';
 
-
-
-
-function Signup() {
+function Signup(props) {
     const [loading, setLoading] = useState(false);
     const currentUser = useAuth();
 
@@ -22,16 +19,17 @@ function Signup() {
     }
 
     async function handleSignup() {
-        if (passwordConfirmRef === passwordRef && emailConfirmRef === emailRef) {
+        if (passwordConfirmRef.current.value !== passwordRef.current.value || emailConfirmRef.current.value !== emailRef.current.value) {
+            alert("Emails or Passwords Do Not Match")
+        }
+        else{
             try {
                 setLoading(true);
                 await signup(emailRef.current.value, passwordRef.current.value)
+                props.closeModal()
             } catch {
                 alert("Error!")
             }
-        }
-        else{
-            alert("Emails or Passwords Do Not Match")
         }
 
         setLoading(false);

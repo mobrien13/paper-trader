@@ -50,8 +50,8 @@ function App() {
 
       {/*Displays modal component if and only if the corresponding button is clicked*/}
       <Modal ref={modalRef}>
-        {modal === "login" && <Login />}
-        {modal === "signup" && <Signup />}
+        {modal === "login" && <Login closeModal={() => modalRef.current.close() } />}
+        {modal === "signup" && <Signup closeModal={() => modalRef.current.close() } />}
       </Modal>
 
     </BrowserRouter>
