@@ -1,19 +1,20 @@
 div2{
-    padding: 8px;
     justify-content: left;
     float: left;
     font-size: 25px;
     max-width: 55%;
+    margin-top: -40px;
 }
 div3{
-    padding: 8px;
-    height: 270px;
-    width: 340px;
+    padding: 0 10px 0 10px;
+    max-height: 300px;
+    max-width: 450px;
+    min-width: 200px;
+    width: 35vw;
     justify-content: right;
-    float: right;
     border:black;
     border-style: dashed;
-    margin-top: 55px;
+    margin-bottom: 40px;
 }
 divC1{
     padding: 5px;
@@ -66,10 +67,33 @@ divH{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 40px;
 }
+
+.welcomeImage{
+    resize: both;
+    max-width: 28vw;
+    min-width: 150px;
+}
+
 @media screen and (max-width: 680px){
     div2{
         max-width: 100%;
+        width: 90vw;
+    }
+    .welcomeImage{
+        max-width: 90vw;
+    }
+    div3{
+        width: 90vw;
+    }
+}
+@media screen and (max-width: 900px){
+    div3{
+        width: 90vw;
+        max-width: 90vw;
+    }
+    div2{
+        width: 90vw;
+        max-width: 90vw;
     }
 }

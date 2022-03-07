@@ -3,7 +3,7 @@ import './Welcome.css';
 import './Pages.css';
 import image1 from '../../images/MoneyImgPT.jpg'
 import image2 from '../../images/MoneyImg2PT.jpg'
-import image3 from '../../images/Paper.jpg'
+import image3 from '../../images/paper.png'
 import {Link} from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import {signup, useAuth } from '../../firebase'
@@ -27,13 +27,13 @@ function Welcome() {
         <divH>
        
             <div>
-                <img src={image1} alt="MoneyPT" width="500" height="333"/>
+                <img className='welcomeImage' src={image1} alt="MoneyPT"/>
             </div>
             <div>
-                <img src={image3} alt="Paper" width="500" height="333"/>
+                <img className='welcomeImage' src={image3} alt="Paper" />
             </div>
             <div>
-                <img src={image2} alt="MoneyPT2" width="500" height="333"/>
+                <img className='welcomeImage' src={image2} alt="MoneyPT2"/>
             </div>
 
         
