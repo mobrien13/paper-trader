@@ -28,7 +28,7 @@ function Login(){
             <input ref = {passwordRef} type = "password" placeholder = "Password" />
         </div>
 
-        <Button disable = {loading} onClick={handleSignup}>Log In</Button>
+        <Button class="buttons" disable = {loading} onClick={handleSignup}>Log In</Button>
         
 
         </>

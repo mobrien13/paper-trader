@@ -1,6 +1,7 @@
 import './Button.css'
 import React from "react"
 
+
 const STYLES = [
   "btn--primary--solid",
   "btn--primary--outline"
@@ -25,7 +26,7 @@ const Button = ({
     : SIZES[0];
 
   return (
-    <li>
+    <li class = "buttons">
       <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onClick} type={type}>
         {children}
       </button>
