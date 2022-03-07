@@ -8,10 +8,11 @@ import Login from './Components/LoginSignup/Login';
 import Signup from './Components/LoginSignup/Signup';
 import Search from './Components/Search/Search';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-import { logout } from './firebase'
+import { logout, useAuth } from './firebase'
 
 function App() {
 
+  const currentUser = useAuth();
   const modalRef = useRef();
   const [modal, setModal] = useState("");
 
@@ -20,12 +21,17 @@ function App() {
       <Navbar>
         {/*Navbar Items and Links*/}
 
-        <Link className="link-margin" to='dashboard'><Button text="Dashboard">Dashboard</Button></Link>
-        <Link className="link-margin" to='settings'><Button text="Settings" >Settings</Button></Link>
-        <Link className="link-margin" to=''><Button onClick = {handleLogout} text="Log Out" >Log Out</Button></Link>
+        {
+          currentUser && 
+          <>
+          <Link className="link-margin" to='dashboard'><Button text="Dashboard">Dashboard</Button></Link>
+          <Link className="link-margin" to='settings'><Button text="Settings" >Settings</Button></Link>
+          <Link className="link-margin" to=''><Button onClick={handleLogout} text="Log Out" >Log Out</Button></Link>
+          </>
+        }
 
         {
-          getAuth().email === "" &&
+          !currentUser &&
           <>
             <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("login") }}>Log In</Button></Link>
             <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("signup") }}>Sign Up</Button></Link>
@@ -52,7 +58,7 @@ function App() {
 }
 
 
-async function handleLogout (){
+async function handleLogout() {
   logout()
 }
 
