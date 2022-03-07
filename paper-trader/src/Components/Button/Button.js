@@ -6,7 +6,8 @@ const STYLES = [
   "btn--primary--solid",
   "btn--primary--outline",
   "btn--login",
-  "btn--signup"
+  "btn--signup",
+  "btn--nav"
 ]
 
 const SIZES = ["btn--medium, btn--small"]

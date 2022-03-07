@@ -25,9 +25,9 @@ function App() {
         {
           currentUser && 
           <>
-          <Link className="link-margin" to='dashboard'><Button text="Dashboard">Dashboard</Button></Link>
-          <Link className="link-margin" to='settings'><Button text="Settings" >Settings</Button></Link>
-          <Link className="link-margin" to=''><Button onClick={ handleLogout } text="Log Out" >Log Out</Button></Link>
+          <Link className="link-margin" to='dashboard'><Button buttonStyle='btn--nav' text="Dashboard">Dashboard</Button></Link>
+          <Link className="link-margin" to='settings'><Button buttonStyle='btn--nav' text="Settings" >Settings</Button></Link>
+          <Link className="link-margin" to=''><Button buttonStyle='btn--nav' onClick={ handleLogout } text="Log Out" >Log Out</Button></Link>
           </>
         }
 

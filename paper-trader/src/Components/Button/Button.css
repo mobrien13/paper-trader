@@ -13,14 +13,11 @@
     border: none;
     list-style-type: none;
 }
-
 .btn{
     font-weight: 400;
     border-radius: 10px;
     cursor: pointer;    
 }
-
-
 .btn--primary--solid{
     background-color: white;
     color: var(--bc);
@@ -36,6 +33,18 @@
 .btn--primary--outline:hover{
     background-color: var(--bc);
     color:white;
+}
+.btn--nav{
+    margin-top:-3px;
+    color:var(--bc);
+    background-color: white;
+    border: 3px solid var(--bc);
+    transition: .5s;
+}
+.btn--nav:hover{
+    background-color: var(--bc);
+    color: white;
+    border: 3px solid white;
 }
 .btn--login{
     margin-top:-3px;
