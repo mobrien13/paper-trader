@@ -2,19 +2,27 @@ import './Login.css';
 import {login, useAuth } from '../../firebase'
 import Button from '../Button/Button'
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Login(){
+function Login(props){
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            handleLogin();
+        }
+    }
+
     const [ loading, setLoading] = useState(false);
     const currentUser = useAuth();
+    const navigate = useNavigate();
     
     const emailRef = useRef()
     const passwordRef = useRef()
 
-    async function handleSignup ()  {
+    async function handleLogin ()  {
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
-            
+            navigate('/dashboard')
         } catch{
             alert("Error!")
         }
@@ -25,11 +33,11 @@ function Login(){
         <>
         <h1>Log In</h1>
         <div>
-            <input className='signInFields' ref = {emailRef} placeholder = "  Email" /><br/>
-            <input className='signInFields' ref = {passwordRef} type = "password" placeholder = "  Password" /><br/>
+            <input className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "  Email" /><br/>
+            <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "  Password" /><br/>
         </div>
 
-        <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleSignup}>Log In</Button>
+        <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleLogin}>Log In</Button>
         
 
         </>

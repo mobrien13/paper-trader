@@ -87,9 +87,12 @@ i:hover{
 #mobileNavbarSearch{
     margin-left: 40%;
 }
+#mobileLogo{
+    margin-left:15px;
+}
 
 /* Responsive Navbar */
-@media screen and (max-width: 600px){
+@media screen and (max-width: 680px){
     .navbar{
         display: none;
     }

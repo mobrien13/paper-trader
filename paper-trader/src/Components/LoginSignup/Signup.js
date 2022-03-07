@@ -15,6 +15,12 @@ function Signup() {
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
 
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            handleSignup();
+        }
+    }
+
     async function handleSignup() {
         if (passwordConfirmRef === passwordRef && emailConfirmRef === emailRef) {
             try {
@@ -35,10 +41,10 @@ function Signup() {
         <>
             <h1>Sign Up</h1>
             <div>
-                <input className='signInFields' ref={emailRef} placeholder="  Email" /><br/>
-                <input className='signInFields' ref={emailConfirmRef} placeholder="  Confirm Email" /><br/>
-                <input className='signInFields' ref={passwordRef} type="password" placeholder="  Password" /><br/>
-                <input className='signInFields' ref={passwordConfirmRef} type="password" placeholder="  Confirm Password" /><br/>
+                <input className='signInFields' ref={emailRef} onKeyPress={ handleKeyPress } placeholder="  Email" /><br/>
+                <input className='signInFields' ref={emailConfirmRef} onKeyPress={ handleKeyPress } placeholder="  Confirm Email" /><br/>
+                <input className='signInFields' ref={passwordRef} onKeyPress={ handleKeyPress } type="password" placeholder="  Password" /><br/>
+                <input className='signInFields' ref={passwordConfirmRef} onKeyPress={ handleKeyPress } type="password" placeholder="  Confirm Password" /><br/>
             </div>
 
             <Button disable={loading} buttonStyle="btn--primary--outline" onClick={handleSignup}>Sign Up</Button>
