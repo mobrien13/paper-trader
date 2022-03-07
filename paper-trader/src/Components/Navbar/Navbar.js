@@ -4,6 +4,7 @@ import logo from '../../icons/logo.svg';
 import { Link } from 'react-router-dom';
 import Button from '../../Components/Button/Button.js';
 import Search from '../Search/Search';
+import { useAuth } from '../../firebase.js';
 
 function Navbar(props) {
 
@@ -15,7 +16,7 @@ function Navbar(props) {
       <nav className="navbar">
         <Link to='/'><img className="logo" src={logo} /></Link>
         <ul className="navbar-buttons">
-          <Search/>
+          { useAuth() != null && <Search/>}
           {props.children} </ul>
         <ul className="navbar-links">
         </ul>
@@ -26,7 +27,7 @@ function Navbar(props) {
         <div className='mobileTopBar'>
           <ul className='mobileNavbarUl'>
             <span id='mobileLogo'><Link to='/'><img className="logo" src={logo} /></Link></span>
-            <span id='mobileNavbarSearch'><Search/></span>
+            <span id='mobileNavbarSearch'> { useAuth() != null && <Search/>} </span>
             <button id='hamburger' onClick={() => setOpen(!open)}><i className='fa fa-bars'></i></button>
           </ul>
         </div>
