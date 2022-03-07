@@ -24,6 +24,7 @@ function Login(){
         <>
         <h1>Log In</h1>
         <div>
+            {useAuth()?.email}
             <input ref = {emailRef} placeholder = "Email" />
             <input ref = {passwordRef} type = "password" placeholder = "Password" />
         </div>
