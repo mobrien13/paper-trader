@@ -1,0 +1,75 @@
+div2{
+    padding: 8px;
+    justify-content: left;
+    float: left;
+    font-size: 25px;
+    max-width: 55%;
+}
+div3{
+    padding: 8px;
+    height: 270px;
+    width: 340px;
+    justify-content: right;
+    float: right;
+    border:black;
+    border-style: dashed;
+    margin-top: 55px;
+}
+divC1{
+    padding: 5px;
+    height: 330px;
+    width: 500px;
+    justify-content: left;
+    position: relative;
+    float: left;
+    flex-wrap: wrap;
+    border:black;
+    border-style: dashed;
+    margin: 10px;
+}
+divC2{
+    padding: 5px;
+    height: 330px;
+    width: 500px;
+    justify-content: left;
+    position: relative;
+    float: left;
+    flex-wrap: wrap;
+    border:black;
+    border-style: dashed;
+    margin: 10px;
+}
+divC3{
+    padding: 5px;
+    height: 330px;
+    width: 500px;
+    justify-content: left;
+    position: relative;
+    float: left;
+    flex-wrap: wrap;
+    border:black;
+    border-style: dashed;
+    margin: 10px;
+}
+divB{
+    padding: 8px;
+    height: 70px;
+    width: 800px;
+    justify-content: space-between;
+    float: left;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    padding-top: 200px;
+}
+divH{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 40px;
+}
+@media screen and (max-width: 680px){
+    div2{
+        max-width: 100%;
+    }
+}
