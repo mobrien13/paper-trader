@@ -6,6 +6,7 @@ import {BrowserRouter, Link} from 'react-router-dom';
 import Modal from './Components/Modal/Modal';
 import Login from './Components/LoginSignup/Login';
 import Signup from './Components/LoginSignup/Signup';
+import Search from './Components/Search/Search';
 
 function App() {
 
@@ -32,8 +33,8 @@ function App() {
 
     {/*Displays modal component if and only if the corresponding button is clicked*/}
     <Modal ref={modalRef}>
-      {modal=="login" && <Login/>}
-      {modal=="signup" && <Signup/>}
+      {modal==="login" && <Login/>}
+      {modal==="signup" && <Signup/>}
     </Modal>
 
   </BrowserRouter>
