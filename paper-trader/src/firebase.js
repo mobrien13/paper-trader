@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { useState, useEffect } from "react";
 
 const firebaseConfig = {
@@ -20,6 +20,10 @@ export function signup(email, password) {
 
 export function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
+}
+
+export function logout() {
+    return signOut(auth)
 }
 
 //Custom hook for userAuth refresh

@@ -8,6 +8,7 @@ import Login from './Components/LoginSignup/Login';
 import Signup from './Components/LoginSignup/Signup';
 import Search from './Components/Search/Search';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { logout } from './firebase'
 
 function App() {
 
@@ -21,10 +22,10 @@ function App() {
 
         <Link className="link-margin" to='dashboard'><Button text="Dashboard">Dashboard</Button></Link>
         <Link className="link-margin" to='settings'><Button text="Settings" >Settings</Button></Link>
-        <Link className="link-margin" to='settings'><Button onClick = "todo" text="Log Out" >Log Out</Button></Link>
+        <Link className="link-margin" to=''><Button onClick = {handleLogout} text="Log Out" >Log Out</Button></Link>
 
         {
-          getAuth()?.email === "" &&
+          getAuth().email === "" &&
           <>
             <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("login") }}>Log In</Button></Link>
             <Link className="link-margin" to><Button onClick={() => { modalRef.current.open(); setModal("signup") }}>Sign Up</Button></Link>
@@ -48,6 +49,11 @@ function App() {
 
     </BrowserRouter>
   );
+}
+
+
+async function handleLogout (){
+  logout()
 }
 
 export default App;
