@@ -14,6 +14,7 @@ function Login(){
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
+            
         } catch{
             alert("Error!")
         }

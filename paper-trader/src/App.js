@@ -11,10 +11,11 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWith
 import { logout, useAuth } from './firebase'
 
 function App() {
-
   const currentUser = useAuth();
   const modalRef = useRef();
   const [modal, setModal] = useState("");
+
+  
 
   return (
     <BrowserRouter>
@@ -26,7 +27,7 @@ function App() {
           <>
           <Link className="link-margin" to='dashboard'><Button text="Dashboard">Dashboard</Button></Link>
           <Link className="link-margin" to='settings'><Button text="Settings" >Settings</Button></Link>
-          <Link className="link-margin" to=''><Button onClick={handleLogout} text="Log Out" >Log Out</Button></Link>
+          <Link className="link-margin" to=''><Button onClick={ handleLogout } text="Log Out" >Log Out</Button></Link>
           </>
         }
 
