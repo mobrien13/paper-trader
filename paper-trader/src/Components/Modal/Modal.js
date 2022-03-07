@@ -1,10 +1,11 @@
 import React, { forwardRef, useState, useImperativeHandle } from 'react'
 import './Modal.css'
 import {motion, AnimatePresence} from "framer-motion"
-
+import { getAuth } from 'firebase/auth';
 
 const Modal = forwardRef((props, ref) => {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false); 
+    const currentUser = getAuth();
 
     useImperativeHandle(ref, () => {
         return{

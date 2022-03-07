@@ -36,3 +36,69 @@ a{
     display: flex;
     justify-content: center;
 }
+
+
+
+
+/* Mobile Navbar */
+.mobileNav {
+    background-color: var(--bc);
+    top:0;
+    left:0;
+    right:0;
+    height: 30px;
+    display: none;
+    width:100vw;
+}
+.mobileNav .navbar-buttons{
+    background-color: var(--bc);
+    display: list-item;
+    text-align: center;
+}
+.openMobileNav{
+    background-color: var(--bc);
+    height: 100vh;
+    width: 96vw;
+}
+
+#hamburger{
+    color: white;
+    margin-right:8px;
+    font-size: 35px;
+    background-color: transparent;
+    border: none;
+    margin-top: 10px;
+}
+.mobileTopBar{
+    background-color: var(--bc);
+    height: 60px;   
+}
+i{
+    color: white;
+}
+i:hover{
+    cursor:pointer;
+}
+.mobileNavbarUl{
+    list-style-type: none;
+    display: flex;
+    justify-content:space-between;
+}
+#mobileNavbarSearch{
+    margin-left: 40%;
+}
+
+/* Responsive Navbar */
+@media screen and (max-width: 600px){
+    .navbar{
+        display: none;
+    }
+    .mobileNav{
+        display: contents;
+    }
+}
+@media screen and (max-width: 400px){
+    #mobileNavbarSearch{
+        margin-left: 20%;
+    }
+}

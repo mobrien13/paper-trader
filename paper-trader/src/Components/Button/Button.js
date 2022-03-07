@@ -1,12 +1,13 @@
 import './Button.css'
 import React from "react"
 
-const STYLES =[
+
+const STYLES = [
   "btn--primary--solid",
   "btn--primary--outline"
 ]
 
-const SIZES =["btn--medium, btn--small"]
+const SIZES = ["btn--medium, btn--small"]
 
 const Button = ({
   children,
@@ -15,19 +16,21 @@ const Button = ({
   buttonStyle,
   buttonSize,
 }) => {
- 
-  const checkButtonStyle = STYLES.includes(buttonStyle) 
+
+  const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
     : STYLES[0];
-    
-  const checkButtonSize = STYLES.includes(buttonSize) 
+
+  const checkButtonSize = STYLES.includes(buttonSize)
     ? buttonSize
     : SIZES[0];
 
   return (
-    <button className = {`btn ${checkButtonStyle} ${checkButtonSize}`} onClick ={onClick} type={type}>
-      {children}
-    </button> 
+    <li class = "buttons">
+      <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onClick} type={type}>
+        {children}
+      </button>
+    </li>
   )
 }
 
