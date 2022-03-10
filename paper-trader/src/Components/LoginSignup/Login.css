@@ -1,8 +1,9 @@
 .signInFields {
     height: 30px;
     border-radius: 10px;
-    border:none;
+    border:5px solid lightgrey;
     background-color: lightgrey;
     margin-top: 10px;
+    margin-bottom: 10px;
     color: black;
 }

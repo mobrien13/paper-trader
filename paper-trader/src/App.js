@@ -15,8 +15,6 @@ function App() {
   const modalRef = useRef();
   const [modal, setModal] = useState("");
 
-  
-
   return (
     <BrowserRouter>
       <Navbar>
