@@ -33,7 +33,7 @@ const Search = () => {
     return (
         <>
             <li>
-                <input id='searchInput' placeholder='   Enter Symbol' onKeyPress={ handleKeyPress } onChange={event => setTicker(event.target.value)}></input>
+                <input id='searchInput' placeholder='Enter Symbol' onKeyPress={ handleKeyPress } onChange={event => setTicker(event.target.value)}></input>
             </li>
         </>
     )
