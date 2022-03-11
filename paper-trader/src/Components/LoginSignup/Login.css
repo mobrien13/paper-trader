@@ -6,4 +6,12 @@
     margin-top: 10px;
     margin-bottom: 10px;
     color: black;
+    outline:auto;
+    outline-color:white;
+    transition: .5s;
+}
+
+/*Changes Focus Outline From Input Fields*/
+.signInFields:focus{
+    outline-color: var(--bc);
 }

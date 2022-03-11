@@ -39,7 +39,7 @@ function Signup(props) {
         <>
             <h1>Sign Up</h1>
             <div>
-                <input className='signInFields' ref={emailRef} onKeyPress={ handleKeyPress } placeholder="Email" /><br/>
+                <input autoFocus className='signInFields' ref={emailRef} onKeyPress={ handleKeyPress } placeholder="Email" /><br/>
                 <input className='signInFields' ref={emailConfirmRef} onKeyPress={ handleKeyPress } placeholder="Confirm Email" /><br/>
                 <input className='signInFields' ref={passwordRef} onKeyPress={ handleKeyPress } type="password" placeholder="Password" /><br/>
                 <input className='signInFields' ref={passwordConfirmRef} onKeyPress={ handleKeyPress } type="password" placeholder="Confirm Password" /><br/>

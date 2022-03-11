@@ -5,7 +5,7 @@ import App from './App';
 import Welcome from './Components/Pages/Welcome.js';
 import Settings from './Components/Pages/Settings.js';
 import Dashboard from './Components/Pages/Dashboard';
-import Stock from './Components/Pages/Stock.js';
+import Login from './Components/LoginSignup/Login';
 
 
 import { MemoryRouter, Router, useLocation, BrowserRouter } from 'react-router-dom';
@@ -62,3 +62,7 @@ test('rendering a stock page with a ticker value displayed using useLocation', (
 })
 
 //login/signup test cases
+
+test('login works', () => {
+    
+})

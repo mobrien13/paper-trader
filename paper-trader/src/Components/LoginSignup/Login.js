@@ -34,7 +34,7 @@ function Login(props){
         <>
         <h1>Log In</h1>
         <div>
-            <input className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
+            <input autoFocus id='email' className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
             <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "Password" /><br/>
         </div>
 
