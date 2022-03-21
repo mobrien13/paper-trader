@@ -5,19 +5,21 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login(props){
+    //refs and states
+    const [ loading, setLoading] = useState(false);
+    const currentUser = useAuth();
+    const navigate = useNavigate();
+    const emailRef = useRef()
+    const passwordRef = useRef()
+
+    //checks if enter is clicked
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             handleLogin();
         }
     }
 
-    const [ loading, setLoading] = useState(false);
-    const currentUser = useAuth();
-    const navigate = useNavigate();
-    
-    const emailRef = useRef()
-    const passwordRef = useRef()
-
+    //login the user
     async function handleLogin ()  {
         try{
             setLoading(true);
@@ -30,12 +32,14 @@ function Login(props){
         setLoading(false);
     }
 
+
+    //component's jsx
     return(
         <>
         <h1>Log In</h1>
         <div>
-            <input className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "  Email" /><br/>
-            <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "  Password" /><br/>
+            <input autoFocus id='email' className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
+            <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "Password" /><br/>
         </div>
 
         <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleLogin}>Log In</Button>

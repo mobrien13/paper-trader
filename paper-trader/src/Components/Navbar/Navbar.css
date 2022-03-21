@@ -90,6 +90,9 @@ i:hover{
 #mobileLogo{
     margin-left:15px;
 }
+.openContents{
+    margin-left:3%;
+}
 
 /* Responsive Navbar */
 @media screen and (max-width: 680px){

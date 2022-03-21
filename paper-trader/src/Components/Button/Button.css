@@ -34,6 +34,11 @@
     background-color: var(--bc);
     color:white;
 }
+.btn--primary--outline:focus{
+    background-color: var(--bc);
+    color:white;
+    outline: none;
+}
 .btn--nav{
     margin-top:-3px;
     color:var(--bc);

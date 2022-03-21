@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { useState, useEffect } from "react";
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyC8BtJeetmmRyCk5OHFgHowu93o52UQHDo",
     authDomain: "paper-trader-53ba3.firebaseapp.com",
     projectId: "paper-trader-53ba3",

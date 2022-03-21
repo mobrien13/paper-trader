@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useImperativeHandle, forwardRef } from 'react';
 import './Navbar.css';
 import logo from '../../icons/logo.svg';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ function Navbar(props) {
       <nav className="navbar">
         <Link to='/'><img className="logo" src={logo} /></Link>
         <ul className="navbar-buttons">
-          { useAuth() != null && <Search/>}
+          {useAuth() != null && <Search />}
           {props.children} </ul>
         <ul className="navbar-links">
         </ul>
@@ -27,7 +27,7 @@ function Navbar(props) {
         <div className='mobileTopBar'>
           <ul className='mobileNavbarUl'>
             <span id='mobileLogo'><Link to='/'><img className="logo" src={logo} /></Link></span>
-            <span id='mobileNavbarSearch'> { useAuth() != null && <Search/>} </span>
+            <span id='mobileNavbarSearch'> {useAuth() != null && <Search />} </span>
             <button id='hamburger' onClick={() => setOpen(!open)}><i className='fa fa-bars'></i></button>
           </ul>
         </div>
@@ -35,7 +35,9 @@ function Navbar(props) {
           {open &&
             <div className='openMobileNav'>
               <br /><br /><br /><br /><br />
-              {props.children}
+              <div className='openContents'>
+                { props.children }
+              </div>
             </div>
           }
         </ul>
