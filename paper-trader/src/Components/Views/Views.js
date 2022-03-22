@@ -13,6 +13,8 @@ function Views() {
     return (
         <>
             {/*Routes the pages*/}
+
+            //this uses react router to pass data to views 
             <Routes>
                 <Route index element={<Welcome></Welcome>} />
                 <Route path='/welcome' element={<Welcome></Welcome>} />

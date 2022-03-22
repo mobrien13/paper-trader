@@ -21,6 +21,7 @@ function App() {
         {/*Navbar Items and Links*/}
 
         {
+          //ternery operator if a user is signed in, if user is signed in it shows these buttons
           currentUser && 
           <>
           <Link className="link-margin" to='dashboard'><Button buttonStyle='btn--nav' text="Dashboard">Dashboard</Button></Link>
@@ -30,6 +31,7 @@ function App() {
         }
 
         {
+          //ternery operator if user is not signed in and displays these buttons
           !currentUser &&
           <>
             <Link className="link-margin" to><Button buttonStyle="btn--login" onClick={() => { modalRef.current.open(); setModal("login") }}>Log In</Button></Link>
