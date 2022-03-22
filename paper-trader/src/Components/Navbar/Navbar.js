@@ -14,15 +14,23 @@ function Navbar(props) {
   return (
     <>
       <nav className="navbar">
+
+        //places logo as link to main page
         <Link to='/'><img className="logo" src={logo} /></Link>
+
+        //generates buttons with props
         <ul className="navbar-buttons">
           {useAuth() != null && <Search />}
           {props.children} </ul>
+
+          //this may be uneeded
         <ul className="navbar-links">
         </ul>
       </nav>
 
 
+
+      //mobible nav bar 
       <nav className='mobileNav'>
         <div className='mobileTopBar'>
           <ul className='mobileNavbarUl'>
