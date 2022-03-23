@@ -3,10 +3,12 @@ import './Modal.css'
 import {motion, AnimatePresence} from "framer-motion"
 import { getAuth } from 'firebase/auth';
 
+//creates modal with ref for open and closed properties
 const Modal = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false); 
     const currentUser = getAuth();
 
+    //creates callable functions to set open or closed
     useImperativeHandle(ref, () => {
         return{
             open: () => setOpen(true),
@@ -15,6 +17,8 @@ const Modal = forwardRef((props, ref) => {
     })
 
     return( 
+
+        //animatees the modal
         <AnimatePresence>
             {open && ( 
                 <>
@@ -46,6 +50,7 @@ const Modal = forwardRef((props, ref) => {
                     className='modal-content-wrapper'>
     
                     {/* Concent goes on this div*/}
+                    //creates modal with props passed into it
                     <motion.div className='modal-content'>
                         {props.children}
                     </motion.div>    

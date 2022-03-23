@@ -21,14 +21,18 @@ function Login(props){
 
     //login the user
     async function handleLogin ()  {
+
+        //try catch that throws error if password does not match
         try{
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value)
             navigate('/dashboard')
             props.closeModal();
         } catch{
+            //throws error here,
             alert("Error!")
         }
+        //this stops page from loading to stop users from spam attacking 
         setLoading(false);
     }
 
@@ -38,10 +42,13 @@ function Login(props){
         <>
         <h1>Log In</h1>
         <div>
+            //this creates inpit field and setss email ref to use log in func
             <input autoFocus id='email' className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
+            //this creates secure input field and sets password ref to use log in func
             <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "Password" /><br/>
         </div>
 
+        /Displays button
         <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleLogin}>Log In</Button>
         
 

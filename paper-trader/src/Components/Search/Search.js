@@ -3,6 +3,7 @@ import './Search.css';
 import { useNavigate } from 'react-router-dom';
 
 
+//creates search func with useState to pass data
 const Search = () => {
     const [ticker, setTicker] = useState('');
 
@@ -33,6 +34,7 @@ const Search = () => {
     return (
         <>
             <li>
+                //generates search input and runs handleKeyPress
                 <input id='searchInput' placeholder='Enter Symbol' onKeyPress={ handleKeyPress } onChange={event => setTicker(event.target.value)}></input>
             </li>
         </>

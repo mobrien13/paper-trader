@@ -5,13 +5,20 @@ import './Pages.css';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 
 
-
+/*
+----------THIS IS ALL PLACE HOLDER INFORMATION-------
+    -this dashboard is currently being working on by 
+          Mitch and Duncan
+    -This will all be changed to take dummy stock data
+*/
 
 function Dashboard() {
     return (
       <>
         <div className='backround'>
           <div className='graph-box'>
+
+            //generates graph from sparkline data, this will need to be changed for graph
             <div className='graph'>
               <Sparklines data={[5, 10, 5, 18, 20, 8, 15,12]} width={100} height={30} margin={5} >
                 <SparklinesLine color="black" style={{ fill: "none}"}}/>

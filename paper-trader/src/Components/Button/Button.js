@@ -2,6 +2,7 @@ import './Button.css'
 import React from "react"
 
 
+//array for styles, see button.css
 const STYLES = [
   "btn--primary--solid",
   "btn--primary--outline",
@@ -10,8 +11,12 @@ const STYLES = [
   "btn--nav"
 ]
 
-const SIZES = ["btn--medium, btn--small"]
+//array lost for sizes, see button.css
+const SIZES = ["btn--medium", 
+"btn--small"
+]
 
+//creats button contructor
 const Button = ({
   children,
   type,
@@ -20,15 +25,18 @@ const Button = ({
   buttonSize,
 }) => {
 
+  //checks button props with styles 
   const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
     : STYLES[0];
 
+  //checks button props with styles 
   const checkButtonSize = STYLES.includes(buttonSize)
     ? buttonSize
     : SIZES[0];
 
-  return (
+  //returns button object with associated props
+    return (
     <li class = "buttons">
       <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onClick} type={type}>
         {children}

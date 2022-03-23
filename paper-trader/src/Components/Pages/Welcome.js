@@ -17,7 +17,7 @@ function Welcome() {
         <div2>
             <h1>What Do We Do?</h1>
             <p>Paper Trader is a live updating stock trading simulator. Using a virtual balance of fake currency, you can practice trading to develop or refine positive investment habits.</p>
-        </div2>
+        </div2> 
         
         <div3>
             <h1>About Us</h1>
