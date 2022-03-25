@@ -8,21 +8,21 @@ function ScrollList(props){
         <div className='scroll-list'>
             <div className='list-title'>{props.title}</div>
                 
-                //list of all stocks within the scroll list
+                {/* //list of all stocks within the scroll list */}
                 
                 <div className='list-body'>
-                    // gives name and price to stock 
+                    {/* // gives name and price to stock  */}
                         <div>{props.stockName} <br></br>{props.price}</div> 
-                        //up and down prices
+                        {/* //up and down prices */}
                         <div>Up/Down<br></br>{props.upDown}</div>
-                        //generates graph
+                        {/* //generates graph */}
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
                 </div>    
 
-//The following was copy and pasted from above
-//----------------------------------------------------------------------------------
+{/* //The following was copy and pasted from above
+//---------------------------------------------------------------------------------- */}
                 <div className='list-body'>
                         <div>{props.stockName} <br></br>{props.price}</div> 
                         <div>Up/Down<br></br>{props.upDown}</div>

@@ -50,7 +50,7 @@ const Modal = forwardRef((props, ref) => {
                     className='modal-content-wrapper'>
     
                     {/* Concent goes on this div*/}
-                    //creates modal with props passed into it
+                    {/*creates modal with props passed into it*/}
                     <motion.div className='modal-content'>
                         {props.children}
                     </motion.div>    

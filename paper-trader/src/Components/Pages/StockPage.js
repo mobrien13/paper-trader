@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Stock = (props) => {
+const StockPage = (props) => {
+
     const location = useLocation();
     const ticker = location.pathname.substring(7);
 
@@ -12,4 +13,4 @@ const Stock = (props) => {
     )
 }
 
-export default Stock
+export default StockPage
