@@ -81,7 +81,8 @@
 }
 .btn--medium{
     padding: 10px 20px;
-    font-size: 11px;
+    font-size: medium;
+    font-weight: bold;
 }
 
 .btn--small{
