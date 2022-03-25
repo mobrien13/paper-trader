@@ -27,6 +27,7 @@ const Search = () => {
     let navigate = useNavigate();
 
     //routes the page
+    //change route to check if stock is valid stock
     const routeChange = (ticker) =>{ 
         navigate('stock/' + ticker);
     }
@@ -34,7 +35,7 @@ const Search = () => {
     return (
         <>
             <li>
-                //generates search input and runs handleKeyPress
+                {/* //generates search input and runs handleKeyPress */}
                 <input id='searchInput' placeholder='Enter Symbol' onKeyPress={ handleKeyPress } onChange={event => setTicker(event.target.value)}></input>
             </li>
         </>

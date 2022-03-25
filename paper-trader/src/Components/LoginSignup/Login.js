@@ -42,13 +42,13 @@ function Login(props){
         <>
         <h1>Log In</h1>
         <div>
-            //this creates inpit field and setss email ref to use log in func
+            {/* //this creates inpit field and setss email ref to use log in func */}
             <input autoFocus id='email' className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
-            //this creates secure input field and sets password ref to use log in func
+            {/* //this creates secure input field and sets password ref to use log in func */}
             <input className='signInFields' ref = {passwordRef} onKeyPress={ handleKeyPress } type = "password" placeholder = "Password" /><br/>
         </div>
 
-        /Displays button
+        {/*Displays button*/}
         <Button className="buttons" buttonStyle="btn--primary--outline" disable = {loading} onClick={handleLogin}>Log In</Button>
         
 

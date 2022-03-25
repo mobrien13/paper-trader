@@ -45,17 +45,17 @@ function Signup(props) {
             <h1>Sign Up</h1>
             <div>
 
-                //this creates new text field with autofocus to place user here also handeles ref to pass to signup function
+                {/*this creates new text field with autofocus to place user here also handeles ref to pass to signup function */}
                 <input autoFocus className='signInFields' ref={emailRef} onKeyPress={ handleKeyPress } placeholder="Email" /><br/>
-                //confimation email field
+                {/*confimation email field*/}
                 <input className='signInFields' ref={emailConfirmRef} onKeyPress={ handleKeyPress } placeholder="Confirm Email" /><br/>
 
-                //secured password fields that generates ref for singup function
+                {/*secured password fields that generates ref for singup function*/}
                 <input className='signInFields' ref={passwordRef} onKeyPress={ handleKeyPress } type="password" placeholder="Password" /><br/>
                 <input className='signInFields' ref={passwordConfirmRef} onKeyPress={ handleKeyPress } type="password" placeholder="Confirm Password" /><br/>
             </div>
 
-            //button handles signup function
+            {/*button handles signup function*/}
             <Button disable={loading} buttonStyle="btn--primary--outline" onClick={handleSignup}>Sign Up</Button>
 
         </>
