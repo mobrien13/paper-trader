@@ -2,7 +2,8 @@ import React from 'react';
 import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
+import Graph from './Graph';
+
 
 
 /*
@@ -22,13 +23,7 @@ function Dashboard() {
           <div className='graph-box'>
 
             {/*generates graph from sparkline data, this will need to be changed for graph */}
-
-
-            <div className='graph'>
-              <Sparklines data={[5, 10, 5, 18, 20, 8, 15, 12]} width={100} height={30} margin={5} >
-                <SparklinesLine color="black" style={{ fill: "none}" }} />
-              </Sparklines>
-            </div>
+              <Graph></Graph>
           </div>
 
           {/* Watchlist placeholder*/}
