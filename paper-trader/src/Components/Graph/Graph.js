@@ -4,6 +4,7 @@ var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
 
+
 class Graph extends Component {
   render() {
     const options = {
