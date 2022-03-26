@@ -6,6 +6,8 @@
     width: 86vw;
     margin-right: auto;
     margin-left: auto;
+
+    margin-bottom: 20px;
     
     /* looks */
     border-radius: 10px;
@@ -18,16 +20,14 @@
     
     /* flex display settings */
     display:flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     flex-direction: row;
     flex-wrap: wrap;
 }
 .buyStockItem{
-    margin-left: 10px;
-    margin-right: 10px;
-}
-.buyStockItemRight{
-    text-align: right;
+    /* margin-left: 10px;
+    margin-right: 10px; */
+    width: 250px;
 }
 .buySellParagraph{
     max-width: 20vw;
