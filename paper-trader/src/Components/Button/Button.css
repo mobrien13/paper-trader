@@ -22,6 +22,12 @@
     background-color: white;
     color: var(--bc);
     border: none;
+    transition: cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition-duration: 0.5s;
+}
+.btn--primary--solid:hover{
+    background-color: var(--bc);
+    color: white;
 }
 .btn--primary--outline{
     margin-top:15px;
