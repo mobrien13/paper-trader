@@ -18,13 +18,28 @@ const StockPage = (props) => {
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
 
+    //creates stock object within stock page
+    const Stock = {
+        price: 1.0,
+        percentUp: 1.0,
+        dayHigh: 1.0,
+        dayLow: 1.0,
+        fiftyTwoHigh: 1.0,
+        fiftyTwoLow: 1.0,
+        name: "Name",
+        ticker: "MMMM",
+        marketCap: 1.0
+    }
+
+    Stock.ticker = ticker
+
     return (
         <>
             <div className='stockPageContent'>
 
 
                 {/* Page Title */}
-                <h1 id='ticker'>{ticker.toUpperCase()}</h1>
+                <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
 
                 {/* Graph and Watchlist Div */}
                 <div className='graphAndWatchlist'>
@@ -48,7 +63,7 @@ const StockPage = (props) => {
                 {/* Stock Details and Order Button */}
                 <div className='buyStockBox'>
                     <div className='buyStockItem'>
-                        <h3>{ticker.toUpperCase()}: $135.00</h3>
+                        <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3>
                         <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
                     </div>
                     <div className='buyStockItem'>
@@ -57,13 +72,13 @@ const StockPage = (props) => {
                     </div>
                     <div className='buyStockItem'>
                         <h3>Price History:</h3>
-                        <p>Day High: $140.00</p>
-                        <p>Day Low: $130.00</p>
+                        <p>Day High: ${Stock.dayHigh}</p>
+                        <p>Day Low: ${Stock.dayLow}</p>
                     </div>
                     <div className='buyStockItem'>
                         <h3>Info:</h3>
-                        <p>Market Cap: 2.851T</p>
-                        <p>52-Week Range: 118.86 - 182.94</p>
+                        <p>Market Cap: {Stock.marketCap}</p>
+                        <p>52-Week Range: {Stock.fiftyTwoLow} - {Stock.fiftyTwoHigh}</p>
                     </div>
                 </div>
 
@@ -74,7 +89,7 @@ const StockPage = (props) => {
 
                     {!buy && !sell &&
                         <>
-                            <h2>{ticker.toUpperCase()}</h2>
+                            <h2>{Stock.name.toUpperCase()}</h2>
                             <p>Select Order Type</p>
                             <Button buttonStyle='btn--primary--outline' onClick={() => setBuy(true)}>Buy</Button>
                             <Button buttonStyle='btn--primary--outline' onClick={() => setSell(true)}>Sell</Button>
@@ -83,7 +98,7 @@ const StockPage = (props) => {
 
                     {buy && !sell &&
                         <>
-                            <h2>{ticker.toUpperCase()} - Buy Order</h2>
+                            <h2>{Stock.name.toUpperCase()} - Buy Order</h2>
                             <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
                             <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                             <br />
@@ -93,7 +108,7 @@ const StockPage = (props) => {
 
                     {!buy && sell &&
                         <>
-                            <h2>{ticker.toUpperCase()} - Sell Order</h2>
+                            <h2>{Stock.name.toUpperCase()} - Sell Order</h2>
                             <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
                             <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                             <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
