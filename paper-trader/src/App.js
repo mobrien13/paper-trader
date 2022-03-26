@@ -10,6 +10,7 @@ import Search from './Components/Search/Search';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { logout, useAuth } from './firebase'
 
+
 function App() {
   const currentUser = useAuth();
   const modalRef = useRef();
