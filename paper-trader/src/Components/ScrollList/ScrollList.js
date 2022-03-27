@@ -1,126 +1,35 @@
 import './ScrollList.css';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
+import ScrollListItem from '../ScrollListItem/ScrollListItem';
+import { User, usersDatabase } from '../../fakeDatabase.js';
 
-function ScrollList(props){
+function ScrollList(props) {
+
+    //database
+    const user = usersDatabase[0];
     
-    return(
+    const watchlist = user.watchlist;
+
+    return (
         <>
-        <div className='scroll-list'>
-            <div className='list-title'>{props.title}</div>
-                
+            <div className='scroll-list'>
+                <div className='list-title'>{props.title}</div>
                 {/* //list of all stocks within the scroll list */}
-                
-                <div className='list-body'>
-                    {/* // gives name and price to stock  */}
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        {/* //up and down prices */}
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        {/* //generates graph */}
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>    
 
-{/* //The following was copy and pasted from above
-//---------------------------------------------------------------------------------- */}
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
+                {watchlist.map((item) =>
 
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
+                    <ScrollListItem
+                        // pulls stockname from users watchlist
+                        stockName={item}
 
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
+                        // dummy data
+                        price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}
 
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
+                    ></ScrollListItem>)}
 
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
 
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
-
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
-
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
-
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
-
-                <div className='list-body'>
-                        <div>{props.stockName} <br></br>{props.price}</div> 
-                        <div>Up/Down<br></br>{props.upDown}</div>
-                        <Sparklines data={props.data} width={100} height={30} limit={8}>
-                            <SparklinesLine color="black" style={{ fill: "none}"}}/>
-                        </Sparklines>
-                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
-                </div>
-        
-        
-        
-        
-        
-        </div> 
+            </div>
         </>
-        
+
     );
 
 }

@@ -32,7 +32,7 @@ function Dashboard() {
           </div>
 
           {/* Watchlist placeholder*/}
-          <ScrollList title="Watch List" stockName="APPL" price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}> </ScrollList>
+          <ScrollList title="Watch List"> </ScrollList>
 
         </div>
 

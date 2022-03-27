@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
+import { User, usersDatabase } from '../../fakeDatabase.js';
 
 function Settings() {
     const [changeEmail, setChangeEmail] = useState(false);
@@ -10,6 +11,10 @@ function Settings() {
 
     const [personalInfo, setPersonalInfo] = useState(true);
     const [funds, setFunds] = useState(true);
+
+    //fake database
+    const email = usersDatabase[0].email;
+    const currentFunds = usersDatabase[0].funds;
 
     return (
         <>
@@ -33,6 +38,8 @@ function Settings() {
 
                     {changeEmail &&
                         <>
+                            <p>Current Email: {email}</p>
+
                             <input className='signInFields' placeholder="New Email" />
                             <br />
                             <input className='signInFields' placeholder="Confirm New Email" />
@@ -66,8 +73,8 @@ function Settings() {
             {funds &&
                 <>
                     <h2>Funds</h2>
-
                     <h3>Add or Remove Funds</h3>
+                    <p>Current Funds: {currentFunds}</p>
                     <input className='signInFields' placeholder="Add Funds" />
                     <Button buttonStyle='btn--primary--outline'>Add Funds</Button>
                 </>
