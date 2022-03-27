@@ -3,6 +3,7 @@ import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
 import Graph from '../Graph/Graph';
+import News from '../News/News';
 
 
 
@@ -23,7 +24,7 @@ function Dashboard() {
           <div className='graph-box'>
 
             {/*generates graph from test data this will need to be changed for graph */}
-            <Graph></Graph>
+            <Graph title='Portfolio Performance'></Graph>
             
           </div>
 
@@ -46,18 +47,10 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* News placeholder*/}
-        <div className='news'>
-          <div className='list-title'>News</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-          <div className='news-item'>APPL PPRICE: $135</div>
-        </div>
+        {/* News Componenet With Placeholders*/}
+        
+        <News></News>
+
       </div>
     </>
   );

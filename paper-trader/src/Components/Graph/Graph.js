@@ -9,7 +9,7 @@ class Graph extends Component {
   render() {
     const options = {
       title: {
-          text: "CanvasJS StockChart"
+          text: `${ this.props.title }`
       },
       charts: [{
           data: [{
