@@ -7,6 +7,8 @@ import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
 import Graph from '../Graph/Graph';
 import { AnimatePresence, motion } from 'framer-motion';
+import News from '../News/News';
+import Box from '../Box/Box';
 
 const StockPage = (props) => {
 
@@ -39,7 +41,11 @@ const StockPage = (props) => {
 
 
                 {/* Page Title */}
-                <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
+                <div className='stockPageTop'>
+                    <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
+                    <Button buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                </div>
+
 
                 {/* Graph and Watchlist Div */}
                 <div className='graphAndWatchlist'>
@@ -47,7 +53,7 @@ const StockPage = (props) => {
                     <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <Graph ticker={ticker}></Graph>
+                        <Graph title={ Stock.ticker.toUpperCase() }></Graph>
 
                     </div>
 
@@ -61,7 +67,7 @@ const StockPage = (props) => {
 
 
                 {/* Stock Details and Order Button */}
-                <div className='buyStockBox'>
+                <Box>
                     <div className='buyStockItem'>
                         <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3>
                         <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
@@ -80,7 +86,15 @@ const StockPage = (props) => {
                         <p>Market Cap: {Stock.marketCap}</p>
                         <p>52-Week Range: {Stock.fiftyTwoLow} - {Stock.fiftyTwoHigh}</p>
                     </div>
-                </div>
+                </Box>
+
+                {/* <div className='buyStockBox'>
+
+                </div> */}
+
+
+                {/* News Component with Dummy Values */}
+                <News></News>
 
 
                 {/* Order Popup */}

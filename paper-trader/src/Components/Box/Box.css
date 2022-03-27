@@ -1,0 +1,21 @@
+.box{
+    /* sizing */
+    margin: 10px;
+    
+    margin-bottom: 20px;
+    
+    /* looks */
+    border-radius: 10px;
+    padding: 20px;
+    
+    /* color */
+    color: white;
+    background-color: var(--bg-accent);
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+    
+    /* flex display settings */
+    display:flex;
+    justify-content: space-between; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}

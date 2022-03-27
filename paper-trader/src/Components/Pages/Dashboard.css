@@ -7,8 +7,6 @@
 
 .backround{
     margin-top: 15px;
-    display:flex;
-    flex-wrap: wrap;
 }
 .graph{
     /* width: 100%;
@@ -40,7 +38,6 @@
 
 .holdings{
     height: 25vh;
-    width: 87vw;
 
     overflow: scroll;
 
@@ -53,41 +50,6 @@
 }
 
 
-.news{
-    display:flex;
-    flex-direction:row;
-    overflow: hidden;
-    float:left;
-    
-    margin: 10px;
-    
-    width: 87vw;
-    height: 30%;
-
-    margin-top: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--bg-accent);
-    border-radius: 10px;
-}
-
-.news-item{
-    text-align: left;
-    border-width: 3px;
-    border-style: solid;
-    border-color: var(--bg-accent);
-
-    max-width: 30%;
-    max-height: 85%;
-    
-    border-radius: 10px;
-    padding: 10%;
-    /* margin: 5px; */
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',monospace;
-    color: var(--text-color);
-    background: rgb(0,102,255);
-    background: linear-gradient(45deg, rgba(0,102,255,1) 0%, rgba(0,102,255,0.4458158263305322) 100%);
-}
 .ul {
     display: flex;
     flex-direction: row;
