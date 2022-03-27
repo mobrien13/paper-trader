@@ -99,7 +99,7 @@ const StockPage = (props) => {
 
                 {/* Order Popup */}
 
-                <Modal ref={modalRef}>
+                <Modal ref={modalRef} type='order'>
 
                     {!buy && !sell &&
                         <>

@@ -19,6 +19,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>    
 
 {/* //The following was copy and pasted from above
@@ -29,6 +30,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -37,6 +39,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -45,6 +48,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -53,6 +57,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -61,6 +66,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -69,6 +75,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -77,6 +84,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -85,6 +93,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -93,6 +102,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
 
                 <div className='list-body'>
@@ -101,6 +111,7 @@ function ScrollList(props){
                         <Sparklines data={props.data} width={100} height={30} limit={8}>
                             <SparklinesLine color="black" style={{ fill: "none}"}}/>
                         </Sparklines>
+                        <div><i className="fa fa-minus-circle" aria-hidden="true"></i></div>
                 </div>
         
         
