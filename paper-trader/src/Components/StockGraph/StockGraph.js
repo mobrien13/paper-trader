@@ -9,30 +9,33 @@ var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 class StockGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, ticker: "" };
   }
  
   componentDidMount() {
+    this.setState({
+      ticker: "AMD"
+    });
 
-    fetch("https://canvasjs.com/data/docs/ltcusd2018.json")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.state.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
           var dps1 = [], dps2 = [];
 
 
-          for (var i = 0; i < data.length; i++) {
+          for (var i = 0; i < data.candles.length; i++) {
             dps1.push({
-              x: new Date(data[i].date),
+              x: new Date(data.candles[i].datetime),
               y: [
-                Number(data[i].open),
-                Number(data[i].high),
-                Number(data[i].low),
-                Number(data[i].close)
+                Number(data.candles[i].open),
+                Number(data.candles[i].high),
+                Number(data.candles[i].low),
+                Number(data.candles[i].close)
               ]
             });
 
-            dps2.push({x: new Date(data[i].date), y: Number(data[i].close)});
+            dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
           }
 
           
