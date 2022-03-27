@@ -32,6 +32,8 @@
     border-style: solid;
     border-color: var(--bg-accent);
     border-radius: 10px;
+
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -47,6 +49,8 @@
     border-style: solid;
     border-color: var(--bg-accent);
     border-radius: 10px;
+    
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
 }
 
 

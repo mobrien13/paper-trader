@@ -12,8 +12,9 @@ const STYLES = [
 ]
 
 //array lost for sizes, see button.css
-const SIZES = ["btn--medium", 
-"btn--small"
+const SIZES = [
+  "btn--medium", 
+  "btn--small"
 ]
 
 //creats button contructor
