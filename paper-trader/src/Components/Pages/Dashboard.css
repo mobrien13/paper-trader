@@ -44,7 +44,8 @@
 .holdings{
     height: 25vh;
 
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     margin: 10px;
 
@@ -54,6 +55,10 @@
     border-radius: 10px;
     
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+}
+
+.holdings::-webkit-scrollbar{
+    display: none;
 }
 
 
