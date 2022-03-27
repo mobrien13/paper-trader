@@ -1,7 +1,9 @@
 .scroll-list{
     display:flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
     /* float:left; */
     align-items: center;
     flex:auto;
@@ -61,5 +63,6 @@
     background-color: var(--bc);
     color: var(--text-color);
 }
-
-::-webkit-scrollbar {display:none;}
+.scroll-list::-webkit-scrollbar{
+    display: none;
+}
