@@ -5,7 +5,7 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 import ScrollList from '../ScrollList/ScrollList';
 import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
-import Graph from '../Graph/Graph';
+import StockGraph from '../Graph/StockGraph';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
@@ -53,7 +53,7 @@ const StockPage = (props) => {
                     <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <Graph title={ Stock.ticker.toUpperCase() }></Graph>
+                        <StockGraph title={ Stock.ticker.toUpperCase() }></StockGraph>
 
                     </div>
 
