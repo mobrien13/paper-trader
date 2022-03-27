@@ -4,6 +4,9 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+#dashboardHeading{
+    margin: 10px;
+}
 
 .backround{
     margin-top: 15px;
