@@ -3,7 +3,7 @@ import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
 import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
-
+import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
 
 
@@ -16,10 +16,15 @@ import News from '../News/News';
 */
 
 function Dashboard() {
+
+  //fake database
+  const user = usersDatabase[0];
+  const userHoldings = user.holdings;
+
   return (
     <>
       <div className='backround'>
-        
+
         <h1 id='dashboardHeading'>Dashboard</h1>
 
         <div className='graphAndWatchlist'>
@@ -28,30 +33,30 @@ function Dashboard() {
 
             {/*generates graph from test data this will need to be changed for graph */}
             <PortfolioGraph title='Portfolio Performance'></PortfolioGraph>
-            
+
           </div>
 
           {/* Watchlist placeholder*/}
-          <ScrollList title="Watch List" stockName="APPL" price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}> </ScrollList>
+          <ScrollList title="Watch List"> </ScrollList>
 
         </div>
 
         {/* holdings placeholder*/}
         <div className='holdings'>
           <div className='holdings-title'>
-            Current Holdings:
+            <h3>Holdings:</h3>
           </div>
           <div className='holdings-body'>
             <ul>
-              <li>COMPANY <span> PRICE </span><span> HOLDING </span></li>
-              <li>COMPANY <span> PRICE </span><span> HOLDING </span></li>
-              <li>COMPANY <span> PRICE </span><span> HOLDING </span></li>
+              {userHoldings.map((item) =>
+                <li>{ item.ticker }: { item.quantity } shares @ ${ item.pricePerShare }/share</li>
+              )}
             </ul>
           </div>
         </div>
 
         {/* News Componenet With Placeholders*/}
-        
+
         <News></News>
 
       </div>

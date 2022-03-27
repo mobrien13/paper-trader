@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { useState, useEffect } from "react";
-import 'firebase/firestore';
 
 
 //struct for firebase data DO NOT TOUCH THIS
