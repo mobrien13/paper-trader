@@ -21,3 +21,28 @@
     border-radius: 20px;;
     text-align: center;
 }
+.order{
+    width: 25vw;
+    height: 40vh;
+}
+
+@media screen and (max-width: 1500px){
+    .order{
+        width: 55vw;
+        height: 55vh;
+    }
+}
+
+@media screen and (max-width: 1000px){
+    .order{
+        width: 40vw;
+        height: 55vh;
+    }
+}
+
+@media screen and (max-width: 680px){
+    .order{
+        width: 50vw;
+        height: 60vh;
+    }
+}

@@ -2,7 +2,8 @@ import React from 'react';
 import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
-import StockGraph from '../StockGraph/StockGraph';
+import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
+
 import News from '../News/News';
 
 
@@ -18,13 +19,15 @@ function Dashboard() {
   return (
     <>
       <div className='backround'>
+        
+        <h1 id='dashboardHeading'>Dashboard</h1>
 
         <div className='graphAndWatchlist'>
 
           <div className='graph-box'>
 
             {/*generates graph from test data this will need to be changed for graph */}
-            <StockGraph title='Portfolio Performance'></StockGraph>
+            <PortfolioGraph title='Portfolio Performance'></PortfolioGraph>
             
           </div>
 
