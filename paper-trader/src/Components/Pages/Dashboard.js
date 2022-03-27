@@ -18,6 +18,8 @@ function Dashboard() {
   return (
     <>
       <div className='backround'>
+        
+        <h1 id='dashboardHeading'>Dashboard</h1>
 
         <div className='graphAndWatchlist'>
 

@@ -9,7 +9,9 @@ class Graph extends Component {
   render() {
     const options = {
       title: {
-          text: `${ this.props.title }`
+          text: `${ this.props.title }`,
+          fontFamily: 'Arial',
+          fontColor: '#484a4d'
       },
       charts: [{
           data: [{
