@@ -18,6 +18,8 @@ class StockGraph extends Component {
       .then(
         (data) => {
           var dps1 = [], dps2 = [];
+
+
           for (var i = 0; i < data.length; i++) {
             dps1.push({
               x: new Date(data[i].date),
@@ -28,14 +30,17 @@ class StockGraph extends Component {
                 Number(data[i].close)
               ]
             });
-        
+
             dps2.push({x: new Date(data[i].date), y: Number(data[i].close)});
           }
+
           
+
+
           this.setState({
             isLoaded: true,
             dataPoints1: dps1,
-            dataPoints2: dps2
+            dataPoints2: dps2,
           });
         }
       )
@@ -43,12 +48,15 @@ class StockGraph extends Component {
  
   render() {
     const options = {
-       theme: "light1",
+      theme: "light1",
+      
       title:{
-        text: `${ this.props.title }`
+        text: `${ this.props.title }`,
+        fontFamily: 'Arial',
+        fontColor: '#484a4d'
       },
       animationEnabled: "True",
-      animationDuration: 1450,
+      animationDuration: 1300,
       //backgroundColor: "#707C8F",
      
 
@@ -74,7 +82,6 @@ class StockGraph extends Component {
           title: "Price USD",
           prefix: "$",
           tickLength: 0
-          
         },
         axisX: {
           crosshair: {
@@ -85,6 +92,9 @@ class StockGraph extends Component {
         
         
         data: [{
+          borderColor:"black",
+          fallingColor: "#DD7E86",
+          risingColor:"#33FF4C",
           name: "Price (in USD)",
           yValueFormatString: "$#,###.##",
           type: "candlestick",
@@ -96,11 +106,14 @@ class StockGraph extends Component {
       navigator: {
         //backgroundColor: "#707C8F",
         data: [{
+          lineColor:"#707C8F",
+          fillOpacity: .3,
           dataPoints: this.state.dataPoints2
         }],
         slider: {
-          minimum: new Date("2018-05-01"),
-          maximum: new Date("2018-07-01")
+          // Need to set max to curret date and min to 1 month ago 
+          //minimum: new Date("2018-01-01"),
+          //maximum: new Date("2018-12-31")
         }
       }
     };
