@@ -2,7 +2,7 @@ import React from 'react';
 import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
-import Graph from '../Graph/Graph';
+import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
 import News from '../News/News';
 
 
@@ -24,7 +24,7 @@ function Dashboard() {
           <div className='graph-box'>
 
             {/*generates graph from test data this will need to be changed for graph */}
-            <Graph title='Portfolio Performance'></Graph>
+            <PortfolioGraph title='Portfolio Performance'></PortfolioGraph>
             
           </div>
 

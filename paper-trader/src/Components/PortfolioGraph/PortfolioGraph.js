@@ -5,7 +5,7 @@ var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
 
 
-class Graph extends Component {
+class PortfolioGraph extends Component {
   render() {
     const options = {
       title: {
@@ -66,4 +66,4 @@ class Graph extends Component {
   }
 }
 
-export default Graph;
+export default PortfolioGraph;
