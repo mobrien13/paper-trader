@@ -3,6 +3,7 @@ import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
 import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
+
 import News from '../News/News';
 
 
