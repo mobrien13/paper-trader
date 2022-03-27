@@ -2,7 +2,7 @@ import React from 'react';
 import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
-import StockGraph from '../Graph/StockGraph';
+import StockGraph from '../StockGraph/StockGraph';
 import News from '../News/News';
 
 

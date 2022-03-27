@@ -5,7 +5,7 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 import ScrollList from '../ScrollList/ScrollList';
 import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
-import StockGraph from '../Graph/StockGraph';
+import StockGraph from '../StockGraph/StockGraph';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
