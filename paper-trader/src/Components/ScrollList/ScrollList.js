@@ -1,12 +1,12 @@
 import './ScrollList.css';
 import ScrollListItem from '../ScrollListItem/ScrollListItem';
-import { User, usersDatabase } from '../../fakeDatabase.js';
+import { usersDatabase } from '../../fakeDatabase.js';
+import { useEffect } from 'react';
 
 function ScrollList(props) {
 
-    //database
+    //fake database
     const user = usersDatabase[0];
-    
     const watchlist = user.watchlist;
 
     return (
@@ -24,7 +24,8 @@ function ScrollList(props) {
                         // dummy data
                         price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}
 
-                    ></ScrollListItem>)}
+                    ></ScrollListItem>
+                )}
 
 
             </div>
