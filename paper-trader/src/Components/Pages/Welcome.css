@@ -4,17 +4,28 @@ div2{
     font-size: 25px;
     max-width: 55%;
     margin-top: -40px;
+    background-color: white;
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    margin-top: 1px; 
+    margin-bottom: 20px; 
+    padding: 20px;
+}
+div2 h1{
+    font-size:xx-large;
 }
 div3{
-    padding: 0 10px 0 10px;
-    max-height: 300px;
-    max-width: 450px;
+    padding: 0 20px 0 20px;
+    max-width: 550px;
     min-width: 200px;
     width: 35vw;
     justify-content: right;
-    border:black;
-    border-style: dashed;
+    border-radius: 10px;
+    background-color: var(--bg-accent);
     margin-bottom: 40px;
+    color: white;
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+    font-size: large;
 }
 divC1{
     padding: 5px;
@@ -67,12 +78,21 @@ divH{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-top: 25px;
+}
+.firstDiv{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 30px;
 }
 
 .welcomeImage{
     resize: both;
-    max-width: 28vw;
+    max-width: 20vw;
     min-width: 150px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (max-width: 680px){
