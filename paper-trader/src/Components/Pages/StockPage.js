@@ -54,7 +54,7 @@ const StockPage = (props) => {
                     <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <StockGraph title={ Stock.ticker.toUpperCase() }></StockGraph>
+                        <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>
 
                     </div>
 

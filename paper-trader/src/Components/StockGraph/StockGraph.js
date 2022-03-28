@@ -9,15 +9,12 @@ var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 class StockGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, ticker: "" };
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
   }
  
   componentDidMount() {
-    this.setState({
-      ticker: "AMD"
-    });
 
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.state.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
