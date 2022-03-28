@@ -9,7 +9,7 @@ export function Holding(ticker, pricePerShare, quantity) {
 
 export function User(email, watchlist, funds, holdings) {
     this.email = email || '';
-    this.watchlist = watchlist || ['APPL', 'TSLA'];
+    this.watchlist = watchlist || ['AAPL', 'TSLA'];
     this.funds = funds || 1000;
     this.holdings = holdings || [Holding];
 }
@@ -32,9 +32,9 @@ User.prototype.getEmail = function () {
 
 
 var holding1 = new Holding('TSLA', 100, 100);
-var holding2 = new Holding('APPL', 100, 100);
+var holding2 = new Holding('AAPL', 100, 100);
 
-var admin = new User('admin@papertrader.com', ['APPL', 'TSLA', 'AMD', 'MSFT', 'GOOG', 'NVDA', 'FB', 'ATVI'], 1000, [holding1, holding2]);
+var admin = new User('admin@papertrader.com', ['AAPL', 'TSLA', 'AMD', 'MSFT', 'GOOG', 'NVDA', 'FB', 'ATVI'], 1000, [holding1, holding2]);
 var user1 = new User('user1@papertrader.com');
 var user2 = new User('user2@papertrader.com');
 
