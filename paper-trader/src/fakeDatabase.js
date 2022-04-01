@@ -31,11 +31,11 @@ User.prototype.getEmail = function () {
 }
 
 
-var holding1 = new Holding('TSLA', 100, 100);
-var holding2 = new Holding('AAPL', 100, 100);
+const holding1 = new Holding('TSLA', 100, 100);
+const holding2 = new Holding('AAPL', 100, 100);
 
-var admin = new User('admin@papertrader.com', ['AAPL', 'TSLA', 'AMD', 'MSFT', 'GOOG', 'NVDA', 'FB', 'ATVI'], 1000, [holding1, holding2]);
-var user1 = new User('user1@papertrader.com');
-var user2 = new User('user2@papertrader.com');
+const admin = new User('admin@papertrader.com', ['AAPL', 'TSLA', 'AMD', 'MSFT', 'GOOG', 'NVDA', 'FB', 'ATVI'], 1000, [holding1, holding2]);
+const user1 = new User('user1@papertrader.com');
+const user2 = new User('user2@papertrader.com');
 
 export const usersDatabase = [admin, user1, user2];

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
+const CanvasJS = CanvasJSReact.CanvasJS;
+const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
+
  //https://canvasjs.com/data/gallery/jquery/samsung-electronics-stock-price.json
  
  //https://api.tdameritrade.com/v1/marketdata/`${props.ticker}`/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false
