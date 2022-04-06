@@ -3,9 +3,7 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
- //https://canvasjs.com/data/gallery/jquery/samsung-electronics-stock-price.json
- 
- //https://api.tdameritrade.com/v1/marketdata/`${props.ticker}`/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false
+//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=1&frequencyType=minute&frequency=1"
  
 class StockGraph extends Component {
   constructor(props) {
@@ -15,7 +13,7 @@ class StockGraph extends Component {
 
   componentDidMount() {
 
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=1&frequencyType=minute&frequency=1")
       .then(res => res.json())
       .then(
         (data) => {
@@ -51,7 +49,7 @@ class StockGraph extends Component {
   componentDidUpdate(prevProps) {
     if(prevProps.ticker !== this.props.ticker){
       
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=1&frequencyType=minute&frequency=1")
       .then(res => res.json())
       .then(
         (data) => {
@@ -151,9 +149,6 @@ class StockGraph extends Component {
           dataPoints: this.state.dataPoints2
         }],
         slider: {
-          // Need to set max to curret date and min to 1 month ago 
-          //minimum: new Date("2018-01-01"),
-          //maximum: new Date("2018-12-31")
         }
       }
     };
