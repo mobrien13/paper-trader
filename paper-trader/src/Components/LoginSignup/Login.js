@@ -11,6 +11,7 @@ function Login(props){
     const navigate = useNavigate();
     const emailRef = useRef()
     const passwordRef = useRef()
+    const [loginError, setLoginError] = useState(false);
 
     //checks if enter is clicked
     const handleKeyPress = (event) => {
@@ -25,12 +26,14 @@ function Login(props){
         //try catch that throws error if password does not match
         try{
             setLoading(true);
+            setLoginError(false);
             await login(emailRef.current.value, passwordRef.current.value)
             navigate('/dashboard')
             props.closeModal();
         } catch{
             //throws error here,
-            alert("Error!")
+            setLoginError(true);
+            //alert("Error!")
         }
         //this stops page from loading to stop users from spam attacking 
         setLoading(false);
@@ -41,6 +44,15 @@ function Login(props){
     return(
         <>
         <h1>Log In</h1>
+
+        {
+            loginError && 
+
+            <>
+
+            </>
+        }
+
         <div>
             {/* //this creates inpit field and setss email ref to use log in func */}
             <input autoFocus id='email' className='signInFields' ref = {emailRef} onKeyPress={ handleKeyPress } placeholder = "Email" /><br/>
