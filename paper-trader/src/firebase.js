@@ -3,7 +3,6 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWith
 import { getFirestore, collection, addDoc, getDoc, query, where, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
-
 //struct for firebase data DO NOT TOUCH THIS
 export const firebaseConfig = {
   apiKey: "AIzaSyC8BtJeetmmRyCk5OHFgHowu93o52UQHDo",
@@ -13,7 +12,6 @@ export const firebaseConfig = {
   messagingSenderId: "613651748321",
   appId: "1:613651748321:web:c70a2b4775621ad29eeea0"
 }
-
 
 //initilizes firebase
 const app = initializeApp(firebaseConfig);
@@ -43,9 +41,6 @@ export async function addUserToUsersData() {
 
 //get user watchlist data
 export async function getUserWatchList() {
-  //returnable watchlist array
-  const returnable = [];
-
   //create collection ref
   const usersDataRef = collection(db, "usersData");
 

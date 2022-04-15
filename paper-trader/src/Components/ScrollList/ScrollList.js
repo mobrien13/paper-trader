@@ -1,14 +1,9 @@
 import './ScrollList.css';
 import ScrollListItem from '../ScrollListItem/ScrollListItem';
 import { usersDatabase } from '../../fakeDatabase.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getUserWatchList } from '../../firebase';
-
-//real database
-let watchlist = [];
-getUserWatchList().then(result => { watchlist = result });
-console.log(watchlist);
-
+import { renderMatches } from 'react-router-dom';
 
 function ScrollList(props) {
 
@@ -16,6 +11,14 @@ function ScrollList(props) {
     // const user = usersDatabase[0];
     // const watchlist = user.watchlist;
 
+    //real database
+    const [watchlist, setWatchlist] = useState([]);
+
+    //get watchlist (async)
+    getUserWatchList().then(result => {
+        //setting watchlist to true changes app state and will reload component with new watchlist
+        setWatchlist(result)
+    });
 
     return (
         <>
