@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, crea } from 'firebase/auth'
+import { useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 
 
@@ -16,6 +17,14 @@ export const firebaseConfig = {
 
 //initilizes firebase
 const app = initializeApp(firebaseConfig);
+
+
+
+//creates user object to be called everywhere 
+const user = { 
+    firestname: String,
+    lastname: String,
+}
 
 //authorizes user
 const auth = getAuth();
