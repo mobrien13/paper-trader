@@ -5,6 +5,7 @@ import './Pages.css';
 import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
 import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
+import { testAdd } from '../../firebase';
 
 
 
@@ -25,7 +26,7 @@ function Dashboard() {
     <>
       <div className='backround'>
 
-        <h1 id='dashboardHeading'>Dashboard</h1>
+        <h1 id='dashboardHeading'>Dashboard <button onClick={ () => testAdd() }>Test Add</button></h1>
 
         <div className='graphAndWatchlist'>
 

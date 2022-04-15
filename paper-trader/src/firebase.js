@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 
@@ -17,8 +18,25 @@ export const firebaseConfig = {
 //initilizes firebase
 const app = initializeApp(firebaseConfig);
 
+//initializes firestore
+const db = getFirestore(app);
+
 //authorizes user
 const auth = getAuth();
+
+//test add to database
+export async function testAdd(){
+  try {
+    const docRef = await addDoc(collection(db, "testUsersData"), {
+      first: "Ada",
+      last: "Lovelace",
+      born: 1815
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
 
 //simplified signup function
 export function signup(email, password) {
