@@ -9,6 +9,7 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWith
 import {signup, useAuth } from '../../firebase'
 
 function Welcome() {
+
     return (
     <>
         
