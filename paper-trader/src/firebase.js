@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -50,7 +50,66 @@ export async function getUserWatchList() {
   const querySnapshot = await getDocs(q);
 
   return querySnapshot.docs[0].data().watchlist;
+}
 
+//set user watchlist data - pass in the new watchlist that the user wants. 
+// THE OLD WATCHLIST WILL BE DESTROYED. 
+// if you want to remove an element/add an element do it elsewhere. 
+// this is ONLY for querying the database
+export async function setUserWatchList(watchlist) {
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //add the watchlist
+  await updateDoc(docRef, {
+    watchlist: watchlist
+  });
+}
+
+//add to watchlist
+export async function addToWatchlist(ticker) {
+  //get watchlist
+  //create collection ref
+  const usersDataRef1 = collection(db, "usersData");
+
+  //query the collection
+  const q1 = query(usersDataRef1, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot1 = await getDocs(q1);
+
+  //set watchlist
+  let watchlist = querySnapshot1.docs[0].data().watchlist;
+
+  //push ticker to watchlist
+  watchlist.push(ticker)
+
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //add the watchlist
+  await updateDoc(docRef, {
+    watchlist: watchlist
+  });
 }
 
 //simplified signup function

@@ -13,12 +13,15 @@ function ScrollList(props) {
 
     //real database
     const [watchlist, setWatchlist] = useState([]);
+    const [loadState, setLoadState] = useState(false);
 
     //get watchlist (async)
-    getUserWatchList().then(result => {
-        //setting watchlist to true changes app state and will reload component with new watchlist
-        setWatchlist(result)
-    });
+    if (watchlist.length === 0 && loadState === false){
+        getUserWatchList().then(result => {
+            //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+            setWatchlist(result)
+        });
+    }
 
     return (
         <>
@@ -35,9 +38,13 @@ function ScrollList(props) {
                         // dummy data
                         price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}
 
-                    ></ScrollListItem>
-                )}
+                        //update parent list (this compoente) when child item (scrollListItem) is removed
+                        changeWatchlist={(newList) => setWatchlist(newList)}
+                        changeLoading={() => setLoadState(true)}
 
+                    ></ScrollListItem>
+                )
+                }
 
             </div>
         </>

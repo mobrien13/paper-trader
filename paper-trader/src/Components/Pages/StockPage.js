@@ -9,10 +9,10 @@ import StockGraph from '../StockGraph/StockGraph';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
+import { addToWatchlist, getUserWatchList } from '../../firebase';
 
 
 const StockPage = (props) => {
-
     const modalRef = useRef();
 
     const location = useLocation();
@@ -36,6 +36,23 @@ const StockPage = (props) => {
 
     Stock.ticker = ticker
 
+    // //real database
+    // const [watchlist, setWatchlist] = useState([]);
+
+    // //get watchlist (async)
+    // getUserWatchList().then(result => {
+    //     //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+    //     setWatchlist(result)
+    // });
+
+    // //function to add stock to watchlist
+    // const addToWatchlist = () => {
+    //     watchlist.push(ticker)
+    //     setUserWatchList(watchlist)
+    //     console.log('new watchlist')
+    // }
+
+
     return (
         <>
             <div className='stockPageContent'>
@@ -44,7 +61,7 @@ const StockPage = (props) => {
                 {/* Page Title */}
                 <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
-                    <Button buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
                 </div>
 
 

@@ -1,22 +1,35 @@
-import React from 'react';
+import { useState } from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { usersDatabase } from '../../fakeDatabase.js';
+import { getUserWatchList, setUserWatchList } from '../../firebase';
 
 
 const ScrollListItem = (props) => {
     //fake database
-    const user = usersDatabase[0];
-    const watchlist = user.watchlist;
+    // const user = usersDatabase[0];
+    // const watchlist = user.watchlist;
 
-    //remove from watchlist
+    //real database
+    const [watchlist, setWatchlist] = useState([]);
 
+    //get watchlist (async)
+    getUserWatchList().then(result => {
+        //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+        setWatchlist(result)
+    });
 
+    //function to remove item from watchlist
     const removeItem = () => {
         // watchlist = removeByValue(props.stockName);
-        for (var i = watchlist.length - 1; i >= 0; i--) {
-            if (watchlist[i] == props.stockName) {
-                alert('splicing')
+        for (let i = watchlist.length - 1; i >= 0; i--) {
+            if (watchlist[i].toUpperCase() === props.stockName.toUpperCase()) {
+                // console.log('splicing')
                 watchlist.splice(i, 1);
+                setUserWatchList(watchlist)
+
+                //updates parent list
+                props.changeWatchlist(watchlist)
+                props.changeLoading()
             }
         }
     }
