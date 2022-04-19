@@ -90,6 +90,14 @@ export async function addToWatchlist(ticker) {
   //set watchlist
   let watchlist = querySnapshot1.docs[0].data().watchlist;
 
+  //check if ticker is in watchlist already
+  for(let i=0; i<watchlist.length; i++){
+    if(watchlist[i].toUpperCase() === ticker.toUpperCase()){
+      console.log(ticker.toUpperCase() + " is already in the watchlist");
+      return;
+    }
+  }
+
   //push ticker to watchlist
   watchlist.push(ticker)
 

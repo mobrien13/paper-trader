@@ -52,6 +52,9 @@ const StockPage = (props) => {
     //     console.log('new watchlist')
     // }
 
+    //key to cause watchlist to rerender
+    // const [key, setKey] = useState(0); 
+
 
     return (
         <>
