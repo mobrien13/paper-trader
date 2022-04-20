@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { useState, useEffect } from "react";
+import { useState, useEffect,React  } from "react";
+import { Firestore, initializeFirestore, getFirestore } from "firebase/firestore";
 
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -16,6 +17,13 @@ export const firebaseConfig = {
 
 //initilizes firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+//creates user object to be called everywhere 
+const user = {
+    firestname: String,
+    lastname: String,
+}
 
 //authorizes user
 const auth = getAuth();
@@ -43,11 +51,12 @@ export function useAuth() {
 
     const [currentUser, setCurrentUser] = useState();
 
-    useEffect(()=> {
-        const unsub =  onAuthStateChanged(auth, user => setCurrentUser(user));
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, user => setCurrentUser(user));
         return unsub;
     }, [])
 
     return currentUser;
 
 }
+
