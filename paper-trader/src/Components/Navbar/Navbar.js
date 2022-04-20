@@ -15,7 +15,7 @@ function Navbar(props) {
     <>
       <nav className="navbar">
 
-        {/*places logo as link to main page*/}
+        {/*places logo as link to main page*/}  
         <Link to='/'><img className="logo" src={logo} /></Link>
 
         {/*generates buttons with props*/}
@@ -23,7 +23,7 @@ function Navbar(props) {
           {useAuth() != null && <Search />}
           {props.children} </ul>
 
-          {/*this may be uneeded*/}
+        {/*this may be uneeded*/}
         <ul className="navbar-links">
         </ul>
       </nav>
@@ -44,7 +44,7 @@ function Navbar(props) {
             <div className='openMobileNav'>
               <br /><br /><br /><br /><br />
               <div className='openContents'>
-                { props.children }
+                {props.children}
               </div>
             </div>
           }

@@ -17,11 +17,26 @@ const Search = () => {
             //clears input
             //var ticker = document.getElementById('searchInput').value;
             //document.getElementById('searchInput').value ='';
-    
-            //renders page
-            routeChange(ticker);        
-        }
-    }    
+            
+            fetch(fetch("https://api.tdameritrade.com/v1/marketdata/"+ticker+"/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    const isEmpty = Object.keys(data).length
+
+                    if(isEmpty !== 0){
+                       //renders page
+                       routeChange(ticker); 
+                    }
+                    else{
+                       alert("invalid ticker")
+                       document.getElementById('searchInput').value ='';
+                    }
+                }
+            )
+        )        
+    }
+}    
 
     //useNavigate hook
     let navigate = useNavigate();
