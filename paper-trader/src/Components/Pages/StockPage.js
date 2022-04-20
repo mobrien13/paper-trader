@@ -24,6 +24,11 @@ const StockPage = (props) => {
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
+    //sets data to 0 whenever the location changes
+    useEffect(() => {
+        setData(0);
+      },[location]);
+
     //creates stock object within stock page
     const Stock = {
         price: 1.0,
