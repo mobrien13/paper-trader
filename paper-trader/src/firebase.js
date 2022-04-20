@@ -31,7 +31,7 @@ export async function addUserToUsersData() {
       firstName: "John",
       lastName: "Doe",
       funds: 1000,
-      watchlist: ["tsla", "aapl"]
+      watchlist: ["tsla", "bdx"]
     });
     console.log("Successfully added user to usersData");
   } catch (e) {
