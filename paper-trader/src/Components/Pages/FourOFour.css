@@ -1,0 +1,45 @@
+.title { 
+
+font-size: 60px;
+color: #06F;
+}
+
+.text { 
+    font-size:x-large;
+    line-height: 1.6;
+    width: 700px;
+}
+
+.image { 
+float: right;
+padding: 30px;
+height: 450px;
+width:600px;
+}
+
+.page{
+    margin: 100px;
+}
+.section-1{
+    float: left;
+}
+
+.extraspace{
+    height: 200px;
+}
+
+.spacer {
+
+    aspect-ratio: 1000/300;
+    width: 125%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    margin: 0 -150px;
+
+}
+
+.layer1{
+    background-image: url('../../images/wave-haikei.svg');
+}
