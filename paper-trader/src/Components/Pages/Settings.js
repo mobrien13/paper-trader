@@ -17,7 +17,7 @@ function Settings() {
     const currentFunds = usersDatabase[0].funds;
 
     return (
-        <>
+        <div className='container'>
             <h1>Settings</h1>
 
             {personalInfo &&
@@ -79,7 +79,7 @@ function Settings() {
                     <Button buttonStyle='btn--primary--outline'>Add Funds</Button>
                 </>
             }
-        </>
+        </div>
     );
 }
 

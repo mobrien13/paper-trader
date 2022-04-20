@@ -1,45 +1,45 @@
 .title { 
-
-font-size: 60px;
-color: #06F;
+    font-size: 60px;
+    color: var(--bc);
 }
 
 .text { 
     font-size:24px;
     line-height: 1.6;
-    width: 700px;
 }
 
-.image { 
-float: right;
-padding: 30px;
-height: 450px;
-width:600px;
+.image404 { 
+    width: 44vw;
+    margin-top: 50px;
 }
 
 .page{
-    margin: 100px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .section-1{
-    float: left;
-}
-
-.extraspace{
-    height: 300px;
+    width: 44vw;
 }
 
 .spacer {
 
     aspect-ratio: 1000/300;
-    width: 125%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
-    margin: 0 -150px;
-
 }
 
 .layer1{
     background-image: url('../../images/wave-haikei.svg');
+}
+
+@media screen and (max-width:1200px) {
+    .image404 { 
+        width: 90vw;
+    }
+    .section-1{
+        width: 90vw;
+    }
 }

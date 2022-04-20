@@ -1,8 +1,8 @@
-div2{
-    justify-content: left;
+.whatDoWeDo{
+    /* justify-content: left; */
     float: left;
     font-size: 25px;
-    max-width: 55%;
+    width: 45vw;
     margin-top: -40px;
     background-color: white;
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.4);
@@ -11,15 +11,15 @@ div2{
     margin-bottom: 20px; 
     padding: 20px;
 }
-div2 h1{
+.whatDoWeDo h1{
     font-size:xx-large;
 }
-div3{
+.aboutUs{
     padding: 0 20px 0 20px;
-    max-width: 550px;
-    min-width: 200px;
+    /* max-width: 550px;
+    min-width: 200px; */
     width: 35vw;
-    justify-content: right;
+    /* justify-content: right; */
     border-radius: 10px;
     background-color: var(--bg-accent);
     margin-bottom: 40px;
@@ -83,6 +83,7 @@ divH{
 .firstDiv{
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     flex-wrap: wrap;
     margin-top: 30px;
 }
@@ -94,26 +95,25 @@ divH{
     border-radius: 10px;
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
 }
-
+@media screen and (max-width: 1200px){
+    .aboutUs{
+        width: 90vw;
+    }
+    .whatDoWeDo{
+        width: 90vw;
+    }
+    .welcomeImage{
+        max-width: 28vw;
+    }
+}
 @media screen and (max-width: 680px){
-    div2{
-        max-width: 100%;
+    .whatDoWeDo{
         width: 90vw;
     }
     .welcomeImage{
         max-width: 90vw;
     }
-    div3{
+    .aboutUs{
         width: 90vw;
-    }
-}
-@media screen and (max-width: 900px){
-    div3{
-        width: 90vw;
-        max-width: 90vw;
-    }
-    div2{
-        width: 90vw;
-        max-width: 90vw;
     }
 }

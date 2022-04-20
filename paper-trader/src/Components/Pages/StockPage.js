@@ -80,7 +80,7 @@ const StockPage = (props) => {
 
     return (
         <>
-            <div className='stockPageContent'>
+            <div className='stockPageContent container'>
 
 
                 {/* Page Title */}

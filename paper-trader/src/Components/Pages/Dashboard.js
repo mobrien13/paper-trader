@@ -23,7 +23,7 @@ function Dashboard() {
 
   return (
     <>
-      <div className='backround'>
+      <div className='backround container'>
 
         <h1 id='dashboardHeading'>Dashboard</h1>
 

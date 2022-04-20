@@ -23,11 +23,11 @@ function App() {
 
         {
           //ternery operator if a user is signed in, if user is signed in it shows these buttons
-          currentUser && 
+          currentUser &&
           <>
-          <Link className="link-margin" to='dashboard'><Button buttonStyle='btn--nav' text="Dashboard">Dashboard</Button></Link>
-          <Link className="link-margin" to='settings'><Button buttonStyle='btn--nav' text="Settings" >Settings</Button></Link>
-          <Link className="link-margin" to=''><Button buttonStyle='btn--nav' onClick={ handleLogout } text="Log Out" >Log Out</Button></Link>
+            <Link className="link-margin" to='dashboard'><Button buttonStyle='btn--nav' text="Dashboard">Dashboard</Button></Link>
+            <Link className="link-margin" to='settings'><Button buttonStyle='btn--nav' text="Settings" >Settings</Button></Link>
+            <Link className="link-margin" to=''><Button buttonStyle='btn--nav' onClick={handleLogout} text="Log Out" >Log Out</Button></Link>
           </>
         }
 
@@ -41,18 +41,14 @@ function App() {
         }
       </Navbar>
 
-      {/*Views is the container for all site content.
-    The container div gives the Views a 10% padding 
-    on the left and right sides*/}
-      <div className='container'>
-        <Views style={{ flex: 1 }} />
-      </div>
+      {/*Views is the container for all site content.*/}
+      <Views style={{ flex: 1 }} />
 
 
       {/*Displays modal component if and only if the corresponding button is clicked*/}
       <Modal ref={modalRef}>
-        {modal === "login" && <Login closeModal={() => modalRef.current.close() } />}
-        {modal === "signup" && <Signup closeModal={() => modalRef.current.close() } />}
+        {modal === "login" && <Login closeModal={() => modalRef.current.close()} />}
+        {modal === "signup" && <Signup closeModal={() => modalRef.current.close()} />}
       </Modal>
 
     </BrowserRouter>
