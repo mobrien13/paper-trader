@@ -23,9 +23,6 @@ const user = {
     lastname: String,
 }
 
-//initializes firestore
-const db = getFirestore(app);
-
 //authorizes user
 const auth = getAuth();
 
