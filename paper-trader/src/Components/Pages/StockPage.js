@@ -20,6 +20,9 @@ const StockPage = (props) => {
 
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
+    
+    // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
+    const [data, setData] = useState(0);
 
     //creates stock object within stock page
     const Stock = {
@@ -65,6 +68,10 @@ const StockPage = (props) => {
                 <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
                     <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    <Button onClick={ () => setData(0) } buttonStyle='btn--primary--outline'>Historical</Button>
+                    <Button onClick={ () => setData(1) } buttonStyle='btn--primary--outline'>Live</Button>
+                    <h1>{data}</h1>
+                    
                 </div>
 
 
@@ -74,7 +81,7 @@ const StockPage = (props) => {
                     <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>
+                        <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } data={data}></StockGraph>
 
                     </div>
 
