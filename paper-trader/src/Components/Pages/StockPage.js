@@ -6,6 +6,7 @@ import ScrollList from '../ScrollList/ScrollList';
 import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
 import StockGraph from '../StockGraph/StockGraph';
+import StockGraphLive from '../StockGraph/StockGraphLive';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
@@ -109,7 +110,10 @@ const StockPage = (props) => {
                         <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } data={data}></StockGraph>
+                        {data === 0 && <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>}
+
+                        {data === 1 && <StockGraphLive title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraphLive>}
+                        
 
                         </div>
 
