@@ -6,9 +6,10 @@ import image2 from '../../images/p2.jpeg'
 import image3 from '../../images/pCCL.jpg'
 import {Link} from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
-import {signup, useAuth } from '../../firebase'
+import {signup, useAuth, setUserWatchList } from '../../firebase'
 
 function Welcome() {
+
     return (
     <>
         

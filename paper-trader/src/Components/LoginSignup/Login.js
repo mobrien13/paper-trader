@@ -28,9 +28,9 @@ function Login(props){
             await login(emailRef.current.value, passwordRef.current.value)
             navigate('/dashboard')
             props.closeModal();
-        } catch{
+        } catch(e){
             //throws error here,
-            alert("Error!")
+            alert("Error!" + e)
         }
         //this stops page from loading to stop users from spam attacking 
         setLoading(false);

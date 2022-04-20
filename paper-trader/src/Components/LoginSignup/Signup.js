@@ -1,5 +1,5 @@
 import './Signup.css';
-import { signup, useAuth } from '../../firebase'
+import { signup, useAuth, addUserToUsersData } from '../../firebase'
 import Button from '../Button/Button'
 import { useRef, useState } from 'react';
 
@@ -28,8 +28,15 @@ function Signup(props) {
             // if email and password match confimations, does try catch to create account
             try {
                 setLoading(true);
+                //actual signup function
                 await signup(emailRef.current.value, passwordRef.current.value)
+
+                //adds user to the database
+                await addUserToUsersData();
+
+                //closes modal
                 props.closeModal()
+
             } catch {
                 // throws error if any issue creating account
                 alert("Error!")
