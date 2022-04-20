@@ -11,7 +11,7 @@ import {signup, useAuth, setUserWatchList } from '../../firebase'
 function Welcome() {
 
     return (
-    <>
+    <div className='container'>
         
         
         <div className='firstDiv'>
@@ -39,7 +39,7 @@ function Welcome() {
 
         
         </divH>
-    </>
+    </div>
     );
   }
   
