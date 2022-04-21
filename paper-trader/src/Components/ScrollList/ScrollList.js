@@ -23,6 +23,15 @@ function ScrollList(props) {
         });
     }
 
+    //reloads whenever the force update happens
+    useEffect(() => {
+        //get watchlist (async)
+        getUserWatchList().then(result => {
+            //setting watchlist to watchlist value, changes app state and will reload component with new watchlist
+            setWatchlist(result)
+            console.log("set the watchlist")
+        });
+    }, [props.forceUpdateData]);
 
     return (
         <>

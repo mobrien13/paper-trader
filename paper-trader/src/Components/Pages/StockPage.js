@@ -13,6 +13,10 @@ import { addToWatchlist, getUserWatchList } from '../../firebase';
 
 
 const StockPage = (props) => {
+    //for some reason the set wont work
+    //force update
+    const [forceUpdateValue, setForceUpdateValue] = useState(0); // integer state
+
     const modalRef = useRef();
 
     const location = useLocation();
@@ -45,6 +49,7 @@ const StockPage = (props) => {
     }
 
     Stock.ticker = ticker
+
 
     // //real database
     // const [watchlist, setWatchlist] = useState([]);
@@ -94,7 +99,14 @@ const StockPage = (props) => {
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
-                    <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    <Button onClick={ () => addToWatchlist(ticker).then(
+                        () => {
+                            // force update
+                            //the force update isnt setting for some reason
+                            setForceUpdateValue(forceUpdateValue++);
+                            console.log("added then updated forceupdatevalue " + forceUpdateValue)
+                        }
+                        ) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
                     <Button onClick={ () => setData(0) } buttonStyle='btn--primary--outline'>Historical</Button>
                     <Button onClick={ () => setData(1) } buttonStyle='btn--primary--outline'>Live</Button>
                     <h1>{data}</h1>
@@ -115,7 +127,7 @@ const StockPage = (props) => {
 
 
                         {/* Watchlist placeholder*/}
-                        <ScrollList title="Watch List"> </ScrollList>
+                        <ScrollList title="Watch List" forceUpdateData={forceUpdateValue}> </ScrollList>
 
                     </div>
                 }
