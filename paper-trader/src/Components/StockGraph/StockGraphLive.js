@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
+
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-const currentTime =  Date.now() -  86400000
-
-//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&endDate="+currentTime+""
+const currentTime =  Date.now() -  86400000 - (3600000 * 5)
 
 class StockGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, mount: false };
   }
+
+
   
   componentDidMount() {
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -41,17 +42,16 @@ class StockGraph extends Component {
             isLoaded: true,
             dataPoints1: dps1,
             dataPoints2: dps2,
-            
+            mount:true
           });
         }
       )
   }
 
   
-  componentDidUpdate(prevProps) {
-    if(prevProps.ticker !== this.props.ticker){
-      
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+  componentDidUpdate() {
+    if(this.state.mount === false){
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -78,12 +78,10 @@ class StockGraph extends Component {
             isLoaded: true,
             dataPoints1: dps1,
             dataPoints2: dps2,
-            
           });
         }
       )
     }
-    
   }
  
   render() {
@@ -139,7 +137,11 @@ class StockGraph extends Component {
       }],
 
       rangeSelector: {
-        buttons: [{
+        buttons: [{              
+          rangeType: "all",
+          label: "All" 
+        },
+        {
           range: 1, 
           rangeType: "hour",
           label: "1 Hour"
@@ -151,10 +153,7 @@ class StockGraph extends Component {
           range: 10,
           rangeType: "minute",
           label: "10 Min"
-        },{              
-          rangeType: "all",
-          label: "All" 
-        }],
+        },],
       },
     
      

@@ -5,7 +5,7 @@ const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 class StockGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false};
   }
   
   componentDidMount() {

@@ -1,7 +1,6 @@
 import { React, useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
 import ScrollList from '../ScrollList/ScrollList';
 import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
@@ -81,7 +80,6 @@ const StockPage = (props) => {
         )
     )
 
-
     return (
         <>
             <div className='stockPageContent container'>
@@ -89,10 +87,10 @@ const StockPage = (props) => {
 
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
-                    <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
+                 {/*<h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1> */} 
                     <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
-                    <Button onClick={ () => setData(0) } buttonStyle='btn--primary--outline'>Historical</Button>
-                    <Button onClick={ () => setData(1) } buttonStyle='btn--primary--outline'>Live</Button>
+                    <Button onClick={ () => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                    <Button onClick={ () => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
                 </div>
                 }
 
@@ -103,9 +101,9 @@ const StockPage = (props) => {
                         <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        {/*data === 0 && <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>*/}
+                        {data === 0 && <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>}
 
-                        {data === 1 && <StockGraphLive title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraphLive>}
+                        {data === 1 && <StockGraphLive title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } ></StockGraphLive>}
                         
 
                         </div>
