@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=10&frequencyType=daily&frequency=1&needExtendedHoursData=false"
-//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false"
+const currentTime =  Date.now() -  86400000
+
+//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&endDate="+currentTime+""
+
 class StockGraph extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ class StockGraph extends Component {
   }
   
   componentDidMount() {
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -19,20 +21,21 @@ class StockGraph extends Component {
 
 
           for (var i = 0; i < data.candles.length; i++) {
-            dps1.push({
-              x: new Date(data.candles[i].datetime),
-              y: [
-                Number(data.candles[i].open),
-                Number(data.candles[i].high),
-                Number(data.candles[i].low),
-                Number(data.candles[i].close)
-              ]
-            });
-
-            dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+            if(new Date(data.candles[i].datetime) < currentTime){
+              dps1.push({
+                x: new Date(data.candles[i].datetime),
+                y: [
+                  Number(data.candles[i].open),
+                  Number(data.candles[i].high),
+                  Number(data.candles[i].low),
+                  Number(data.candles[i].close)
+                ]
+              });
+  
+              dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+            }
+            
           }
-
-          
 
           this.setState({
             isLoaded: true,
@@ -48,7 +51,7 @@ class StockGraph extends Component {
   componentDidUpdate(prevProps) {
     if(prevProps.ticker !== this.props.ticker){
       
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=2&frequencyType=minute&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -56,21 +59,21 @@ class StockGraph extends Component {
 
 
           for (var i = 0; i < data.candles.length; i++) {
-            dps1.push({
-              x: new Date(data.candles[i].datetime),
-              y: [
-                Number(data.candles[i].open),
-                Number(data.candles[i].high),
-                Number(data.candles[i].low),
-                Number(data.candles[i].close)
-              ]
-            });
-
-            dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-          }
-
-          
-
+            if(new Date(data.candles[i].datetime) < currentTime){
+              dps1.push({
+                x: new Date(data.candles[i].datetime),
+                y: [
+                  Number(data.candles[i].open),
+                  Number(data.candles[i].high),
+                  Number(data.candles[i].low),
+                  Number(data.candles[i].close)
+                ]
+              });
+  
+              dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+            }
+            }
+            
           this.setState({
             isLoaded: true,
             dataPoints1: dps1,
@@ -102,16 +105,18 @@ class StockGraph extends Component {
         axisX: {
           lineThickness: 3,
           tickLength: 0,
-          labelFormatter: function(e) {
-            return "";
-          },
+          // labelFormatter: function(e) {
+          //   return "";
+          // },
+          valueFormatString: "h:mm",
         
           crosshair: {
             enabled: true,
             snapToDataPoint: true,
-            labelFormatter: function(e) {
-              return "";
-            }
+            // labelFormatter: function(e) {
+            //   return "";
+            // }
+            valueFormatString: "h:mm",
           }
         },
         axisY: {
@@ -121,6 +126,7 @@ class StockGraph extends Component {
           tickLength: 0
         },
         
+ 
         data: [{
           borderColor:"black",
           fallingColor: "#DD7E86",
@@ -131,6 +137,26 @@ class StockGraph extends Component {
           dataPoints : this.state.dataPoints1
         }]
       }],
+
+      rangeSelector: {
+        buttons: [{
+          range: 1, 
+          rangeType: "hour",
+          label: "1 Hour"
+        },{            
+          range: 30,
+          rangeType: "minute",
+          label: "30 Min"
+        },{     
+          range: 10,
+          rangeType: "minute",
+          label: "10 Min"
+        },{              
+          rangeType: "all",
+          label: "All" 
+        }],
+      },
+    
      
       
       navigator: {

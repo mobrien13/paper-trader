@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=10&frequencyType=daily&frequency=1&needExtendedHoursData=false"
-//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false"
 class StockGraph extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +9,7 @@ class StockGraph extends Component {
   }
   
   componentDidMount() {
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=5&frequencyType=daily&frequency=1&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=3&frequencyType=daily&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -48,7 +46,7 @@ class StockGraph extends Component {
   componentDidUpdate(prevProps) {
     if(prevProps.ticker !== this.props.ticker){
       
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=5&frequencyType=daily&frequency=1&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=3&frequencyType=daily&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
