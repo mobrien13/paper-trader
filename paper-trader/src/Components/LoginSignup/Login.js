@@ -12,6 +12,7 @@ function Login(props){
     const emailRef = useRef()
     const passwordRef = useRef()
     const [loginError, setLoginError] = useState(false);
+    const [errorText, setErrorText] = useState("")
 
     //checks if enter is clicked
     const handleKeyPress = (event) => {
@@ -23,22 +24,22 @@ function Login(props){
     //login the user
     async function handleLogin ()  {
 
-        //try catch that throws error if password does not match
-        try{
+         //try catch that throws error if password does not match
+         try{
             setLoading(true);
             setLoginError(false);
             await login(emailRef.current.value, passwordRef.current.value)
             navigate('/dashboard')
             props.closeModal();
-        } catch{
+        } catch(e){
             //throws error here,
             setLoginError(true);
-            //alert("Error!")
+            setErrorText(e.toString())
+            // alert("Error!" + e)
         }
         //this stops page from loading to stop users from spam attacking 
         setLoading(false);
     }
-
 
     //component's jsx
     return(
@@ -49,7 +50,7 @@ function Login(props){
             loginError && 
 
             <>
-
+                <div className='loginError'><p className='errorText'>{errorText}</p></div>
             </>
         }
 

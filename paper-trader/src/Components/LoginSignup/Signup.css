@@ -1,0 +1,13 @@
+.signupError {
+    background-color: crimson;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color:white;
+    transition: .5s;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.errorText{
+    padding: 5px;
+}
