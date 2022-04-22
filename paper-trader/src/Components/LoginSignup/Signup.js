@@ -12,6 +12,9 @@ function Signup(props) {
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
 
+    const [signupError, setSignupError] = useState(false);
+    const [errorText, setErrorText] = useState("")
+
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
             handleSignup();
@@ -22,12 +25,14 @@ function Signup(props) {
 
         //checks if email matches email confimation, and password matches password confirmation
         if (passwordConfirmRef.current.value !== passwordRef.current.value || emailConfirmRef.current.value !== emailRef.current.value) {
-            alert("Emails or Passwords Do Not Match")
+            setErrorText("Emails or Passwords Do Not Match")
+            setSignupError(true);
         }
         else{
-            // if email and password match confimations, does try catch to create account
+            // if email and password match confirmations, does try catch to create account
             try {
                 setLoading(true);
+                setSignupError(false);
                 //actual signup function
                 await signup(emailRef.current.value, passwordRef.current.value)
 
@@ -37,9 +42,11 @@ function Signup(props) {
                 //closes modal
                 props.closeModal()
 
-            } catch {
+            } catch (e){
                 // throws error if any issue creating account
-                alert("Error!")
+                setSignupError(true);
+                setErrorText(e.toString())
+                // alert("Error!" + e)
             }
         }
 
@@ -50,6 +57,12 @@ function Signup(props) {
     return (
         <>
             <h1>Sign Up</h1>
+            {
+            signupError && 
+                <>
+                    <div className='signupError'><p className='errorText'>{errorText}</p></div>
+                </>
+             }
             <div>
 
                 {/*this creates new text field with autofocus to place user here also handeles ref to pass to signup function */}

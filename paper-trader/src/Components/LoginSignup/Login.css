@@ -11,6 +11,21 @@
     transition: .5s;
 }
 
+.loginError {
+    background-color: crimson;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color:white;
+    transition: .5s;
+    border-radius: 5px;
+    font-weight: bold;
+    max-width: 300px;
+}
+
+.errorText{
+    padding: 5px;
+}
+
 /*Changes Focus Outline From Input Fields*/
 .signInFields:focus{
     outline-color: var(--bc);

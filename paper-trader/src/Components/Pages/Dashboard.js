@@ -5,6 +5,7 @@ import './Pages.css';
 import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
 import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
+import Trending from '../Trending/Trending'
 
 
 
@@ -58,7 +59,8 @@ function Dashboard() {
         {/* News Componenet With Placeholders*/}
 
         <News></News>
-
+        {//<Trending></Trending>
+}
       </div>
     </>
   );
