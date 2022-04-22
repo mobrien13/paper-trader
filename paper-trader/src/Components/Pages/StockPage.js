@@ -9,7 +9,7 @@ import StockGraph from '../StockGraph/StockGraph';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
-import { addToWatchlist, getUserWatchList } from '../../firebase';
+import { addToWatchlist, getUserWatchList, buyStock } from '../../firebase';
 
 
 const StockPage = (props) => {
@@ -20,6 +20,7 @@ const StockPage = (props) => {
 
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
+    const [amount, setAmount] = useState(0);
     
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
@@ -90,7 +91,6 @@ const StockPage = (props) => {
         <>
             <div className='stockPageContent container'>
 
-
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
@@ -128,6 +128,9 @@ const StockPage = (props) => {
                         <div className='buyStockItem'>
                             <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3>
                             <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
+                            <button onClick = {() => buyStock(ticker, 100, 10)}>test buy</button>
+
+
                         </div>
                         <div className='buyStockItem'>
                             <h3>Current Holdings: </h3>
@@ -161,7 +164,7 @@ const StockPage = (props) => {
 
                         {!buy && !sell &&
                             <>
-                                <h2>{Stock.name.toUpperCase()}</h2>
+                                <h2>{Stock.ticker.toUpperCase()}</h2>
                                 <p>Select Order Type</p>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setBuy(true)}>Buy</Button>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setSell(true)}>Sell</Button>
@@ -170,17 +173,18 @@ const StockPage = (props) => {
 
                         {buy && !sell &&
                             <>
-                                <h2>{Stock.name.toUpperCase()} - Buy Order</h2>
-                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
-                                <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
+                                <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
+                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)}/><br />
+                                <Button onClick = {() => buyStock(ticker, 100, amount)} buttonStyle='btn--primary--outline'>Execute Market</Button>
                                 <br />
+
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
                             </>
                         }
 
                         {!buy && sell &&
                             <>
-                                <h2>{Stock.name.toUpperCase()} - Sell Order</h2>
+                                <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
                                 <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
