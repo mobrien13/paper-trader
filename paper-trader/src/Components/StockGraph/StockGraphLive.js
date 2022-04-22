@@ -3,12 +3,16 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-const currentTime =  Date.now() -  86400000 - (3600000 * 5)
+const currentTime =  Date.now() -  86400000 - (3600000 * 8)
+
+var data1 = [], data2 = []
+
 
 class StockGraph extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, mount: false };
+  constructor() {
+    super();
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false};
+    this.updateChart = this.updateChart.bind(this);
   }
 
 
@@ -38,29 +42,9 @@ class StockGraph extends Component {
             
           }
 
-          this.setState({
-            isLoaded: true,
-            dataPoints1: dps1,
-            dataPoints2: dps2,
-            mount:true
-          });
-        }
-      )
-  }
-
-  
-  componentDidUpdate() {
-    if(this.state.mount === false){
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&needExtendedHoursData=false")
-      .then(res => res.json())
-      .then(
-        (data) => {
-          var dps1 = [], dps2 = [];
-
-
           for (var i = 0; i < data.candles.length; i++) {
-            if(new Date(data.candles[i].datetime) < currentTime){
-              dps1.push({
+            if(new Date(data.candles[i].datetime)){
+              data1.push({
                 x: new Date(data.candles[i].datetime),
                 y: [
                   Number(data.candles[i].open),
@@ -70,10 +54,11 @@ class StockGraph extends Component {
                 ]
               });
   
-              dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-            }
+              data2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
             }
             
+          }
+
           this.setState({
             isLoaded: true,
             dataPoints1: dps1,
@@ -81,7 +66,35 @@ class StockGraph extends Component {
           });
         }
       )
-    }
+    setInterval(this.updateChart, 10000);
+  }
+
+  
+  updateChart() {
+  // for (var i = 0; i < data.candles.length; i++) {
+  //   if(new Date(data.candles[i].datetime) < currentTime){
+  //      dps1.push({
+  //      x: new Date(data.candles[i].datetime),
+  //       y: [
+  //         Number(data.candles[i].open),
+  //         Number(data.candles[i].high),
+  //         Number(data.candles[i].low),
+  //         Number(data.candles[i].close)
+  //         ]
+  //         });
+  
+  //         dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+  //       }
+  //     }
+            
+    this.setState({
+      isLoaded: true,
+      //dataPoints1: dps1,
+      //dataPoints2: dps2,
+    });
+      
+    this.chart.render();
+    console.log("updated");
   }
  
   render() {
@@ -182,7 +195,7 @@ class StockGraph extends Component {
             // Reference: https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator
             this.state.isLoaded && 
             <CanvasJSStockChart containerProps={containerProps} options = {options}
-              /* onRef = {ref => this.chart = ref} */
+            onRef={ref => this.chart = ref}
             />
           }
         </div>
