@@ -1,21 +1,18 @@
 import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
-const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
- //https://canvasjs.com/data/gallery/jquery/samsung-electronics-stock-price.json
- 
- //https://api.tdameritrade.com/v1/marketdata/`${props.ticker}`/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false
- 
+//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=10&frequencyType=daily&frequency=1&needExtendedHoursData=false"
+//"https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false"
 class StockGraph extends Component {
   constructor(props) {
     super(props);
     this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
   }
-
+  
   componentDidMount() {
-
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
+    if (this.props.data === 0) {
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=5&frequencyType=daily&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -46,12 +43,48 @@ class StockGraph extends Component {
           });
         }
       )
+    } 
+    // if(this.props.data === 1) {
+    //   fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+    //   .then(res => res.json())
+    //   .then(
+    //     (data) => {
+    //       var dps1 = [], dps2 = [];
+
+
+    //       for (var i = 0; i < data.candles.length; i++) {
+    //         dps1.push({
+    //           x: new Date(data.candles[i].datetime),
+    //           y: [
+    //             Number(data.candles[i].open),
+    //             Number(data.candles[i].high),
+    //             Number(data.candles[i].low),
+    //             Number(data.candles[i].close)
+    //           ]
+    //         });
+
+    //         dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+    //       }
+
+          
+
+    //       this.setState({
+    //         isLoaded: true,
+    //         dataPoints1: dps1,
+    //         dataPoints2: dps2,
+            
+    //       });
+    //     }
+    //   )
+    //  }
+   
   }
 
+  
   componentDidUpdate(prevProps) {
-    if(prevProps.ticker !== this.props.ticker){
+    if(prevProps.ticker !== this.props.ticker && this.props.data === 0){
       
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=5&frequencyType=daily&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -83,6 +116,41 @@ class StockGraph extends Component {
         }
       )
     }
+
+    if(this.props.data === 1) {
+      
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1")
+      .then(res => res.json())
+      .then(
+        (data) => {
+          var dps1 = [], dps2 = [];
+
+
+          for (var i = 0; i < data.candles.length; i++) {
+            dps1.push({
+              x: new Date(data.candles[i].datetime),
+              y: [
+                Number(data.candles[i].open),
+                Number(data.candles[i].high),
+                Number(data.candles[i].low),
+                Number(data.candles[i].close)
+              ]
+            });
+
+            dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+          }
+
+          
+
+          this.setState({
+            isLoaded: true,
+            dataPoints1: dps1,
+            dataPoints2: dps2,
+            
+          });
+        }
+      )
+     }
     
   }
  
@@ -95,9 +163,9 @@ class StockGraph extends Component {
         fontFamily: 'Arial',
         fontColor: '#484a4d'
       },
-      animationEnabled: "True",
+      animationEnabled: "true",
       animationDuration: 1300,
-      //backgroundColor: "#707C8F",
+     
      
 
       charts: [{
@@ -123,13 +191,6 @@ class StockGraph extends Component {
           prefix: "$",
           tickLength: 0
         },
-        axisX: {
-          crosshair: {
-            enabled: true,
-            snapToDataPoint: true
-          }
-        },
-        
         
         data: [{
           borderColor:"black",
@@ -151,9 +212,6 @@ class StockGraph extends Component {
           dataPoints: this.state.dataPoints2
         }],
         slider: {
-          // Need to set max to curret date and min to 1 month ago 
-          //minimum: new Date("2018-01-01"),
-          //maximum: new Date("2018-12-31")
         }
       }
     };

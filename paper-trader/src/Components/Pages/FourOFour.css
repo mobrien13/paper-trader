@@ -1,0 +1,45 @@
+.title { 
+    font-size: 60px;
+    color: var(--bc);
+}
+
+.text { 
+    font-size:24px;
+    line-height: 1.6;
+}
+
+.image404 { 
+    width: 44vw;
+    margin-top: 50px;
+}
+
+.page{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.section-1{
+    width: 44vw;
+}
+
+.spacer {
+
+    aspect-ratio: 1000/300;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.layer1{
+    background-image: url('../../images/wave-haikei.svg');
+}
+
+@media screen and (max-width:1200px) {
+    .image404 { 
+        width: 90vw;
+    }
+    .section-1{
+        width: 90vw;
+    }
+}
