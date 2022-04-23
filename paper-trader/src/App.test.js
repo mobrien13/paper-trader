@@ -5,7 +5,9 @@ import App from './App';
 import Welcome from './Components/Pages/Welcome.js';
 import Settings from './Components/Pages/Settings.js';
 import Dashboard from './Components/Pages/Dashboard';
-import { login, logout, useAuth, getAuth, firebaseConfig, signup } from './firebase.js';
+import News from './Components/News/News';
+import ScrollList from './Components/ScrollList/ScrollList';
+import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList } from './firebase.js';
 import { jest } from '@jest/globals';
 import { describe, expect, it, toBeTruthy } from '@jest/globals';
 import { initializeApp } from "firebase/app"
@@ -21,9 +23,17 @@ import { act } from 'react-dom/test-utils';
 
 describe('\nNavigation Tests:\n', () => {
 
+    //test setup
+    beforeAll(async () => {
+        jest.setTimeout(10000);
+        await initializeApp(firebaseConfig)
+    });
+    beforeEach(async () => {
+        await logout();
+    });
+
     test('render welcome correctly', () => {
         render(<Welcome></Welcome>);
-        expect(screen.getByText('Welcome')).toBeInTheDocument();
         expect(screen.getByText('About Us')).toBeInTheDocument();
         expect(screen.getByText('What Do We Do?')).toBeInTheDocument();
     })
@@ -33,16 +43,14 @@ describe('\nNavigation Tests:\n', () => {
         expect(screen.getByText('Settings')).toBeInTheDocument();
     })
 
-    test('render dashboard correctly', () => {
-        render(<Dashboard></Dashboard>)
-        expect(screen.getByText('Watch List')).toBeInTheDocument();
-        expect(screen.getByText('Current Holdings:')).toBeInTheDocument();
+    test('render settings correctly', () => {
+        render(<News></News>)
+        expect(screen.getByText('News')).toBeInTheDocument();
     })
 
     test('render app correctly', () => {
         render(<App></App>)
         expect(screen.getByText('Log In')).toBeInTheDocument();
-        expect(screen.getByText('Welcome')).toBeInTheDocument();
         expect(screen.getByText('Sign Up')).toBeInTheDocument();
         expect(screen.getByText('What Do We Do?')).toBeInTheDocument();
     })
@@ -124,4 +132,38 @@ describe('\nFirebase Tests:\n', () => {
         //REMEMBER: MANUALLY DELETE THE USER BEFORE RUNNING TESTS
         //MUST HAVE A SEPARATE SERVER (RUNNING THE ADMIN SDK) TO DELETE USERS
     })
+});
+
+//watchlist test cases
+describe('\nFirebase Tests:\n', () => {
+    //test setup
+    beforeAll(async () => {
+        jest.setTimeout(60000);
+        initializeApp(firebaseConfig)
+    });
+    beforeEach(async () => {
+        await logout();
+    });
+
+
+    //watchlist
+    test('test getUserWatchlist', async () => {
+        await login("admin@papertrader.com", "admin12");
+        console.log("logged in");
+        //add the getUserWatchlist test here
+        let watchlist = [];
+        let knownWatchList = [];
+        knownWatchList.push("TSLA");
+        knownWatchList.push("BDX");
+        //knownWatchList.push("AAPL");
+        await getUserWatchList().then(result => {
+            //setting watchlist to watchlist value, changes app state and will reload component with new watchlist
+            watchlist = result
+        });
+        console.log(watchlist);
+        for(let i = 0; i<2; i++){
+            let test = watchlist[i].toUpperCase()===knownWatchList[i].toUpperCase();
+            expect(test).toBeTruthy()
+        }
+    })       
 });
