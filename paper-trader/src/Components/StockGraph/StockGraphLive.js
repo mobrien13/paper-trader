@@ -15,19 +15,19 @@ class StockGraph extends Component {
     this.updateChart = this.updateChart.bind(this);
   }
 
-
   
   componentDidMount() {
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
-      .then(res => res.json())
-      .then(
-        (data) => {
-          var dps1 = [], dps2 = [];
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+    .then(res => res.json())
+    .then(
+      (data) => {
+        var dps1 = [], dps2 = [];
 
 
-          for (var i = 0; i < data.candles.length; i++) {
+        for (var i = 0; i < data.candles.length; i++) {
+          if(new Date(data.candles[i].datetime) < currentTime){
             dps1.push({
-              x: new Date(data.candles[i].datetime < currentTime),
+              x: new Date(data.candles[i].datetime),
               y: [
                 Number(data.candles[i].open),
                 Number(data.candles[i].high),
@@ -35,10 +35,12 @@ class StockGraph extends Component {
                 Number(data.candles[i].close)
               ]
             });
-
+  
             dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-
-            tempy.push({
+  
+          }
+          
+           tempy.push({
               ary : [
               new Date(data.candles[i].datetime),
               Number(data.candles[i].open),
@@ -47,25 +49,26 @@ class StockGraph extends Component {
               Number(data.candles[i].close)
               ]
             });
-          }
-
-          this.setState({
-            isLoaded: true,
-            dataPoints1: dps1,
-            dataPoints2: dps2
-          });
         }
-      )
-    setInterval(this.updateChart, 30000);
-  }
+
+        this.setState({
+          isLoaded: true,
+          dataPoints1: dps1,
+          dataPoints2: dps2,
+          
+        });
+      }
+    )
+    setInterval(this.updateChart, 5000);
+}
 
   
   updateChart() {
     const Time =  Date.now() -  (86400000);
     temp1 = []; 
     temp2 = [];
-  for (var i = 0; i < tempy.length; i++) {
-    if(new Date(tempy[i].ary[0]) < Time){
+    for (var i = 0; i < tempy.length; i++) {
+      if(new Date(tempy[i].ary[0]) < Time){
        temp1.push({
        x: new Date(tempy[i].ary[0]),
         y: [
