@@ -3,9 +3,9 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-const currentTime =  Date.now() -  86400000 - (3600000 * 8)
+const currentTime =  Date.now() -  (86400000)
 
-var data1 = [], data2 = []
+var tempy = [], temp1 = [], temp2 = []
 
 
 class StockGraph extends Component {
@@ -18,7 +18,7 @@ class StockGraph extends Component {
 
   
   componentDidMount() {
-      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequency=1&needExtendedHoursData=false")
+      fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
@@ -26,71 +26,64 @@ class StockGraph extends Component {
 
 
           for (var i = 0; i < data.candles.length; i++) {
-            if(new Date(data.candles[i].datetime) < currentTime){
-              dps1.push({
-                x: new Date(data.candles[i].datetime),
-                y: [
-                  Number(data.candles[i].open),
-                  Number(data.candles[i].high),
-                  Number(data.candles[i].low),
-                  Number(data.candles[i].close)
-                ]
-              });
-  
-              dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-            }
-            
-          }
+            dps1.push({
+              x: new Date(data.candles[i].datetime < currentTime),
+              y: [
+                Number(data.candles[i].open),
+                Number(data.candles[i].high),
+                Number(data.candles[i].low),
+                Number(data.candles[i].close)
+              ]
+            });
 
-          for (var i = 0; i < data.candles.length; i++) {
-            if(new Date(data.candles[i].datetime)){
-              data1.push({
-                x: new Date(data.candles[i].datetime),
-                y: [
-                  Number(data.candles[i].open),
-                  Number(data.candles[i].high),
-                  Number(data.candles[i].low),
-                  Number(data.candles[i].close)
-                ]
-              });
-  
-              data2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-            }
-            
+            dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
+
+            tempy.push({
+              ary : [
+              new Date(data.candles[i].datetime),
+              Number(data.candles[i].open),
+              Number(data.candles[i].high),
+              Number(data.candles[i].low),
+              Number(data.candles[i].close)
+              ]
+            });
           }
 
           this.setState({
             isLoaded: true,
             dataPoints1: dps1,
-            dataPoints2: dps2,
+            dataPoints2: dps2
           });
         }
       )
-    setInterval(this.updateChart, 10000);
+    setInterval(this.updateChart, 30000);
   }
 
   
   updateChart() {
-  // for (var i = 0; i < data.candles.length; i++) {
-  //   if(new Date(data.candles[i].datetime) < currentTime){
-  //      dps1.push({
-  //      x: new Date(data.candles[i].datetime),
-  //       y: [
-  //         Number(data.candles[i].open),
-  //         Number(data.candles[i].high),
-  //         Number(data.candles[i].low),
-  //         Number(data.candles[i].close)
-  //         ]
-  //         });
+    const Time =  Date.now() -  (86400000);
+    temp1 = []; 
+    temp2 = [];
+  for (var i = 0; i < tempy.length; i++) {
+    if(new Date(tempy[i].ary[0]) < Time){
+       temp1.push({
+       x: new Date(tempy[i].ary[0]),
+        y: [
+          Number(tempy[i].ary[1]),
+          Number(tempy[i].ary[2]),
+          Number(tempy[i].ary[3]),
+          Number(tempy[i].ary[4])
+          ]
+          });
   
-  //         dps2.push({x: new Date(data.candles[i].datetime), y: Number(data.candles[i].close)});
-  //       }
-  //     }
+          temp2.push({x: new Date(tempy[i].ary[0]), y: Number(tempy[i].ary[4])});
+        }
+      }
             
     this.setState({
       isLoaded: true,
-      //dataPoints1: dps1,
-      //dataPoints2: dps2,
+      dataPoints1: temp1,
+      dataPoints2: temp2,
     });
       
     this.chart.render();
@@ -106,27 +99,19 @@ class StockGraph extends Component {
         fontFamily: 'Arial',
         fontColor: '#484a4d'
       },
-      animationEnabled: "true",
-      animationDuration: 1300,
+      
      
-     
-
       charts: [{
         
         axisX: {
           lineThickness: 3,
           tickLength: 0,
-          // labelFormatter: function(e) {
-          //   return "";
-          // },
+       
           valueFormatString: "h:mm",
         
           crosshair: {
             enabled: true,
             snapToDataPoint: true,
-            // labelFormatter: function(e) {
-            //   return "";
-            // }
             valueFormatString: "h:mm",
           }
         },
@@ -137,7 +122,6 @@ class StockGraph extends Component {
           tickLength: 0
         },
         
- 
         data: [{
           borderColor:"black",
           fallingColor: "#DD7E86",
@@ -170,9 +154,7 @@ class StockGraph extends Component {
       },
     
      
-      
       navigator: {
-        //backgroundColor: "#707C8F",
         data: [{
           lineColor:"#707C8F",
           fillOpacity: .3,
@@ -192,7 +174,6 @@ class StockGraph extends Component {
       <div> 
         <div>
           {
-            // Reference: https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator
             this.state.isLoaded && 
             <CanvasJSStockChart containerProps={containerProps} options = {options}
             onRef={ref => this.chart = ref}
