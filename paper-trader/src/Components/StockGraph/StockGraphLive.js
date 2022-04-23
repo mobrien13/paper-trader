@@ -4,10 +4,12 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
 let currentTime =  Date.now() -  (86400000)
-var tempy = [], temp1 = [], temp2 = []
+var temp1 = [], temp2 = [], tempy = []
 
 
 class StockGraphLive extends Component {
+
+  
   constructor() {
     super();
     this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false};
@@ -64,7 +66,11 @@ class StockGraphLive extends Component {
         });
       }
     )
-    setInterval(this.updateChart, 5000);
+    
+   const x = setInterval(() => {
+      this.updateChart();
+    }, 1000);
+    return () => clearInterval(x);
 }
 
   
