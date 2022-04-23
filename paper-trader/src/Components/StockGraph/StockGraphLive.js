@@ -7,7 +7,7 @@ let currentTime =  Date.now() -  (86400000)
 var tempy = [], temp1 = [], temp2 = []
 
 
-class StockGraph extends Component {
+class StockGraphLive extends Component {
   constructor() {
     super();
     this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false};
@@ -192,4 +192,4 @@ class StockGraph extends Component {
     );
   }
 }
-export default StockGraph;  
+export default StockGraphLive;  
