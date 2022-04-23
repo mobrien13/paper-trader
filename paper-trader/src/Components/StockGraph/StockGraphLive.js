@@ -3,8 +3,7 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-const currentTime =  Date.now() -  (86400000)
-
+let currentTime =  Date.now() -  (86400000)
 var tempy = [], temp1 = [], temp2 = []
 
 
@@ -21,7 +20,7 @@ class StockGraph extends Component {
     .then(res => res.json())
     .then(
       (data) => {
-        var dps1 = [], dps2 = [];
+        let dps1 = [], dps2 = [];
 
 
         for (var i = 0; i < data.candles.length; i++) {
@@ -40,7 +39,8 @@ class StockGraph extends Component {
   
           }
           
-           tempy.push({
+          if(new Date(data.candles[i].datetime) > currentTime){
+            tempy.push({
               ary : [
               new Date(data.candles[i].datetime),
               Number(data.candles[i].open),
@@ -49,7 +49,12 @@ class StockGraph extends Component {
               Number(data.candles[i].close)
               ]
             });
+          }
+           
         }
+
+        temp1 = dps1;
+        temp2 = dps2;
 
         this.setState({
           isLoaded: true,
@@ -64,9 +69,9 @@ class StockGraph extends Component {
 
   
   updateChart() {
-    const Time =  Date.now() -  (86400000);
-    temp1 = []; 
-    temp2 = [];
+    let Time =  Date.now() -  (86400000);
+    
+    
     for (var i = 0; i < tempy.length; i++) {
       if(new Date(tempy[i].ary[0]) < Time){
        temp1.push({
