@@ -98,7 +98,7 @@ export async function addToWatchlist(ticker) {
   for(let i=0; i<watchlist.length; i++){
     if(watchlist[i].toUpperCase() === ticker.toUpperCase()){
       console.log(ticker.toUpperCase() + " is already in the watchlist");
-      return;
+      return false;
     }
   }
 
@@ -122,6 +122,7 @@ export async function addToWatchlist(ticker) {
   await updateDoc(docRef, {
     watchlist: watchlist
   });
+  return true;
 }
 
 //simplified signup function

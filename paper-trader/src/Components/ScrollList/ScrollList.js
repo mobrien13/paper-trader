@@ -29,7 +29,7 @@ function ScrollList(props) {
         getUserWatchList().then(result => {
             //setting watchlist to watchlist value, changes app state and will reload component with new watchlist
             setWatchlist(result)
-            console.log("set the watchlist")
+            console.log("set the watchlist in useEffect")
         });
     }, [props.forceUpdateData]);
 
