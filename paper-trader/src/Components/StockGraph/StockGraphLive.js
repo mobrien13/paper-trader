@@ -3,7 +3,7 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-let currentTime =  Date.now() -  (86400000)
+let currentTime =  Date.now() -  (86400000 * 2) - (3600000*7)
 var temp1 = [], temp2 = [], tempy = []
 
 
@@ -18,7 +18,7 @@ class StockGraphLive extends Component {
 
   
   componentDidMount() {
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false")
     .then(res => res.json())
     .then(
       (data) => {
@@ -26,7 +26,7 @@ class StockGraphLive extends Component {
 
 
         for (var i = 0; i < data.candles.length; i++) {
-          if(new Date(data.candles[i].datetime) < currentTime){
+          if(new Date(data.candles[i].datetime) <= currentTime){
             dps1.push({
               x: new Date(data.candles[i].datetime),
               y: [
@@ -67,19 +67,20 @@ class StockGraphLive extends Component {
       }
     )
     
+    // render on 30sec interval
    const x = setInterval(() => {
       this.updateChart();
-    }, 1000);
+    }, 30000);
     return () => clearInterval(x);
 }
 
   
   updateChart() {
-    let Time =  Date.now() -  (86400000);
+    let Time =  Date.now() -  (86400000 * 2) - (3600000*7)
     
     
     for (var i = 0; i < tempy.length; i++) {
-      if(new Date(tempy[i].ary[0]) < Time){
+      if(new Date(tempy[i].ary[0]) <= Time){
        temp1.push({
        x: new Date(tempy[i].ary[0]),
         y: [
@@ -148,6 +149,7 @@ class StockGraphLive extends Component {
       }],
 
       rangeSelector: {
+        selectedRangeButtonIndex: 2,
         buttons: [{              
           rangeType: "all",
           label: "All" 
