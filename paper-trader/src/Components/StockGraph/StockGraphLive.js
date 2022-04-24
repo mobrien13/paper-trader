@@ -69,7 +69,7 @@ class StockGraphLive extends Component {
     
    const x = setInterval(() => {
       this.updateChart();
-    }, 30000);
+    }, 1000);
     return () => clearInterval(x);
 }
 

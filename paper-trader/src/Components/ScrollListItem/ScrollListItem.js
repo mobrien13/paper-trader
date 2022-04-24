@@ -17,15 +17,17 @@ const ScrollListItem = (props) => {
      const [upDown, setUpDown] = useState(0);
      const [closes] = useState([]);
 
-    //get watchlist (async)
-    getUserWatchList().then(result => {
-        //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-        setWatchlist(result)
-    });
 
     //function to remove item from watchlist
-    const removeItem = () => {
+    async function removeItem()  {
         // watchlist = removeByValue(props.stockName);
+
+        //get watchlist (async)
+        await getUserWatchList().then(result => {
+            //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+            setWatchlist(result)
+        });
+
         for (let i = watchlist.length - 1; i >= 0; i--) {
             if (watchlist[i].toUpperCase() === props.stockName.toUpperCase()) {
                 // console.log('splicing')
@@ -49,7 +51,6 @@ const ScrollListItem = (props) => {
                     closes.push(Number(data.candles[i].close));
                     
                 }
-                console.log(closes)
                 setUpDown(Math.round(((closes[closes.length-1]-closes[closes.length-2]) / closes[closes.length-2]) * 100 ));
             }
         )
@@ -86,4 +87,4 @@ const ScrollListItem = (props) => {
     )
 }
 
-export default ScrollListItem
+export default ScrollListItem;
