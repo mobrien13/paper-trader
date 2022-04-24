@@ -15,6 +15,7 @@ function ScrollList(props) {
     const [watchlist, setWatchlist] = useState([]);
     const [loadState, setLoadState] = useState(false);
 
+
     //get watchlist (async)
     if (watchlist.length === 0 && loadState === false){
         getUserWatchList().then(result => {
