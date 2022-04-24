@@ -60,6 +60,10 @@ const StockPage = (props) => {
     //key to cause watchlist to rerender
     // const [key, setKey] = useState(0); 
 
+    //sets data to 0 whenever the location changes
+    useEffect(() => {
+        setData(0);
+      },[location]);
 
 
     //check if the stock ticker that the user entered exists
