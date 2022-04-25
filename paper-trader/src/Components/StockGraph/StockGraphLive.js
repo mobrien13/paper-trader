@@ -18,7 +18,7 @@ class StockGraphLive extends Component {
 
   
   componentDidMount() {
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=5&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
     .then(res => res.json())
     .then(
       (data) => {
@@ -68,14 +68,16 @@ class StockGraphLive extends Component {
     )
     
     // render on 30sec interval
-   const x = setInterval(() => {
-      this.updateChart();
-    }, 30000);
-    return () => clearInterval(x);
+  //  const x = setInterval(() => {
+  //     this.updateChart();
+  //   }, 30000);
+  //   return () => clearInterval(x);
+  setTimeout(this.updateChart,1000);
 }
 
   
-  updateChart() {
+  updateChart(prevProps) {
+    console.log("here");
     let Time =  Date.now() -  (86400000 * 2) - (3600000*7)
     
     
@@ -103,6 +105,8 @@ class StockGraphLive extends Component {
       
     this.chart.render();
     console.log("updated");
+    
+    setTimeout(this.updateChart,1000);
   }
  
   render() {
