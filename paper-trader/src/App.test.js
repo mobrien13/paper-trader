@@ -148,16 +148,16 @@ describe('\nFirebase Tests:\n', () => {
 
     //watchlist
     test('test getUserWatchlist', async () => {
-        await login("admin@papertrader.com", "admin12");
+        await login("testuser@papertrader.com", "test12");
         console.log("logged in");
         //add the getUserWatchlist test here
         let watchlist = [];
         let knownWatchList = [];
         knownWatchList.push("TSLA");
         knownWatchList.push("BDX");
-        //knownWatchList.push("AAPL");
+        knownWatchList.push("AAPL");
         await getUserWatchList().then(result => {
-            //setting watchlist to watchlist value, changes app state and will reload component with new watchlist
+            //setting watchlist to watchlist value
             watchlist = result
         });
         console.log(watchlist);

@@ -7,6 +7,7 @@ import Settings from "../Pages/Settings";
 import FourOFour from '../Pages/FourOFour';
 import { Routes, Route, Redirect } from "react-router-dom";
 import StockPage from '../Pages/StockPage';
+import Test from '../Test/Test';
 import { RequireAuth } from './RequireAuth.tsx';
 
 //function
@@ -22,6 +23,7 @@ function Views() {
                 <Route path='/dashboard' element={ <RequireAuth><Dashboard></Dashboard></RequireAuth> }/>
                 <Route path='/settings' element={ <RequireAuth><Settings></Settings></RequireAuth> }/>
                 <Route path='/stock/*' element={ <RequireAuth><StockPage></StockPage></RequireAuth> }/>
+                <Route path='/test' element={ <RequireAuth><Test></Test></RequireAuth> }/>
                 <Route path='*' element={ <FourOFour></FourOFour> } />
             </Routes>
         </>
