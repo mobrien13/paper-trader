@@ -9,7 +9,7 @@ import StockGraphLive from '../StockGraph/StockGraphLive';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
-import { addToWatchlist, getUserWatchList, buyStock } from '../../firebase';
+import { addToWatchlist, getUserWatchList, buyStock, getHoldings } from '../../firebase';
 
 
 const StockPage = (props) => {
@@ -21,7 +21,8 @@ const StockPage = (props) => {
     const [buy, setBuy] = useState(false);
     const [sell, setSell] = useState(false);
     const [amount, setAmount] = useState(0);
-    
+    const [price, setPrice] = useState(0);
+
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
@@ -40,7 +41,21 @@ const StockPage = (props) => {
         marketCap: 1.0
     }
 
-    Stock.ticker = ticker
+    Stock.ticker = ticker.toUpperCase()
+    useEffect(() => {
+        fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    setPrice((Number(data.candles[data.candles.length - 1].close)).toFixed(2));
+                }
+            )
+    }, []);
+
+    Stock.price = price
+
+
+
 
     // //real database
     // const [watchlist, setWatchlist] = useState([]);
@@ -64,7 +79,7 @@ const StockPage = (props) => {
     //sets data to 0 whenever the location changes
     useEffect(() => {
         setData(0);
-      },[location]);
+    }, [location]);
 
 
     //check if the stock ticker that the user entered exists
@@ -91,10 +106,10 @@ const StockPage = (props) => {
 
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
-                 {/*<h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1> */} 
-                    <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
-                    <Button onClick={ () => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
-                    <Button onClick={ () => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
+                    {/*<h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1> */}
+                    <Button onClick={() => addToWatchlist(ticker)} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                    <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
                 </div>
                 }
 
@@ -104,11 +119,11 @@ const StockPage = (props) => {
 
                         <div className='graph-box'>
 
-                        {/*generates graph from test data this will need to be changed for graph */}
-                        {data === 0 && <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>}
+                            {/*generates graph from test data this will need to be changed for graph */}
+                            {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
 
-                        {data === 1 && <StockGraphLive title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } ></StockGraphLive>}
-                        
+                            {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} ></StockGraphLive>}
+
 
                         </div>
 
@@ -127,7 +142,6 @@ const StockPage = (props) => {
                         <div className='buyStockItem'>
                             <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3>
                             <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
-                            <button onClick = {() => buyStock(ticker, 100, 10)}>test buy</button>
 
 
                         </div>
@@ -173,10 +187,9 @@ const StockPage = (props) => {
                         {buy && !sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
-                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)}/><br />
-                                <Button onClick = {() => buyStock(ticker, 100, amount)} buttonStyle='btn--primary--outline'>Execute Market</Button>
+                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
+                                <Button onClick={() => buyStock(ticker, Stock.price, amount)} buttonStyle='btn--primary--outline'>Execute Market</Button>
                                 <br />
-
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
                             </>
                         }
@@ -187,7 +200,7 @@ const StockPage = (props) => {
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
                                 <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
-                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
+                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); console.log(getHoldings()) }}>Back</Button>
                             </>
                         }
 

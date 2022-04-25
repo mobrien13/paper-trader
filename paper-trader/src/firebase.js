@@ -48,6 +48,15 @@ export async function addUserToUsersData() {
 //buy stock 
 export async function buyStock(ticker, price, quantity) { 
   const userUid = auth.currentUser.uid
+  const holdings = collection(db, "holdings")
+  const q = query(holdings, where("uid", "==", userUid))
+  const querySnapshot = await getDocs(q)
+
+  for(let x = 0; x < querySnapshot.docs.length; x++){
+    if (querySnapshot.docs[x].data().ticker === ticker)
+    return false
+  }
+
   const docRef = await addDoc(collection(db, "holdings"), { 
     uid: userUid,
     ticker: ticker,
@@ -56,12 +65,26 @@ export async function buyStock(ticker, price, quantity) {
     quantity: quantity,
     isSold: false
   })
+  return true
+}
 
+//get holdings
+export async function getHoldings(){
+  const userUid = auth.currentUser.uid
+  const holdings = collection(db, "holdings")
+  const q = query(holdings, where("uid", "==", userUid))
+  const newArray = []
+
+  const querySnapshot = await getDocs(q)
+
+  for(let x = 0; x < querySnapshot.docs.length; x++){
+    newArray.push(querySnapshot.docs[x].data())
+  }
+
+  return newArray;
 }
 
 export async function sellStock(ticker, price, quantity) { 
-  
-
 
 }
 
