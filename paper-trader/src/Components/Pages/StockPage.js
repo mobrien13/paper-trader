@@ -22,6 +22,7 @@ const StockPage = (props) => {
     const [sell, setSell] = useState(false);
     const [amount, setAmount] = useState(0);
     const [price, setPrice] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("");
 
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
@@ -50,8 +51,7 @@ const StockPage = (props) => {
                     setPrice((Number(data.candles[data.candles.length - 1].close)).toFixed(2));
                 }
             )
-    }, []);
-
+    }, [ticker]);
     Stock.price = price
 
 
@@ -188,7 +188,22 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
-                                <Button onClick={() => buyStock(ticker, Stock.price, amount)} buttonStyle='btn--primary--outline'>Execute Market</Button>
+                                <Button onClick={ async () => { 
+                                    //waits for buy stock to complete and sets error message
+                                    await buyStock(ticker, Stock.price, amount).then(result => {
+                                        if(result === true){
+                                            //This is sent if the order successfully palces
+                                            
+                                            alert("Order placed")
+
+                                        }
+                                        if(result === false){ 
+                                            //This is sent if order fails
+                                            
+                                            alert("Order failed")
+                                        }
+                                    })
+                                    } } buttonStyle='btn--primary--outline'>Execute Market</Button>
                                 <br />
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
                             </>
