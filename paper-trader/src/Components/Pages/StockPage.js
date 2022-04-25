@@ -1,11 +1,11 @@
 import { React, useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
 import ScrollList from '../ScrollList/ScrollList';
 import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
 import StockGraph from '../StockGraph/StockGraph';
+import StockGraphLive from '../StockGraph/StockGraphLive';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
@@ -23,11 +23,6 @@ const StockPage = (props) => {
     
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
-
-    //sets data to 0 whenever the location changes
-    useEffect(() => {
-        setData(0);
-      },[location]);
 
     const [exists, setExists] = useState(0);
 
@@ -65,6 +60,10 @@ const StockPage = (props) => {
     //key to cause watchlist to rerender
     // const [key, setKey] = useState(0); 
 
+    //sets data to 0 whenever the location changes
+    useEffect(() => {
+        setData(0);
+      },[location]);
 
 
     //check if the stock ticker that the user entered exists
@@ -85,7 +84,6 @@ const StockPage = (props) => {
         )
     )
 
-
     return (
         <>
             <div className='stockPageContent container'>
@@ -93,12 +91,10 @@ const StockPage = (props) => {
 
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
-                    <h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1>
+                 {/*<h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1> */} 
                     <Button onClick={ () => addToWatchlist(ticker) } buttonStyle='btn--primary--outline'>Add to Watch List</Button>
-                    <Button onClick={ () => setData(0) } buttonStyle='btn--primary--outline'>Historical</Button>
-                    <Button onClick={ () => setData(1) } buttonStyle='btn--primary--outline'>Live</Button>
-                    <h1>{data}</h1>
-                    
+                    <Button onClick={ () => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                    <Button onClick={ () => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
                 </div>
                 }
 
@@ -109,7 +105,10 @@ const StockPage = (props) => {
                         <div className='graph-box'>
 
                         {/*generates graph from test data this will need to be changed for graph */}
-                        <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } data={data}></StockGraph>
+                        {data === 0 && <StockGraph title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() }></StockGraph>}
+
+                        {data === 1 && <StockGraphLive title={ Stock.ticker.toUpperCase() } ticker={ Stock.ticker.toUpperCase() } ></StockGraphLive>}
+                        
 
                         </div>
 
