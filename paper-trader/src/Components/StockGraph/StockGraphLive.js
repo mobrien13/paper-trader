@@ -3,7 +3,7 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-let currentTime =  Date.now() -  (86400000 * 3)
+let currentTime =  Date.now() -  (86400000)
 var temp1 = [], temp2 = [], tempy = []
 
 
@@ -18,7 +18,7 @@ class StockGraphLive extends Component {
 
   
   componentDidMount() {
-    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+    fetch("https://api.tdameritrade.com/v1/marketdata/"+this.props.ticker+"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
     .then(res => res.json())
     .then(
       (data) => {
@@ -79,7 +79,7 @@ class StockGraphLive extends Component {
 
   
   updateChart() {
-    let Time =  Date.now() -  (86400000 * 3)
+    let Time =  Date.now() -  (86400000)
     
     
     for (var i = 0; i < tempy.length; i++) {
