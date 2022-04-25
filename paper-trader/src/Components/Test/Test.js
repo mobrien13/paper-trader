@@ -6,9 +6,7 @@ import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchLi
 
 /*
 ----------THIS IS ALL PLACE HOLDER INFORMATION-------
-    -this dashboard is currently being working on by 
-          Mitch and Duncan
-    -This will all be changed to take dummy stock data
+    firebase does not allow for firestore requests inside of jest testing environment, as far as we have been able to find. Without mocking the database. So we made our own testing environment, the test page.
 */
 
 function Test() {
@@ -22,8 +20,8 @@ function Test() {
   getUserWatchList().then(result => {
     //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
     setWatchlist(result)
-    setTestingWatchList(false)
     test()
+    setTestingWatchList(false)
   });
 
   function test() {
@@ -46,7 +44,7 @@ function Test() {
 
   return (
     <>
-      <div>
+      <div className="container">
 
         <h1>Watchlist</h1>
 
@@ -54,9 +52,9 @@ function Test() {
 
           {testingWatchList && <p>Watchlist test is currently running</p>}
 
-          {!testingWatchList && watchListPass && <p>Watchlist test passes</p>}
+          {!testingWatchList && watchListPass && <p style={{color: 'green'}}>Watchlist test passes</p>}
 
-          {!testingWatchList && !watchListPass && <p>Watchlist test fails</p>}
+          {!testingWatchList && !watchListPass && <p style={{color: 'red'}}>Watchlist test fails</p>}
 
         </div>
       </div>
