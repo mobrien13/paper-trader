@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc } from "firebase/firestore";
@@ -41,6 +42,27 @@ export async function addUserToUsersData() {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+}
+
+
+//buy stock 
+export async function buyStock(ticker, price, quantity) { 
+  const userUid = auth.currentUser.uid
+  const docRef = await addDoc(collection(db, "holdings"), { 
+    uid: userUid,
+    ticker: ticker,
+    buyPrice: price,
+    sellPrice: 0,
+    quantity: quantity,
+    isSold: false
+  })
+
+}
+
+export async function sellStock(ticker, price, quantity) { 
+  
+
+
 }
 
 //get user watchlist data
