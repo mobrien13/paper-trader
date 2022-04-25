@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -84,8 +84,20 @@ export async function getHoldings(){
   return newArray;
 }
 
-export async function sellStock(ticker, price, quantity) { 
+export async function sellStock(ticker, price) { 
+  console.log(ticker)
+  ticker = ticker.toLowerCase()
+  const userUid = auth.currentUser.uid
+  const holdings = collection(db, "holdings")
+  const q = query(holdings, where("uid", "==", userUid), where("ticker", "==", ticker))
+  const querySnapshot = await getDocs(q)
 
+  const docRef = doc(db, "holdings", querySnapshot.docs[0].id)
+
+  await updateDoc(docRef, {
+    isSold: true,
+    sellPrice: price
+  })
 }
 
 //get user watchlist data
