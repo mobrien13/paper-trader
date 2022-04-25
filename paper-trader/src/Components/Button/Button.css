@@ -30,6 +30,7 @@
     color: white;
 }
 .btn--primary--outline{
+    margin: 5px;
     margin-top:15px;
     background-color: transparent;
     border: 3px solid var(--bc);
