@@ -9,7 +9,7 @@ import StockGraphLive from '../StockGraph/StockGraphLive';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
-import { addToWatchlist, getUserWatchList, buyStock, getHoldings } from '../../firebase';
+import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock } from '../../firebase';
 
 
 const StockPage = (props) => {
@@ -226,7 +226,7 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
-                                <Button buttonStyle='btn--primary--outline'>Execute Market Order</Button>
+                                <Button buttonStyle='btn--primary--outline' onClick={ async () => await sellStock(Stock.ticker, Stock.price)}>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); console.log(getHoldings()) }}>Back</Button>
                             </>
