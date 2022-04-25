@@ -54,6 +54,16 @@ const StockPage = (props) => {
     }, [ticker]);
     Stock.price = price
 
+    //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
+    const [userHoldings, setUserHoldings] = useState([])
+
+    useEffect(() => {
+        getHoldings().then(result => {
+            setUserHoldings(result)
+        }
+        )
+    }, [ticker])
+
 
 
 
@@ -147,7 +157,10 @@ const StockPage = (props) => {
                         </div>
                         <div className='buyStockItem'>
                             <h3>Current Holdings: </h3>
-                            <p>None</p>
+                            <ul>
+                                {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+                            </ul>
                         </div>
                         <div className='buyStockItem'>
                             <h3>Price History:</h3>
@@ -188,22 +201,22 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
-                                <Button onClick={ async () => { 
+                                <Button onClick={async () => {
                                     //waits for buy stock to complete and sets error message
                                     await buyStock(ticker, Stock.price, amount).then(result => {
-                                        if(result === true){
+                                        if (result === true) {
                                             //This is sent if the order successfully palces
-                                            
+
                                             alert("Order placed")
 
                                         }
-                                        if(result === false){ 
+                                        if (result === false) {
                                             //This is sent if order fails
-                                            
+
                                             alert("Order failed")
                                         }
                                     })
-                                    } } buttonStyle='btn--primary--outline'>Execute Market</Button>
+                                }} buttonStyle='btn--primary--outline'>Execute Market</Button>
                                 <br />
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
                             </>
