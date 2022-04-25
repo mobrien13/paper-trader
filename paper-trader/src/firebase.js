@@ -44,7 +44,6 @@ export async function addUserToUsersData() {
   }
 }
 
-
 //buy stock 
 export async function buyStock(ticker, price, quantity) { 
   const userUid = auth.currentUser.uid

@@ -3,6 +3,7 @@ import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { User, usersDatabase } from '../../fakeDatabase.js';
+import { Link } from 'react-router-dom';
 
 function Settings() {
     const [changeEmail, setChangeEmail] = useState(false);
@@ -79,6 +80,11 @@ function Settings() {
                     <Button buttonStyle='btn--primary--outline'>Add Funds</Button>
                 </>
             }
+
+            <br/>
+            <br/>
+            <Link to='/test'><Button>Run Tests</Button></Link>
+
         </div>
     );
 }
