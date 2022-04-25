@@ -51,7 +51,7 @@ const ScrollListItem = (props) => {
                     closes.push(Number(data.candles[i].close));
                     
                 }
-                setUpDown(Math.round(((closes[closes.length-1]-closes[closes.length-2]) / closes[closes.length-2]) * 100 ));
+                setUpDown((((closes[closes.length-1]-closes[closes.length-2]) / closes[closes.length-2]) * 100 ).toFixed(2));
             }
         )
 
@@ -60,7 +60,7 @@ const ScrollListItem = (props) => {
         .then(res => res.json())
         .then(
             (data) => {
-                setPrice(Number(data.candles[data.candles.length-1].close));
+                setPrice(Number(data.candles[data.candles.length-1].close)).toFixed(2);
             }
         )
       },[]);
