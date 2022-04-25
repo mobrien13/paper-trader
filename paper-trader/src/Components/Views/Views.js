@@ -7,7 +7,7 @@ import Settings from "../Pages/Settings";
 import FourOFour from '../Pages/FourOFour';
 import { Routes, Route, Redirect } from "react-router-dom";
 import StockPage from '../Pages/StockPage';
-import Test from '../Test/Test';
+import Test from '../Test/Test.js'
 import { RequireAuth } from './RequireAuth.tsx';
 
 //function

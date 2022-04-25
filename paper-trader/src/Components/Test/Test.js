@@ -1,4 +1,4 @@
-import { useEffect, useState  } from 'react';
+import { useEffect, useState } from 'react';
 import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList } from '../../firebase.js';
 
 
@@ -13,25 +13,36 @@ import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchLi
 
 function Test() {
 
-    const [watchlist, setWatchlist] = useState([]);
-    const [testingWatchList, setTestingWatchList] = useState(true);
-    const [watchListPass, setWatchListPass] = useState(true);
-    let knownWatchList = ["TSLA", "BDX", "AAPL"];
-    
+  const [watchlist, setWatchlist] = useState([]);
+  const [testingWatchList, setTestingWatchList] = useState(true);
+  const [watchListPass, setWatchListPass] = useState(true);
+  let knownWatchList = ["TSLA", "BDX", "AAPL"];
 
-    getUserWatchList().then(result => {
-        //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-        setWatchlist(result)
-        setTestingWatchList(false)
-    });
 
-    useEffect(() => {
-        for(let i = 0; i<3; i++){
-            if(watchlist[i].toUpperCase() !== knownWatchList[i]){
-                setWatchListPass(false)
-            }
-        }
-    },[watchlist])
+  getUserWatchList().then(result => {
+    //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+    setWatchlist(result)
+    setTestingWatchList(false)
+    test()
+  });
+
+  function test() {
+    for (let i = 0; i < 3; i++) {
+      if (watchlist[i].toUpperCase() !== knownWatchList[i]) {
+        setWatchListPass(false)
+      }
+    }
+  }
+
+  // function useAsync(asyncFn, onSuccess) {
+  //   useEffect(() => {
+  //     let isActive = true;
+  //     asyncFn().then(data => {
+  //       if (isActive) onSuccess(data);
+  //     });
+  //     return () => { isActive = false };
+  //   }, [asyncFn, onSuccess]);
+  // }
 
   return (
     <>
@@ -41,11 +52,11 @@ function Test() {
 
         <div>
 
-         {testingWatchList && <p>Watchlist test is currently running</p>}
+          {testingWatchList && <p>Watchlist test is currently running</p>}
 
-         {!testingWatchList && watchListPass && <p>Watchlist test passes</p>}
+          {!testingWatchList && watchListPass && <p>Watchlist test passes</p>}
 
-         {!testingWatchList && !watchListPass && <p>Watchlist test fails</p>}
+          {!testingWatchList && !watchListPass && <p>Watchlist test fails</p>}
 
         </div>
       </div>
