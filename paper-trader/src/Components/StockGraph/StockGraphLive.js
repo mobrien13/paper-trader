@@ -3,7 +3,7 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-let currentTime =  Date.now() -  (86400000 * 2) - (3600000*7)
+let currentTime =  Date.now() -  (86400000 * 3)
 var temp1 = [], temp2 = [], tempy = []
 
 
@@ -12,7 +12,7 @@ class StockGraphLive extends Component {
   
   constructor() {
     super();
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false};
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, time:0};
     this.updateChart = this.updateChart.bind(this);
   }
 
@@ -58,27 +58,28 @@ class StockGraphLive extends Component {
         temp1 = dps1;
         temp2 = dps2;
 
+        let timer = setTimeout(() =>{
+          console.log(this.props.data)
+          this.updateChart();
+        },20000);
+
         this.setState({
           isLoaded: true,
           dataPoints1: dps1,
           dataPoints2: dps2,
-          
+          time: timer
         });
       }
     )
     
-    // render on 30sec interval
-  //  const x = setInterval(() => {
-  //     this.updateChart();
-  //   }, 30000);
-  //   return () => clearInterval(x);
-  setTimeout(this.updateChart,1000);
+  
+  
+  
 }
 
   
-  updateChart(prevProps) {
-    console.log("here");
-    let Time =  Date.now() -  (86400000 * 2) - (3600000*7)
+  updateChart() {
+    let Time =  Date.now() -  (86400000 * 3)
     
     
     for (var i = 0; i < tempy.length; i++) {
@@ -96,17 +97,25 @@ class StockGraphLive extends Component {
           temp2.push({x: new Date(tempy[i].ary[0]), y: Number(tempy[i].ary[4])});
         }
       }
-            
+    let timer = setTimeout(() =>{
+      console.log(this.props.data)
+      this.updateChart();
+    },20000);
+    
     this.setState({
       isLoaded: true,
       dataPoints1: temp1,
       dataPoints2: temp2,
+      time:timer
     });
       
     this.chart.render();
     console.log("updated");
     
-    setTimeout(this.updateChart,1000);
+  }
+
+  componentWillUnmount(){
+    clearTimeout(this.state.time);
   }
  
   render() {

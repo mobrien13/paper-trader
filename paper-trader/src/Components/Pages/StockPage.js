@@ -132,7 +132,7 @@ const StockPage = (props) => {
                             {/*generates graph from test data this will need to be changed for graph */}
                             {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
 
-                            {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} ></StockGraphLive>}
+                            {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} data={data} ></StockGraphLive>}
 
 
                         </div>
