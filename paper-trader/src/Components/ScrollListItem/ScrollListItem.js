@@ -51,8 +51,10 @@ const ScrollListItem = (props) => {
                     closes.push(Number(data.candles[i].close));
                     
                 }
-                
-                setUpDown((((closes[closes.length-1]-closes[closes.length-2]) / closes[closes.length-2]) * 100 ).toFixed(2));
+
+                Array.prototype.reverse.call(closes);
+
+                setUpDown((((closes[closes.length-1]-closes[0]) / closes[0]) * 100 ).toFixed(2));
             }
         )
 
