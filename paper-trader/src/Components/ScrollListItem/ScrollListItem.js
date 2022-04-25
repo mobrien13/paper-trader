@@ -60,7 +60,7 @@ const ScrollListItem = (props) => {
         .then(res => res.json())
         .then(
             (data) => {
-                setPrice(Number(data.candles[data.candles.length-1].close)).toFixed(2);
+                setPrice((Number(data.candles[data.candles.length-1].close)).toFixed(2));
             }
         )
       },[]);
