@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import ScrollList from '../ScrollList/ScrollList';
 import './Dashboard.css';
 import './Pages.css';
@@ -6,6 +6,7 @@ import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
 import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
 import Trending from '../Trending/Trending'
+import { getHoldings } from '../../firebase';
 
 
 
@@ -19,8 +20,17 @@ import Trending from '../Trending/Trending'
 function Dashboard() {
 
   //fake database
-  const user = usersDatabase[0];
-  const userHoldings = user.holdings;
+  // const user = usersDatabase[0];
+  // const userHoldings = user.holdings;
+
+  const [userHoldings, setUserHoldings] = useState([])
+
+  useEffect(() => {
+    getHoldings().then(result => {
+      setUserHoldings(result)
+    }
+    )
+  }, [])
 
   return (
     <>
@@ -49,9 +59,8 @@ function Dashboard() {
           </div>
           <div className='holdings-body'>
             <ul>
-              {userHoldings.map((item) =>
-                <li>{ item.ticker }: { item.quantity } shares @ ${ item.pricePerShare }/share</li>
-              )}
+              {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+              {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
             </ul>
           </div>
         </div>
@@ -60,7 +69,7 @@ function Dashboard() {
 
         <News></News>
         {//<Trending></Trending>
-}
+        }
       </div>
     </>
   );
