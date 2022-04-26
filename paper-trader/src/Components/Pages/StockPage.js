@@ -90,7 +90,7 @@ const StockPage = (props) => {
                 }
             )
     }, [ticker]);
-    
+    Stock.name = name
     
 
     //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
@@ -155,7 +155,7 @@ const StockPage = (props) => {
 
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
-                    <h1 id='ticker'>{name}</h1>
+                    <h1 id='ticker'>{Stock.name}</h1>
                     <Button onClick={() => addToWatchlist(ticker)} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
                     <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
                     <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
