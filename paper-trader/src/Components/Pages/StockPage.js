@@ -27,6 +27,10 @@ const StockPage = (props) => {
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
+    //Name of company
+    const [name, setName] = useState(null);
+
+    // Used for rendering data if ticker exists
     const [exists, setExists] = useState(0);
 
     //creates stock object within stock page
@@ -42,6 +46,7 @@ const StockPage = (props) => {
         marketCap: 1.0
     }
 
+    // Gets Stock Price From Ameritrade API
     Stock.ticker = ticker.toUpperCase()
     useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
@@ -53,6 +58,40 @@ const StockPage = (props) => {
             )
     }, [ticker]);
     Stock.price = price
+ 
+
+
+    //Gets Stock name from Ameritrade API and cuts off uneeded characters
+    useEffect(() => {
+        fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    try {
+                        let n = data[Stock.ticker].description
+                        n = n.replaceAll(" - Common Stock","")
+
+                        if(n.length > 35){
+                            n = n.substring(0,32)
+                            let c = "..."
+                            n = n.concat(c)
+                        }
+                        else{
+                            n = n.substring(0,35)
+                        }
+                        setName(n)
+                        console.log(name)
+                    }
+
+                    catch (e){
+                        setName("failed to load")
+                        console.log(name)
+                    }  
+                }
+            )
+    }, [ticker]);
+    Stock.name = name
+    
 
     //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
     const [userHoldings, setUserHoldings] = useState([])
@@ -116,7 +155,7 @@ const StockPage = (props) => {
 
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
-                    {/*<h1 id='ticker'>{Stock.name} ({Stock.ticker.toUpperCase()})</h1> */}
+                    <h1 id='ticker'>{Stock.name}</h1>
                     <Button onClick={() => addToWatchlist(ticker)} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
                     <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
                     <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
