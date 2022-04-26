@@ -30,6 +30,7 @@ const StockPage = (props) => {
     //Name of company
     const [name, setName] = useState(null);
 
+    // Used for rendering data if ticker exists
     const [exists, setExists] = useState(0);
 
     //creates stock object within stock page
@@ -45,6 +46,7 @@ const StockPage = (props) => {
         marketCap: 1.0
     }
 
+    // Gets Stock Price From Ameritrade API
     Stock.ticker = ticker.toUpperCase()
     useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
@@ -59,39 +61,35 @@ const StockPage = (props) => {
  
 
 
-  
-        useEffect(() => {
-            fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
-                .then(res => res.json())
-                .then(
-                    (data) => {
-                        try {
-                            let n = data[Stock.ticker].description
-                            n = n.replaceAll(" - Common Stock","")
+    //Gets Stock name from Ameritrade API and cuts off uneeded characters
+    useEffect(() => {
+        fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    try {
+                        let n = data[Stock.ticker].description
+                        n = n.replaceAll(" - Common Stock","")
 
-
-                            if(n.length > 35){
-                                n = n.substring(0,32)
-                                let c = "..."
-                                n = n.concat(c)
-                            }
-                            else{
-                                n = n.substring(0,35)
-                            }
-        
-                            setName(n)
-                            console.log(name)
-        
+                        if(n.length > 35){
+                            n = n.substring(0,32)
+                            let c = "..."
+                            n = n.concat(c)
                         }
-                        catch (e){
-                            setName("failed to load")
-                            console.log(name)
+                        else{
+                            n = n.substring(0,35)
                         }
-                        
-                            
+                        setName(n)
+                        console.log(name)
                     }
-                )
-        }, [ticker]);
+
+                    catch (e){
+                        setName("failed to load")
+                        console.log(name)
+                    }  
+                }
+            )
+    }, [ticker]);
     
     
 
