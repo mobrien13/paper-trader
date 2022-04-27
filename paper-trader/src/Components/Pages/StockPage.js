@@ -54,7 +54,7 @@ const StockPage = (props) => {
     }, [location]);
 
 
-    // Gets Stock Price From Ameritrade API
+    // Gets Stock Price From Ameritrade API for Current price, day high and day low
     Stock.ticker = ticker.toUpperCase()
     useEffect(() => {
         let currentTime =  Date.now() -  (86400000)
@@ -62,9 +62,8 @@ const StockPage = (props) => {
             .then(res => res.json())
             .then(
                 (data) => {
-                    
-
                     let ary = [], close = []
+                    let min = 0, max = 0
         
                     for (var i = 0; i < data.candles.length; i++) {
                         if(new Date(data.candles[i].datetime) <= currentTime){
@@ -73,11 +72,6 @@ const StockPage = (props) => {
                             close.push(Number(data.candles[i].close))
                         }   
                     }
-
-                    console.log(Math.max(ary))
-                    
-                    let min = 0
-                    let max = 0
 
                     for(let x = 0; x < ary.length; x++){
                         if(ary[x] > max && x === 0){
@@ -94,11 +88,9 @@ const StockPage = (props) => {
                         }
                     }
 
-
                     setMax(max)
                     setMin(min)
                     setPrice((Number(close[close.length - 1])).toFixed(2));
-
                 }
             )
     }, [ticker]);
@@ -107,12 +99,23 @@ const StockPage = (props) => {
     Stock.dayHigh = max
     Stock.dayLow = min
  
-    //Gets Stock name from Ameritrade API and cuts off uneeded characters
+    //Gets Stock name from Ameritrade API and cuts off uneeded characters and checks if stock exists
     useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
             .then(res => res.json())
             .then(
                 (data) => {
+
+                    const isEmpty = Object.keys(data).length
+
+                    if (isEmpty !== 0) {
+                        //renders page
+                        setExists(1);
+                    }
+                    else {
+                        setExists(2);
+                    }
+
                     try {
                         let n = data[Stock.ticker].description
                         n = n.replaceAll(" - Common Stock", "")
@@ -128,48 +131,27 @@ const StockPage = (props) => {
                         setName(n)
 
                     }
-
-                    catch (e) {
+                    catch (e){
                         setName("failed to load")
+                    }  
 
-                    }
                 }
             )
     }, [ticker]);
     Stock.name = name
 
-
-    //check if the stock ticker that the user entered exists
-    fetch(fetch("https://api.tdameritrade.com/v1/marketdata/" + ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
-        .then(res => res.json())
-        .then(
-            (data) => {
-                const isEmpty = Object.keys(data).length
-
-                if (isEmpty !== 0) {
-                    //renders page
-                    setExists(1);
-                }
-                else {
-                    setExists(2);
-                }
-            }
-        )
-    )
-
+/////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     useEffect(() => {
         getHoldings().then(result => {
-            setUserHoldings(result)
-        }
-        )
+            setUserHoldings(result)})
     }, [ticker])
 
     //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
     const [userHoldings, setUserHoldings] = useState([])
+
     const [key, setKey] = useState(0)
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
     return (
         <>
             <div className='stockPageContent container'>
@@ -307,5 +289,4 @@ const StockPage = (props) => {
         </>
     )
 }
-
 export default StockPage
