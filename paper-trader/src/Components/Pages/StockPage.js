@@ -27,6 +27,8 @@ const StockPage = (props) => {
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
+    const [min, setMin] = useState(0)
+    const [max, setMax] = useState(0)
     //Name of company
     const [name, setName] = useState(null);
 
@@ -46,6 +48,12 @@ const StockPage = (props) => {
         marketCap: 1.0
     }
 
+    //sets data to 0 whenever the location changes
+    useEffect(() => {
+        setData(0);
+    }, [location]);
+
+
     // Gets Stock Price From Ameritrade API
     Stock.ticker = ticker.toUpperCase()
     useEffect(() => {
@@ -59,8 +67,6 @@ const StockPage = (props) => {
     }, [ticker]);
     Stock.price = price
  
-
-
     //Gets Stock name from Ameritrade API and cuts off uneeded characters
     useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
@@ -80,56 +86,18 @@ const StockPage = (props) => {
                             n = n.substring(0,35)
                         }
                         setName(n)
-                        console.log(name)
+                       
                     }
 
                     catch (e){
                         setName("failed to load")
-                        console.log(name)
+                        
                     }  
                 }
             )
     }, [ticker]);
     Stock.name = name
     
-
-    //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
-    const [userHoldings, setUserHoldings] = useState([])
-
-    useEffect(() => {
-        getHoldings().then(result => {
-            setUserHoldings(result)
-        }
-        )
-    }, [ticker])
-
-
-
-
-    // //real database
-    // const [watchlist, setWatchlist] = useState([]);
-
-    // //get watchlist (async)
-    // getUserWatchList().then(result => {
-    //     //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-    //     setWatchlist(result)
-    // });
-
-    // //function to add stock to watchlist
-    // const addToWatchlist = () => {
-    //     watchlist.push(ticker)
-    //     setUserWatchList(watchlist)
-    //     console.log('new watchlist')
-    // }
-
-    //key to cause watchlist to rerender
-    // const [key, setKey] = useState(0); 
-
-    //sets data to 0 whenever the location changes
-    useEffect(() => {
-        setData(0);
-    }, [location]);
-
 
     //check if the stock ticker that the user entered exists
     fetch(fetch("https://api.tdameritrade.com/v1/marketdata/" + ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
@@ -149,6 +117,86 @@ const StockPage = (props) => {
         )
     )
 
+
+    useEffect(() => {
+        let currentTime =  Date.now() -  (86400000)
+        fetch("https://api.tdameritrade.com/v1/marketdata/"+ ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+        .then(res => res.json())
+        .then(
+            (data) => {
+                let ary = []
+        
+                for (var i = 0; i < data.candles.length; i++) {
+                    if(new Date(data.candles[i].datetime) <= currentTime){
+                        ary.push(Number(data.candles[i].high))
+                        ary.push(Number(data.candles[i].low))
+                    }   
+                }
+
+                console.log(Math.max(ary))
+                
+                let min = 0
+                let max = 0
+
+                for(let x = 0; x < ary.length; x++){
+                    if(ary[x] > max && x === 0){
+                        max = ary[x]
+                        min = ary[x]
+                    }
+
+                    if(ary[x] > max){
+                        max = ary[x]
+                    }
+
+                    if(ary[x] < min){
+                        min = ary[x]
+                    }
+                }
+
+
+                setMax(max)
+                setMin(min)
+                
+            }
+        )
+    }, [ticker])
+
+    Stock.dayHigh = max
+    Stock.dayLow = min
+    
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+    useEffect(() => {
+        getHoldings().then(result => {
+            setUserHoldings(result)
+        }
+        )
+    }, [ticker])
+    
+    //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
+    const [userHoldings, setUserHoldings] = useState([])
+
+    //real database
+    // const [watchlist, setWatchlist] = useState([]);
+
+    // //get watchlist (async)
+    // getUserWatchList().then(result => {
+    //     //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+    //     setWatchlist(result)
+    // });
+
+    // //function to add stock to watchlist
+    // const addToWatchlist = () => {
+    //     watchlist.push(ticker)
+    //     setUserWatchList(watchlist)
+    //     console.log('new watchlist')
+    // }
+
+    //key to cause watchlist to rerender
+    // const [key, setKey] = useState(0); 
+    
+    
+    
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
     return (
         <>
             <div className='stockPageContent container'>

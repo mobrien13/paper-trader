@@ -71,10 +71,6 @@ class StockGraphLive extends Component {
         });
       }
     )
-    
-  
-  
-  
 }
 
   
