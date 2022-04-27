@@ -85,7 +85,7 @@ class StockGraph extends Component {
       theme: "light1",
       animationEnabled: "true",
       animationDuration: 1300,
-      
+  
       charts: [{
         
         axisX: {
