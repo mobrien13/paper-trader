@@ -13,17 +13,19 @@ function ScrollList(props) {
 
     //real database
     const [watchlist, setWatchlist] = useState([]);
-    const [loadState, setLoadState] = useState(false);
-
+    // const [loadState, setLoadState] = useState(false);
 
     //get watchlist (async)
-    if (watchlist.length === 0 && loadState === false){
-        getUserWatchList().then(result => {
-            //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-            setWatchlist(result)
-        });
-    }
+    useEffect(() => {
+            getUserWatchList().then(result => {
+                //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+                setWatchlist(result)
+                console.log("get/set watchlist")
+            });
+    },[])
 
+
+    //try making a function inn scrolllist that is called on stockpage button click 
 
     return (
         <>
@@ -39,7 +41,7 @@ function ScrollList(props) {
 
                         //update parent list (this compoente) when child item (scrollListItem) is removed
                         changeWatchlist={(newList) => setWatchlist(newList)}
-                        changeLoading={() => setLoadState(true)}
+                        // changeLoading={() => setLoadState(true)}
 
                     ></ScrollListItem>
                 )

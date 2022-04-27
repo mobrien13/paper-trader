@@ -32,12 +32,12 @@ const ScrollListItem = (props) => {
         for (let i = watchlist.length - 1; i >= 0; i--) {
             if (watchlist[i].toUpperCase() === props.stockName.toUpperCase()) {
                 // console.log('splicing')
-                watchlist.splice(i, 1);
+                setWatchlist(watchlist.splice(i, 1));
                 setUserWatchList(watchlist)
 
                 //updates parent list
                 props.changeWatchlist(watchlist)
-                props.changeLoading()
+                // props.changeLoading()
             }
         }
     }
@@ -100,6 +100,7 @@ const ScrollListItem = (props) => {
                 <Sparklines data={closes} width={100} height={30} limit={8}>
                     <SparklinesLine color="white" style={{ fill: "none}" }} />
                 </Sparklines>
+                
                 <div><i onClick={() => removeItem()} className="fa fa-minus-circle" aria-hidden="true"></i></div>
 
             </div>
