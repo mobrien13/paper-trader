@@ -37,9 +37,6 @@ function ScrollList(props) {
                         // pulls stockname from users watchlist
                         stockName={item.toUpperCase()}
 
-                        // dummy data
-                        price="$135" upDown="+4%" data={[5, 10, 5, 18, 20, 8, 15, 12, 4, 21]}
-
                         //update parent list (this compoente) when child item (scrollListItem) is removed
                         changeWatchlist={(newList) => setWatchlist(newList)}
                         changeLoading={() => setLoadState(true)}

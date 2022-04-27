@@ -86,7 +86,7 @@ const ScrollListItem = (props) => {
                 <Link to={'/stock/' + props.stockName} className='scrollListLink'>
                     <div>Up/Down<br></br>{upDown + "%"}</div>
                 </Link>
-                
+
                 {/* //generates graph */}
                 <Sparklines data={closes} width={100} height={30} limit={8}>
                     <SparklinesLine color="white" style={{ fill: "none}" }} />
