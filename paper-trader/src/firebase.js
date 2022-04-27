@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc, Timestamp } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -50,9 +50,10 @@ export async function buyStock(ticker, price, quantity) {
   const holdings = collection(db, "holdings")
   const q = query(holdings, where("uid", "==", userUid))
   const querySnapshot = await getDocs(q)
+  const timeBought = Timestamp.now()
 
   for(let x = 0; x < querySnapshot.docs.length; x++){
-    if (querySnapshot.docs[x].data().ticker === ticker)
+    if (querySnapshot.docs[x].data().ticker === ticker )
     return false
   }
 
@@ -62,7 +63,8 @@ export async function buyStock(ticker, price, quantity) {
     buyPrice: price,
     sellPrice: 0,
     quantity: quantity,
-    isSold: false
+    isSold: false,
+    date: timeBought
   })
   return true
 }
@@ -95,7 +97,9 @@ export async function sellStock(ticker, price) {
 
   await updateDoc(docRef, {
     isSold: true,
-    sellPrice: price
+    sellPrice: price,
+    date: Timestamp.now()
+
   })
 }
 
