@@ -120,14 +120,7 @@ class StockGraphLive extends Component {
  
   render() {
     const options = {
-      theme: "light1",
-      
-      title:{
-        text: `${ this.props.title }`,
-        fontFamily: 'Arial',
-        fontColor: '#484a4d'
-      },
-      
+      theme: "light1",    
      
       charts: [{
         
