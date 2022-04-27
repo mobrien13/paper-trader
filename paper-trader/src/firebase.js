@@ -36,7 +36,21 @@ export async function addUserToUsersData() {
       firstName: "John",
       lastName: "Doe",
       funds: 1000,
-      watchlist: ["tsla", "bdx"]
+      watchlist: ["tsla", "bdx"],
+      orders: { 
+        holdings: {
+          tsla: {
+            ticker: "tsla", 
+            buyPrice: 1004.97,
+            amount: 1,
+            isSold: false,
+            sellPrice: null
+          },
+        },
+        reciepts: {
+
+        }
+      }
     });
     console.log("Successfully added user to usersData");
   } catch (e) {
@@ -56,8 +70,16 @@ export async function buyStock(ticker, price, quantity) {
     if (querySnapshot.docs[x].data().ticker === ticker )
     return false
   }
+  
 
-  const docRef = await addDoc(collection(db, "holdings"), { 
+  //get current amount from database
+
+  //add the amount user wants to it 
+
+  
+
+
+  const docRef = await addDoc(collection(db, "usersData"), { 
     uid: userUid,
     ticker: ticker,
     buyPrice: price,
@@ -66,6 +88,7 @@ export async function buyStock(ticker, price, quantity) {
     isSold: false,
     date: timeBought
   })
+
   return true
 }
 
