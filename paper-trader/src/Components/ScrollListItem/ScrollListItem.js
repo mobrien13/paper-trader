@@ -64,7 +64,16 @@ const ScrollListItem = (props) => {
             .then(res => res.json())
             .then(
                 (data) => {
-                    setPrice((Number(data.candles[data.candles.length - 1].close)).toFixed(2));
+                    let currentTime =  Date.now() -  (86400000)
+                    let close = []
+
+                    for (var i = 0; i < data.candles.length; i++) {
+                        if(new Date(data.candles[i].datetime) <= currentTime){
+                            close.push(Number(data.candles[i].close))
+                        }   
+                    }
+
+                    setPrice((Number(close[close.length - 1])).toFixed(2));
                 }
             )
     }, []);
