@@ -69,3 +69,8 @@
 .scroll-list::-webkit-scrollbar{
     display: none;
 }
+
+.scrollListLink{
+    color:white;
+    margin: 5px;
+}
