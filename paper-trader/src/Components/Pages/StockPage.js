@@ -95,6 +95,7 @@ const StockPage = (props) => {
             )
     }, [ticker]);
     Stock.price = price
+
     Stock.dayHigh = max
     Stock.dayLow = min
  
@@ -117,35 +118,39 @@ const StockPage = (props) => {
 
                     try {
                         let n = data[Stock.ticker].description
-                        n = n.replaceAll(" - Common Stock","")
+                        n = n.replaceAll(" - Common Stock", "")
 
-                        if(n.length > 35){
-                            n = n.substring(0,32)
+                        if (n.length > 35) {
+                            n = n.substring(0, 32)
                             let c = "..."
                             n = n.concat(c)
                         }
-                        else{
-                            n = n.substring(0,35)
+                        else {
+                            n = n.substring(0, 35)
                         }
                         setName(n)
-                       
+
                     }
                     catch (e){
                         setName("failed to load")
                     }  
+
                 }
             )
     }, [ticker]);
     Stock.name = name
+
 /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+
     useEffect(() => {
         getHoldings().then(result => {
             setUserHoldings(result)})
     }, [ticker])
-    
+
     //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
     const [userHoldings, setUserHoldings] = useState([])
- 
+
+    const [key, setKey] = useState(0)
 
     return (
         <>
@@ -154,7 +159,9 @@ const StockPage = (props) => {
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name}</h1>
-                    <Button onClick={() => addToWatchlist(ticker)} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    <Button onClick={() => addToWatchlist(ticker).then(() => {
+                        setKey(key + 1);
+                    })} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
                     <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
                     <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
                 </div>
@@ -176,7 +183,7 @@ const StockPage = (props) => {
 
 
                         {/* Watchlist placeholder*/}
-                        <ScrollList title="Watch List"> </ScrollList>
+                        <ScrollList title="Watch List" key={key}> </ScrollList>
 
                     </div>
                 }
@@ -263,7 +270,7 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
-                                <Button buttonStyle='btn--primary--outline' onClick={ async () => await sellStock(Stock.ticker, Stock.price)}>Execute Market Order</Button>
+                                <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price)}>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); console.log(getHoldings()) }}>Back</Button>
                             </>

@@ -27,6 +27,7 @@ const user = {
 //authorizes user
 const auth = getAuth();
 
+
 //add user to usersData - this function is called in signup directly after an account is created successfully
 export async function addUserToUsersData() {
   try {

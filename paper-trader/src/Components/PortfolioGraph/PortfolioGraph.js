@@ -10,8 +10,7 @@ class PortfolioGraph extends Component {
     const options = {
       theme:"light1",
       animationEnabled: "True",
-      animationDuration: 1200,
-      
+      animationDuration: 1200,      
 
       charts: [{
           xaxis:{
