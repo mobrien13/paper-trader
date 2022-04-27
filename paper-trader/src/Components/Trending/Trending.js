@@ -7,7 +7,7 @@ import React from "react";
 
   var options = {
     method: 'GET',
-    url: 'https://yfapi.net/v1/finance/trending/{US}',
+    url: 'https://yfapi.net/v1/finance/trending/US',
     params: {modules: 'defaultKeyStatistics,assetProfile'},
     headers: {
       'x-api-key': 'PLqDQn3va62W9uCxdBpx1a5eQpJxc9NCatyBeWcW'
