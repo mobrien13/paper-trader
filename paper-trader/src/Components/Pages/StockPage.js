@@ -57,15 +57,54 @@ const StockPage = (props) => {
     // Gets Stock Price From Ameritrade API
     Stock.ticker = ticker.toUpperCase()
     useEffect(() => {
+        let currentTime =  Date.now() -  (86400000)
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
             .then(res => res.json())
             .then(
                 (data) => {
-                    setPrice((Number(data.candles[data.candles.length - 1].close)).toFixed(2));
+                    
+
+                    let ary = [], close = []
+        
+                    for (var i = 0; i < data.candles.length; i++) {
+                        if(new Date(data.candles[i].datetime) <= currentTime){
+                            ary.push(Number(data.candles[i].high))
+                            ary.push(Number(data.candles[i].low))
+                            close.push(Number(data.candles[i].close))
+                        }   
+                    }
+
+                    console.log(Math.max(ary))
+                    
+                    let min = 0
+                    let max = 0
+
+                    for(let x = 0; x < ary.length; x++){
+                        if(ary[x] > max && x === 0){
+                            max = ary[x]
+                            min = ary[x]
+                        }
+
+                        if(ary[x] > max){
+                            max = ary[x]
+                        }
+
+                        if(ary[x] < min){
+                            min = ary[x]
+                        }
+                    }
+
+
+                    setMax(max)
+                    setMin(min)
+                    setPrice((Number(close[close.length - 1])).toFixed(2));
+
                 }
             )
     }, [ticker]);
     Stock.price = price
+    Stock.dayHigh = max
+    Stock.dayLow = min
  
     //Gets Stock name from Ameritrade API and cuts off uneeded characters
     useEffect(() => {
@@ -118,51 +157,9 @@ const StockPage = (props) => {
     )
 
 
-    useEffect(() => {
-        let currentTime =  Date.now() -  (86400000)
-        fetch("https://api.tdameritrade.com/v1/marketdata/"+ ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
-        .then(res => res.json())
-        .then(
-            (data) => {
-                let ary = []
-        
-                for (var i = 0; i < data.candles.length; i++) {
-                    if(new Date(data.candles[i].datetime) <= currentTime){
-                        ary.push(Number(data.candles[i].high))
-                        ary.push(Number(data.candles[i].low))
-                    }   
-                }
-
-                console.log(Math.max(ary))
-                
-                let min = 0
-                let max = 0
-
-                for(let x = 0; x < ary.length; x++){
-                    if(ary[x] > max && x === 0){
-                        max = ary[x]
-                        min = ary[x]
-                    }
-
-                    if(ary[x] > max){
-                        max = ary[x]
-                    }
-
-                    if(ary[x] < min){
-                        min = ary[x]
-                    }
-                }
 
 
-                setMax(max)
-                setMin(min)
-                
-            }
-        )
-    }, [ticker])
-
-    Stock.dayHigh = max
-    Stock.dayLow = min
+    
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     useEffect(() => {
