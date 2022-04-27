@@ -5,6 +5,7 @@
   "dependencies": {
     "@testing-library/user-event": "^13.5.0",
     "apexcharts": "^3.33.2",
+    "axios": "^0.27.1",
     "enzyme-adapter": "^0.0.1-security.0",
     "firebase": "^9.6.11",
     "framer-motion": "^6.2.8",
