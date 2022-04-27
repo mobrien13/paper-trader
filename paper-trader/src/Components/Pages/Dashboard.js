@@ -68,7 +68,7 @@ function Dashboard() {
         {/* News Componenet With Placeholders*/}
 
         <News></News>
-        {//<Trending></Trending>
+        {<Trending></Trending>
         }
       </div>
     </>
