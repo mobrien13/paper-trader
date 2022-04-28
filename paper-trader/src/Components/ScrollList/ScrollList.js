@@ -17,35 +17,42 @@ function ScrollList(props) {
 
     //get watchlist (async)
     useEffect(() => {
-            getUserWatchList().then(result => {
-                //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-                setWatchlist(result)
-                console.log("get/set watchlist")
-            });
-    },[])
+        getUserWatchList().then(result => {
+            //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+            setWatchlist(result)
+            console.log("get/set watchlist")
+        });
+    }, [])
 
 
     //try making a function inn scrolllist that is called on stockpage button click 
 
     return (
         <>
-            <div className='scroll-list'>
+            <div className='scroll-list-container'>
+
                 <div className='list-title'>{props.title}</div>
-                {/* //list of all stocks within the scroll list */}
 
-                {watchlist.map((item) =>
+                <div className='scroll-list'>
 
-                    <ScrollListItem
-                        // pulls stockname from users watchlist
-                        stockName={item.toUpperCase()}
+                    {/* //list of all stocks within the scroll list */}
 
-                        //update parent list (this compoente) when child item (scrollListItem) is removed
-                        changeWatchlist={(newList) => setWatchlist(newList)}
+
+                    {watchlist.map((item) =>
+
+                        <ScrollListItem
+                            // pulls stockname from users watchlist
+                            stockName={item.toUpperCase()}
+
+                            //update parent list (this compoente) when child item (scrollListItem) is removed
+                            changeWatchlist={(newList) => setWatchlist(newList)}
                         // changeLoading={() => setLoadState(true)}
 
-                    ></ScrollListItem>
-                )
-                }
+                        ></ScrollListItem>
+                    )
+                    }
+                    
+                </div>
 
             </div>
         </>

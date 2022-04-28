@@ -1,22 +1,8 @@
-.scroll-list{
-    display:flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.scroll-list-container{
 
-    /* float:left; */
-    align-items: center;
-    flex:auto;
-
+    overflow: hidden;
+    
     margin-top: 10px;
-
-    /* max-height: 500px;
-    max-width: 20%;
-    min-height: 500px; */
-
-
-    width: 20vw;
-    height: 60vh;
 
     border-width: 5px;
     border-style: solid;
@@ -24,6 +10,20 @@
     border-radius: 10px;
 
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-list{
+    display:flex;
+    flex-direction: column;
+
+    /* float:left; */
+    align-items: center;
+    flex:auto;
+
+    min-width: 20vw;
+    height: 54vh;
+
+    overflow-y: scroll;
 }
 
 .list-body{
@@ -62,7 +62,12 @@
 
     font-weight: bold;
     background-color: var(--bc);
+    /* background: linear-gradient(180deg, rgba(0,102,255,1) 80%, rgba(0,0,0,0) 100%); */
     color: var(--text-color);
+
+    padding-top: 5px;
+
+    height: 6vh;
 
 }
 
