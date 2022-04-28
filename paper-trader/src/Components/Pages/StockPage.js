@@ -27,8 +27,12 @@ const StockPage = (props) => {
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
+    // usestates for stock object data
     const [min, setMin] = useState(0)
     const [max, setMax] = useState(0)
+    const [min52, setMin52] = useState(0)
+    const [max52, setMax52] = useState(0)
+
     //Name of company
     const [name, setName] = useState(null);
 
@@ -90,7 +94,9 @@ const StockPage = (props) => {
 
                     setMax(max.toFixed(2))
                     setMin(min.toFixed(2))
-                    setPrice((Number(close[close.length - 1])).toFixed(2))
+
+                    // TO DO MOVE TO BUY MODAL
+                    //setPrice((Number(close[close.length - 1])).toFixed(2))
                 }
             )
     }, [ticker]);
@@ -139,6 +145,48 @@ const StockPage = (props) => {
             )
     }, [ticker]);
     Stock.name = name
+
+
+    // For 52 week range
+    useEffect(() => {
+        let currentTime =  Date.now() -  (86400000)
+        fetch("https://api.tdameritrade.com/v1/marketdata/"+ Stock.ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    let ary = []
+                    let min = 0, max = 0
+        
+                    for (var i = 0; i < data.candles.length; i++) {
+                        if(new Date(data.candles[i].datetime) <= currentTime){
+                            ary.push(Number(data.candles[i].high))
+                            ary.push(Number(data.candles[i].low))
+                        }   
+                    }
+
+                    for(let x = 0; x < ary.length; x++){
+                        if(ary[x] > max && x === 0){
+                            max = ary[x]
+                            min = ary[x]
+                        }
+
+                        if(ary[x] > max){
+                            max = ary[x]
+                        }
+
+                        if(ary[x] < min){
+                            min = ary[x]
+                        }
+                    }
+
+                    setMax52(max.toFixed(2))
+                    setMin52(min.toFixed(2))
+                }
+            )
+
+    },[ticker]);
+    Stock.fiftyTwoHigh =  max52
+    Stock.fiftyTwoLow = min52
 
 /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
@@ -194,7 +242,7 @@ const StockPage = (props) => {
                 {exists === 1 &&
                     <Box>
                         <div className='buyStockItem'>
-                            <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3>
+                            {/* <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3> */}
                             <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
 
 
@@ -214,7 +262,7 @@ const StockPage = (props) => {
                         <div className='buyStockItem'>
                             <h3>Info:</h3>
                             <p>Market Cap: {Stock.marketCap}</p>
-                            <p>52-Week Range: {Stock.fiftyTwoLow} - {Stock.fiftyTwoHigh}</p>
+                            <p>52-Week Range: ${Stock.fiftyTwoHigh} - ${Stock.fiftyTwoLow}</p>
                         </div>
                     </Box>
                 }
