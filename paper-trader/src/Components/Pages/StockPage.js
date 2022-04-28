@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef } from 'react';
+import { React, useEffect, useState, useRef,useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
 import ScrollList from '../ScrollList/ScrollList';
@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
 import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock } from '../../firebase';
+import { waitForPendingWrites } from 'firebase/firestore';
 
 
 const StockPage = (props) => {
@@ -32,6 +33,7 @@ const StockPage = (props) => {
     const [max, setMax] = useState(0)
     const [min52, setMin52] = useState(0)
     const [max52, setMax52] = useState(0)
+    
 
     //Name of company
     const [name, setName] = useState(null);
@@ -47,9 +49,10 @@ const StockPage = (props) => {
         dayLow: 1.0,
         fiftyTwoHigh: 1.0,
         fiftyTwoLow: 1.0,
+        fiftyTwoPercent: 1.0,
         name: "Name",
-        ticker: "MMMM",
-        marketCap: 1.0
+        ticker: "MMMM"
+        
     }
 
     //sets data to 0 whenever the location changes
@@ -60,7 +63,7 @@ const StockPage = (props) => {
 
     // Gets Stock Price From Ameritrade API for Current price, day high and day low
     Stock.ticker = ticker.toUpperCase()
-    useEffect(() => {
+    useLayoutEffect(() => {
         let currentTime =  Date.now() -  (86400000)
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
             .then(res => res.json())
@@ -96,17 +99,17 @@ const StockPage = (props) => {
                     setMin(min.toFixed(2))
 
                     // TO DO MOVE TO BUY MODAL
-                    //setPrice((Number(close[close.length - 1])).toFixed(2))
+                    setPrice((Number(close[close.length - 1])).toFixed(2))
+                    
                 }
             )
     }, [ticker]);
     Stock.price = price
-
     Stock.dayHigh = max
     Stock.dayLow = min
  
     //Gets Stock name from Ameritrade API and cuts off uneeded characters and checks if stock exists
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
             .then(res => res.json())
             .then(
@@ -148,7 +151,7 @@ const StockPage = (props) => {
 
 
     // For 52 week range
-    useEffect(() => {
+    useLayoutEffect(() => {
         let currentTime =  Date.now() -  (86400000)
         fetch("https://api.tdameritrade.com/v1/marketdata/"+ Stock.ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
             .then(res => res.json())
@@ -178,7 +181,6 @@ const StockPage = (props) => {
                             min = ary[x]
                         }
                     }
-
                     setMax52(max.toFixed(2))
                     setMin52(min.toFixed(2))
                 }
@@ -187,6 +189,7 @@ const StockPage = (props) => {
     },[ticker]);
     Stock.fiftyTwoHigh =  max52
     Stock.fiftyTwoLow = min52
+    Stock.fiftyTwoPercent = (((Stock.price - Stock.fiftyTwoHigh) / Stock.fiftyTwoHigh) * 100).toFixed(2)
 
 /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
@@ -261,7 +264,7 @@ const StockPage = (props) => {
                         </div>
                         <div className='buyStockItem'>
                             <h3>Info:</h3>
-                            <p>Market Cap: {Stock.marketCap}</p>
+                            <p>52-Week Change: {Stock.fiftyTwoPercent}%</p>
                             <p>52-Week Range: ${Stock.fiftyTwoHigh} - ${Stock.fiftyTwoLow}</p>
                         </div>
                     </Box>
