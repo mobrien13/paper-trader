@@ -88,9 +88,9 @@ const StockPage = (props) => {
                         }
                     }
 
-                    setMax(max)
-                    setMin(min)
-                    setPrice((Number(close[close.length - 1])).toFixed(2));
+                    setMax(max.toFixed(2))
+                    setMin(min.toFixed(2))
+                    setPrice((Number(close[close.length - 1])).toFixed(2))
                 }
             )
     }, [ticker]);
