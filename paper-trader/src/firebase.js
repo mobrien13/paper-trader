@@ -32,6 +32,7 @@ export async function addUserToUsersData() {
   try {
     const userUid = auth.currentUser.uid;
     const docRef = await addDoc(collection(db, "usersData"), {
+      //this builds users data, giving them tsla as a holding
       uid: userUid,
       firstName: "John",
       lastName: "Doe",
