@@ -110,7 +110,7 @@ const StockPage = (props) => {
     Stock.dayLow = min
 
     //Gets Stock name from Ameritrade API and cuts off uneeded characters and checks if stock exists
-    useLayoutEffect(() => {
+    useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
             .then(res => res.json())
             .then(
@@ -154,7 +154,7 @@ const StockPage = (props) => {
     /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     // For 52 week range
-    useLayoutEffect(() => {
+    useEffect(() => {
         let currentTime =  Date.now() -  (86400000)
         fetch("https://api.tdameritrade.com/v1/marketdata/"+ Stock.ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
             .then(res => res.json())
@@ -192,6 +192,8 @@ const StockPage = (props) => {
     },[ticker]);
     Stock.fiftyTwoHigh =  max52
     Stock.fiftyTwoLow = min52
+    console.log("Price -"+Stock.price)
+    console.log("high -"+Stock.fiftyTwoHigh)
     Stock.fiftyTwoPercent = (((Stock.price - Stock.fiftyTwoHigh) / Stock.fiftyTwoHigh) * 100).toFixed(2)
 
 /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
