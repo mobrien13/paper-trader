@@ -6,7 +6,7 @@ import './News.css';
 const News = () => {
   return (
     <>
-      <div className='news-block'>
+      <div className='news-container'>
         <div className='list-title'>News</div>
         <div className='news'>
           <div className='news-item'>News Item 1</div>
