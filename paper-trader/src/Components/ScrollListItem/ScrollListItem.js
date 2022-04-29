@@ -76,7 +76,8 @@ const ScrollListItem = (props) => {
                     setPrice((Number(close[close.length - 1])).toFixed(2));
                 }
             )
-    }, []);
+            
+    }, [Location]);
 
 
 

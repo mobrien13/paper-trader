@@ -60,7 +60,6 @@ const StockPage = (props) => {
         setData(0);
     }, [location]);
 
-
     // Gets Stock Price From Ameritrade API for Current price, day high and day low
     Stock.ticker = ticker.toUpperCase()
     useLayoutEffect(() => {
