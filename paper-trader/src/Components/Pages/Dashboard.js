@@ -49,7 +49,7 @@ function Dashboard() {
           </div>
 
           {/* Watchlist placeholder*/}
-          <ScrollList title="Watch List"> </ScrollList>
+          <ScrollList title="Watchlist"> </ScrollList>
 
         </div>
 
@@ -85,7 +85,7 @@ function Dashboard() {
       </div>
 
       {/* Footer */}
-      <div className='footerDark' />
+      <div className='spacer layer1' />
 
     </>
   );

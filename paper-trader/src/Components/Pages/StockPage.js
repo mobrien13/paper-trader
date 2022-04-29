@@ -159,9 +159,16 @@ const StockPage = (props) => {
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name}</h1>
-                    <Button onClick={() => addToWatchlist(ticker).then(() => {
+
+                    {/* Old Add To Watchlist Button */}
+                    {/* <Button onClick={() => addToWatchlist(ticker).then(() => {
                         setKey(key + 1);
-                    })} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
+                    })} buttonStyle='btn--primary--outline'>Watchlist</Button> */}
+
+                    {/* New Add To Watchlist Button */}
+                    <i onClick={() => addToWatchlist(ticker).then(() => { setKey(key + 1); })}className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+
+
                     <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
                     <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
                 </div>
@@ -183,7 +190,7 @@ const StockPage = (props) => {
 
 
                         {/* Watchlist placeholder*/}
-                        <ScrollList title="Watch List" key={key}> </ScrollList>
+                        <ScrollList title="Watchlist" key={key}> </ScrollList>
 
                     </div>
                 }
@@ -286,6 +293,10 @@ const StockPage = (props) => {
                 }
 
             </div>
+
+            {/* Footer */}
+            <div className='spacer layer1' />
+            
         </>
     )
 }
