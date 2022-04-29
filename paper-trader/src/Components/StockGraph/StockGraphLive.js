@@ -3,8 +3,6 @@ import CanvasJSReact from '../../canvasjs.stock.react';
 const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
-let currentTime = Date.now() - (86400000)
-var temp1 = [], temp2 = [], tempy = []
 
 
 CanvasJS.addColorSet("candleStickColors",
@@ -18,21 +16,22 @@ class StockGraphLive extends Component {
 
   constructor() {
     super();
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, time: 0 };
+    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false, times: null, temp1: [], temp2: [], tempy: []};
     this.updateChart = this.updateChart.bind(this);
   }
 
 
   componentDidMount() {
+    const currentTime = Date.now() - (86400000)
     fetch("https://api.tdameritrade.com/v1/marketdata/" + this.props.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
         (data) => {
-          let dps1 = [], dps2 = [];
+          let dps1 = [], dps2 = [], array = [];
 
 
           for (var i = 0; i < data.candles.length; i++) {
-            if (new Date(data.candles[i].datetime) <= currentTime) {
+            if (new Date(data.candles[i].datetime) < currentTime) {
               dps1.push({
                 x: new Date(data.candles[i].datetime),
                 y: [
@@ -48,7 +47,7 @@ class StockGraphLive extends Component {
             }
 
             if (new Date(data.candles[i].datetime) > currentTime) {
-              tempy.push({
+              array.push({
                 ary: [
                   new Date(data.candles[i].datetime),
                   Number(data.candles[i].open),
@@ -61,9 +60,6 @@ class StockGraphLive extends Component {
 
           }
 
-          temp1 = dps1;
-          temp2 = dps2;
-
           let timer = setTimeout(() => {
             console.log(this.props.data)
             this.updateChart();
@@ -73,7 +69,10 @@ class StockGraphLive extends Component {
             isLoaded: true,
             dataPoints1: dps1,
             dataPoints2: dps2,
-            time: timer
+            times: timer,
+            temp1: dps1,
+            temp2: dps2,
+            tempy: array
           });
         }
       )
@@ -81,22 +80,21 @@ class StockGraphLive extends Component {
 
 
   updateChart() {
-    let Time = Date.now() - (86400000)
+    const Time = Date.now() - (86400000)
 
-
-    for (var i = 0; i < tempy.length; i++) {
-      if (new Date(tempy[i].ary[0]) <= Time) {
-        temp1.push({
-          x: new Date(tempy[i].ary[0]),
+    for (var i = 0; i < this.state.tempy.length; i++) {
+      if (new Date(this.state.tempy[i].ary[0]) < Time) {
+        this.state.temp1.push({
+          x: new Date(this.state.tempy[i].ary[0]),
           y: [
-            Number(tempy[i].ary[1]),
-            Number(tempy[i].ary[2]),
-            Number(tempy[i].ary[3]),
-            Number(tempy[i].ary[4])
+            Number(this.state.tempy[i].ary[1]),
+            Number(this.state.tempy[i].ary[2]),
+            Number(this.state.tempy[i].ary[3]),
+            Number(this.state.tempy[i].ary[4])
           ]
         });
 
-        temp2.push({ x: new Date(tempy[i].ary[0]), y: Number(tempy[i].ary[4]) });
+        this.state.temp2.push({ x: new Date(this.state.tempy[i].ary[0]), y: Number(this.state.tempy[i].ary[4]) });
       }
     }
     let timer = setTimeout(() => {
@@ -106,9 +104,9 @@ class StockGraphLive extends Component {
 
     this.setState({
       isLoaded: true,
-      dataPoints1: temp1,
-      dataPoints2: temp2,
-      time: timer
+      dataPoints1: this.state.temp1,
+      dataPoints2: this.state.temp2,
+      times: timer
     });
 
     this.chart.render();
@@ -117,7 +115,18 @@ class StockGraphLive extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.time);
+    clearTimeout(this.state.times);
+
+    this.setState({
+      isLoaded: false,
+      dataPoints1: [],
+      dataPoints2: [],
+      times: null,
+      temp1: null,
+      temp2: null,
+      tempy: null
+    });
+
   }
 
   render() {
@@ -130,6 +139,7 @@ class StockGraphLive extends Component {
         axisX: {
           lineThickness: 3,
           tickLength: 0,
+          interval: 50,
 
           valueFormatString: "h:mm",
 
