@@ -20,7 +20,8 @@ a{
 
 .navbar{
     height: var(--nav-size);
-    background-color: var(--bc);
+    /* background-color: var(--bc); */
+    background: linear-gradient(45deg, rgb(0, 80, 199),rgb(0, 102, 255), rgba(0,102,255,1));
     padding: 0 1rem;
     border-bottom: var(--border);
 }

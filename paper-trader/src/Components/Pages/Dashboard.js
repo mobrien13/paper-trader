@@ -81,7 +81,12 @@ function Dashboard() {
         <News></News>
         {//<Trending></Trending>
         }
+
       </div>
+
+      {/* Footer */}
+      <div className='footerDark' />
+
     </>
   );
 }
