@@ -60,8 +60,6 @@ class StockGraphLive extends Component {
 
           }
 
-        
-
           let timer = setTimeout(() => {
             console.log(this.props.data)
             this.updateChart();
@@ -83,7 +81,6 @@ class StockGraphLive extends Component {
 
   updateChart() {
     const Time = Date.now() - (86400000) - (3600000*5)
-
 
     for (var i = 0; i < this.state.tempy.length; i++) {
       if (new Date(this.state.tempy[i].ary[0]) < Time) {
