@@ -299,7 +299,7 @@ const StockPage = (props) => {
 
                 {/* News Component with Dummy Values */}
                 {exists === 1 &&
-                    <News></News>
+                    <News keyWord={Stock.ticker}></News>
                 }
 
                 {/* Order Popup */}
