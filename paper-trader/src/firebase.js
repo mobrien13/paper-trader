@@ -39,18 +39,18 @@ export async function addUserToUsersData() {
       funds: 1000,
       watchlist: ["tsla", "bdx"],
       orders: { 
-        holdings: {
-          tsla: {
-            ticker: "tsla", 
-            buyPrice: 1004.97,
-            amount: 1,
-            isSold: false,
-            sellPrice: null
-          },
-        },
-        reciepts: {
+        holdings: [{
+          ticker: "tsla",
+          amount: 1,
+          buyPrice: 420,
+          isSold: false,
+          sellPrice: null,
+          timebought: Timestamp.now(),
+          timesold: null
+        }],
+        reciepts: [{
 
-        }
+        }]
       }
     });
     console.log("Successfully added user to usersData");
@@ -61,50 +61,33 @@ export async function addUserToUsersData() {
 
 //buy stock 
 export async function buyStock(ticker, price, quantity) { 
-  const userUid = auth.currentUser.uid
-  const holdings = collection(db, "holdings")
-  const q = query(holdings, where("uid", "==", userUid))
-  const querySnapshot = await getDocs(q)
-  const timeBought = Timestamp.now()
+  //get current user
+  const userUid = auth.currentUser.uid;
 
-  for(let x = 0; x < querySnapshot.docs.length; x++){
-    if (querySnapshot.docs[x].data().ticker === ticker )
-    return false
-  }
-  
+  //get document path
+  const holdings = collection(db, "usersData", "")
 
-  //get current amount from database
+  //get stock if there is the same stock
 
-  //add the amount user wants to it 
-
-  
+  //update stock
 
 
-  const docRef = await addDoc(collection(db, "usersData"), { 
-    uid: userUid,
-    ticker: ticker,
-    buyPrice: price,
-    sellPrice: 0,
-    quantity: quantity,
-    isSold: false,
-    date: timeBought
-  })
-
-  return true
 }
 
 //get holdings
 export async function getHoldings(){
   const userUid = auth.currentUser.uid
-  const holdings = collection(db, "holdings")
+  const holdings = collection(db, "usersData")
   const q = query(holdings, where("uid", "==", userUid))
   const newArray = []
 
   const querySnapshot = await getDocs(q)
 
   for(let x = 0; x < querySnapshot.docs.length; x++){
-    newArray.push(querySnapshot.docs[x].data())
+    newArray.push(querySnapshot.docs[x].data().orders.holdings)
   }
+
+  console.log(newArray)
 
   return newArray;
 }
