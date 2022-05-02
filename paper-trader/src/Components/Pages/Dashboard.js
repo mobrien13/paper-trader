@@ -60,8 +60,8 @@ function Dashboard() {
           </div>
           <div className='holdings-body'>
             <ul>
-              {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-              {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+              {userHoldings.map((item) => !item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+              {userHoldings.map((item) => item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
             </ul>
           </div>
         </div> */}

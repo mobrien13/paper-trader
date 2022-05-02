@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc, Timestamp } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -33,11 +33,26 @@ export async function addUserToUsersData() {
   try {
     const userUid = auth.currentUser.uid;
     const docRef = await addDoc(collection(db, "usersData"), {
+      //this builds users data, giving them tsla as a holding
       uid: userUid,
       firstName: "John",
       lastName: "Doe",
       funds: 1000,
-      watchlist: ["tsla", "bdx"]
+      watchlist: ["tsla", "bdx"],
+      orders: { 
+        holdings: [{
+          ticker: "tsla",
+          amount: 1,
+          buyPrice: 420,
+          isSold: false,
+          sellPrice: null,
+          timebought: Timestamp.now(),
+          timesold: null
+        }],
+        reciepts: [{
+
+        }]
+      }
     });
     console.log("Successfully added user to usersData");
   } catch (e) {
@@ -47,39 +62,33 @@ export async function addUserToUsersData() {
 
 //buy stock 
 export async function buyStock(ticker, price, quantity) { 
-  const userUid = auth.currentUser.uid
-  const holdings = collection(db, "holdings")
-  const q = query(holdings, where("uid", "==", userUid))
-  const querySnapshot = await getDocs(q)
+  //get current user
+  const userUid = auth.currentUser.uid;
 
-  for(let x = 0; x < querySnapshot.docs.length; x++){
-    if (querySnapshot.docs[x].data().ticker === ticker)
-    return false
-  }
+  //get document path
+  const holdings = collection(db, "usersData", "")
 
-  const docRef = await addDoc(collection(db, "holdings"), { 
-    uid: userUid,
-    ticker: ticker,
-    buyPrice: price,
-    sellPrice: 0,
-    quantity: quantity,
-    isSold: false
-  })
-  return true
+  //get stock if there is the same stock
+
+  //update stock
+
+
 }
 
 //get holdings
 export async function getHoldings(){
   const userUid = auth.currentUser.uid
-  const holdings = collection(db, "holdings")
+  const holdings = collection(db, "usersData")
   const q = query(holdings, where("uid", "==", userUid))
   const newArray = []
 
   const querySnapshot = await getDocs(q)
 
   for(let x = 0; x < querySnapshot.docs.length; x++){
-    newArray.push(querySnapshot.docs[x].data())
+    newArray.push(querySnapshot.docs[x].data().orders.holdings)
   }
+
+  console.log(newArray)
 
   return newArray;
 }
@@ -96,7 +105,9 @@ export async function sellStock(ticker, price) {
 
   await updateDoc(docRef, {
     isSold: true,
-    sellPrice: price
+    sellPrice: price,
+    date: Timestamp.now()
+
   })
 }
 
