@@ -77,10 +77,7 @@ function Dashboard() {
         </Orders>
 
         {/* News Componenet With Placeholders*/}
-
-        <News></News>
-        {//<Trending></Trending>
-        }
+        <News keyWord='stock market'></News>
 
       </div>
 
