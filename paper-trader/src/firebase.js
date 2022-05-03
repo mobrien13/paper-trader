@@ -78,14 +78,14 @@ export async function buyStock(ticker, price, quantity) {
 //get holdings
 export async function getHoldings(){
   const userUid = auth.currentUser.uid
-  const holdings = collection(db, "usersData")
-  const q = query(holdings, where("uid", "==", userUid))
+  const col = collection(db, "usersData")
+  const q = query(col, where("uid", "==", userUid))
   const newArray = []
 
   const querySnapshot = await getDocs(q)
 
   for(let x = 0; x < querySnapshot.docs.length; x++){
-    newArray.push(querySnapshot.docs[x].data().orders.holdings)
+    newArray.push(querySnapshot.docs[x].data().orders.holdings[x])
   }
 
   console.log(newArray)
