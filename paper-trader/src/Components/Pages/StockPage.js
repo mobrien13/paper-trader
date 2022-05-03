@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef,useLayoutEffect } from 'react';
+import { React, useEffect, useState, useRef} from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
 import ScrollList from '../ScrollList/ScrollList';
@@ -6,11 +6,9 @@ import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
 import StockGraph from '../StockGraph/StockGraph';
 import StockGraphLive from '../StockGraph/StockGraphLive';
-import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
 import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock } from '../../firebase';
-import { waitForPendingWrites } from 'firebase/firestore';
 
 
 const StockPage = (props) => {
