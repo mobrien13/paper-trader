@@ -276,8 +276,8 @@ const StockPage = (props) => {
                         <div className='buyStockItem'>
                             <h3>Current Holdings: </h3>
                             <ul>
-                                {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+                                {/* {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)} */}
                             </ul>
                         </div>
                         <div className='buyStockItem'>
