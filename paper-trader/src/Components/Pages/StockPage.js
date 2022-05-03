@@ -127,6 +127,7 @@ const StockPage = (props) => {
                     try {
                         let n = data[Stock.ticker].description
                         n = n.replaceAll(" - Common Stock", "")
+                        n = n.replaceAll(" Common Stock", "")
 
                         if (n.length > 35) {
                             n = n.substring(0, 32)
