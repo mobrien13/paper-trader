@@ -62,34 +62,36 @@ const StockPage = (props) => {
 
     // Gets Stock Price From Ameritrade API for Current price, day high and day low
     Stock.ticker = ticker.toUpperCase()
-    useLayoutEffect(() => {
-        let currentTime =  Date.now() -  (86400000)
+
+    useEffect(() => {
+        let currentTime = Date.now() - (86400000)
+
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
             .then(res => res.json())
             .then(
                 (data) => {
                     let ary = [], close = []
                     let min = 0, max = 0
-        
+
                     for (var i = 0; i < data.candles.length; i++) {
-                        if(new Date(data.candles[i].datetime) <= currentTime){
+                        if (new Date(data.candles[i].datetime) <= currentTime) {
                             ary.push(Number(data.candles[i].high))
                             ary.push(Number(data.candles[i].low))
                             close.push(Number(data.candles[i].close))
-                        }   
+                        }
                     }
 
-                    for(let x = 0; x < ary.length; x++){
-                        if(ary[x] > max && x === 0){
+                    for (let x = 0; x < ary.length; x++) {
+                        if (ary[x] > max && x === 0) {
                             max = ary[x]
                             min = ary[x]
                         }
 
-                        if(ary[x] > max){
+                        if (ary[x] > max) {
                             max = ary[x]
                         }
 
-                        if(ary[x] < min){
+                        if (ary[x] < min) {
                             min = ary[x]
                         }
                     }
@@ -106,9 +108,9 @@ const StockPage = (props) => {
     Stock.price = price
     Stock.dayHigh = max
     Stock.dayLow = min
- 
+
     //Gets Stock name from Ameritrade API and cuts off uneeded characters and checks if stock exists
-    useLayoutEffect(() => {
+    useEffect(() => {
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/quotes?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD")
             .then(res => res.json())
             .then(
@@ -140,9 +142,9 @@ const StockPage = (props) => {
                         setName(n)
 
                     }
-                    catch (e){
+                    catch (e) {
                         setName("failed to load")
-                    }  
+                    }
 
                 }
             )
@@ -150,8 +152,10 @@ const StockPage = (props) => {
     Stock.name = name
 
 
+    /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+
     // For 52 week range
-    useLayoutEffect(() => {
+    useEffect(() => {
         let currentTime =  Date.now() -  (86400000)
         fetch("https://api.tdameritrade.com/v1/marketdata/"+ Stock.ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
             .then(res => res.json())
@@ -189,13 +193,16 @@ const StockPage = (props) => {
     },[ticker]);
     Stock.fiftyTwoHigh =  max52
     Stock.fiftyTwoLow = min52
+    console.log("Price -"+Stock.price)
+    console.log("high -"+Stock.fiftyTwoHigh)
     Stock.fiftyTwoPercent = (((Stock.price - Stock.fiftyTwoHigh) / Stock.fiftyTwoHigh) * 100).toFixed(2)
 
 /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     useEffect(() => {
         getHoldings().then(result => {
-            setUserHoldings(result)})
+            setUserHoldings(result)
+        })
     }, [ticker])
 
     //set holdings whenever the ticker changes - in the future we will need this to update whenever something is bought or sold aswell
@@ -210,11 +217,28 @@ const StockPage = (props) => {
                 {/* Page Title */}
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name}</h1>
-                    <Button onClick={() => addToWatchlist(ticker).then(() => {
+
+                    {/* Old Add To Watchlist Button */}
+                    {/* <Button onClick={() => addToWatchlist(ticker).then(() => {
                         setKey(key + 1);
-                    })} buttonStyle='btn--primary--outline'>Add to Watch List</Button>
-                    <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
-                    <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
+                    })} buttonStyle='btn--primary--outline'>Watchlist</Button> */}
+
+                    {/* New Add To Watchlist Button */}
+                    <i onClick={() => addToWatchlist(ticker).then(() => { setKey(key + 1); })} className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+
+
+                    {/* Hides historical button if the graph is in historical mode */}
+
+                    {data === 1 &&
+                        <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                    }
+
+                    {/* Hides live button if the graph is in live mode */}
+
+                    {data === 0 &&
+                        <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
+                    }
+
                 </div>
                 }
 
@@ -234,7 +258,7 @@ const StockPage = (props) => {
 
 
                         {/* Watchlist placeholder*/}
-                        <ScrollList title="Watch List" key={key}> </ScrollList>
+                        <ScrollList title="Watchlist" key={key}> </ScrollList>
 
                     </div>
                 }
@@ -253,8 +277,8 @@ const StockPage = (props) => {
                         <div className='buyStockItem'>
                             <h3>Current Holdings: </h3>
                             <ul>
-                                {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+                                {/* {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)} */}
                             </ul>
                         </div>
                         <div className='buyStockItem'>
@@ -275,9 +299,9 @@ const StockPage = (props) => {
 
 
                 {/* News Component with Dummy Values */}
-                {exists === 1 &&
-                    <News></News>
-                }
+                {/* {exists === 1 &&
+                    <News keyWord={Stock.ticker}></News>
+                } */}
 
                 {/* Order Popup */}
                 {exists === 1 &&
@@ -337,6 +361,10 @@ const StockPage = (props) => {
                 }
 
             </div>
+
+            {/* Footer */}
+            <div className='spacer layer1' />
+
         </>
     )
 }

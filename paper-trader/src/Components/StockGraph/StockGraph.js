@@ -128,6 +128,10 @@ class StockGraph extends Component {
           labelFormatter: function (e) {
             return "";
           },
+          lineColor: "#242526",
+          tickColor: "#242526",
+          titleFontColor: "#242526",
+          gridColor: "#242526",
 
           crosshair: {
             enabled: true,
@@ -142,6 +146,10 @@ class StockGraph extends Component {
           title: "Price USD",
           prefix: "$",
           tickLength: 0,
+          lineColor: "#242526",
+          tickColor: "#242526",
+          titleFontColor: "#242526",
+          gridColor: "#242526",
         },
 
         data: [{

@@ -3,6 +3,7 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { usersDatabase } from '../../fakeDatabase.js';
 import { getUserWatchList, setUserWatchList } from '../../firebase';
 import { Link } from 'react-router-dom';
+import '../ScrollList/ScrollList.css';
 
 
 const ScrollListItem = (props) => {
@@ -102,7 +103,7 @@ const ScrollListItem = (props) => {
                     <SparklinesLine color="white" style={{ fill: "none}" }} />
                 </Sparklines>
                 
-                <div><i onClick={() => removeItem()} className="fa fa-minus-circle" aria-hidden="true"></i></div>
+                <div className='watchListMinus'><i onClick={() => removeItem()} className="fa fa-minus-circle" aria-hidden="true"></i></div>
 
             </div>
 

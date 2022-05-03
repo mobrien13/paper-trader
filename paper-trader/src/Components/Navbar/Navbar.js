@@ -14,18 +14,25 @@ function Navbar(props) {
   return (
     <>
       <nav className="navbar">
+          {/*places logo as link to main page*/}
+          <Link to='/'>
+            <span className='logoTitle'>
+              <img className="logo" src={logo} />
+              <h1>PaperTrader</h1>
+            </span>
+          </Link>
 
-        {/*places logo as link to main page*/}  
-        <Link to='/'><img className="logo" src={logo} /></Link>
+          {/*generates buttons with props*/}
+          <ul className="navbar-buttons">
 
-        {/*generates buttons with props*/}
-        <ul className="navbar-buttons">
-          {useAuth() != null && <Search />}
-          {props.children} </ul>
+            {useAuth() != null && <Search />}
+            {props.children}
 
-        {/*this may be uneeded*/}
-        <ul className="navbar-links">
-        </ul>
+          </ul>
+
+          {/*this may be uneeded*/}
+          <ul className="navbar-links">
+          </ul>
       </nav>
 
 

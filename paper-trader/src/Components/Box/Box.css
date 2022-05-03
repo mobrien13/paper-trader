@@ -1,16 +1,14 @@
 .box{
     /* sizing */
-    margin: 10px;
-    
+    margin-top: 10px;    
     margin-bottom: 20px;
     
     /* looks */
     border-radius: 10px;
     padding: 20px;
-    
     /* color */
     color: white;
-    background-color: var(--bg-accent);
+    background-color: var(--bg);
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
     
     /* flex display settings */
