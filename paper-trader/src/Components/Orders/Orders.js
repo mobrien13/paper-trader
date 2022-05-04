@@ -13,7 +13,7 @@ const Orders = (props) => {
     //sets holdings initially to empty so it doesnt brick
     const [holdings, setHoldings] = useState([{
         ticker: "HOLDINGS IS EMPTY",
-        amount: 0,
+        quantity: 0,
         buyPrice: 0,
         isSold: false,
         sellPrice: null,
@@ -96,7 +96,7 @@ const Orders = (props) => {
                         receipts.map((item, i) => {
                             if (i > 0) {
                                 return (
-                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} amount={item.quantity} cost={item.buyPrice * item.quantity}  profit={(item.sellPrice * item.amount) - (item.buyPrice * item.amount)} date={item.timebought} ></OrderItem>
+                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity}  profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
                                 )
                             }
                         })

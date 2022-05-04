@@ -126,14 +126,13 @@ export async function getHoldings() {
   catch (e) {
     return [{
       ticker: "HOLDINGS DOES NOT EXIST",
-      amount: null,
+      quantity: null,
       buyPrice: null,
       isClosed: false,
       isValid: true,
       sellPrice: null,
       timebought: null,
       timesold: null
-
     }];
   }
 }
@@ -159,7 +158,7 @@ export async function getReceipts() {
   catch (e) {
     return [{
       ticker: "RECEIPTS DOES NOT EXIST",
-      amount: null,
+      quantity: null,
       buyPrice: null,
       isValid: true,
       isClosed: false,
@@ -214,6 +213,7 @@ export async function sellStock(ticker, price, quantity) {
             && querySnapshot.docs[0].data().holdings[i].quantity === quantity
             && querySnapshot.docs[0].data().holdings[i].quantitySold === 0) {
             //update the docs here
+
           }
 
           //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) < quantity
@@ -221,6 +221,7 @@ export async function sellStock(ticker, price, quantity) {
           //for this case they wont necessarily be in order still which will screw up fifo. need to think of a better way to do it. will implement it like this for now. sell order only matters if you are filing taxes 
           if (!querySnapshot.docs[0].data().holdings[i].isClosed
             && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < quantity){
+              //update the docs here
 
             }
 
@@ -230,6 +231,7 @@ export async function sellStock(ticker, price, quantity) {
             if (!querySnapshot.docs[0].data().holdings[i].isClosed
               && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > quantity) {
               //update the docs here
+
             }
 
           //doc is updated in here
