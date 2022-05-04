@@ -39,7 +39,7 @@ export async function addUserToUsersData() {
       lastName: "Doe",
       funds: 1000,
       watchlist: ["TSLA", "BDX"],
-      holdings:[{}],
+      holdings: [{}],
       // holdings: [{
       //   ticker: "tsla",
       //   amount: 1,
@@ -123,34 +123,91 @@ export async function getHoldings() {
   }
   catch (e) {
     return [{
-        ticker: "HOLDINGS DOES NOT EXIST",
-        amount: null,
-        buyPrice: null,
-        isSold: false,
-        sellPrice: null,
-        timebought: null,
-        timesold: null
+      ticker: "HOLDINGS DOES NOT EXIST",
+      amount: null,
+      buyPrice: null,
+      isSold: false,
+      sellPrice: null,
+      timebought: null,
+      timesold: null
 
     }];
   }
 }
 
-export async function sellStock(ticker, price) {
-  console.log(ticker)
-  ticker = ticker.toLowerCase()
-  const userUid = auth.currentUser.uid
-  const holdings = collection(db, "holdings")
-  const q = query(holdings, where("uid", "==", userUid), where("ticker", "==", ticker))
-  const querySnapshot = await getDocs(q)
+export async function sellStock(ticker, price, quantity) {
+  // old
+  // console.log(ticker)
+  // ticker = ticker
+  // const userUid = auth.currentUser.uid
+  // const holdings = collection(db, "holdings")
+  // const q = query(holdings, where("uid", "==", userUid), where("ticker", "==", ticker))
+  // const querySnapshot = await getDocs(q)
 
-  const docRef = doc(db, "holdings", querySnapshot.docs[0].id)
+  // const docRef = doc(db, "holdings", querySnapshot.docs[0].id)
 
-  await updateDoc(docRef, {
-    isSold: true,
-    sellPrice: price,
-    date: Timestamp.now()
+  // await updateDoc(docRef, {
+  //   isSold: true,
+  //   sellPrice: price,
+  //   date: Timestamp.now()
+  // })
 
-  })
+  //TODO:
+
+  //get all of the holdings for the stock that they want to sell
+  //for now, no shorting
+
+  //sell from the holdings that were purchased first, then sell subsequent holdings
+
+  //create a receipt for each holding sold
+
+  //return true, when complete
+
+  try {
+    //sets up query
+    const userUid = auth.currentUser.uid
+    const col = collection(db, "usersData")
+    const q = query(col, where("uid", "==", userUid))
+
+    //does query
+    const querySnapshot = await getDocs(q)
+
+    //sets consts for us later
+    const docId = querySnapshot.docs[0].id
+    const docRef = doc(db, "userData", querySnapshot.docs[0].id)
+
+
+    let totalSold = 0;
+
+    for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
+      if (totalSold < quantity) {
+
+        //if holdings[i] !isClosed and holdings[i].quantitySold === quantity 
+          //flag as closed, create receipt
+
+        //if holdings[i] !isClosed and holdings[i].quantitySold < quantity
+          //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price and date
+
+        //if holdings[i] !isClosed and holdings[i].quantitySold > quantity
+          //flag as closed, make a receipt, continue looping because there are more to be sold
+
+        //if it gets passed the previous ones after the loops end, and total sold>0, then the user wants to short
+        //dissallow the short position for now, implement later
+
+        //doc is updated in here
+        await updateDoc(docRef, {
+
+        })
+
+      }
+    }
+
+  }
+  catch (e) {
+    console.log(e)
+    return false;
+  }
+
 }
 
 //get user watchlist data
