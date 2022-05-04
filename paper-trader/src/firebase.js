@@ -49,7 +49,7 @@ export async function addUserToUsersData() {
       //   timebought: Date.now(),
       //   timesold: null
       // }],
-      reciepts: [{
+      receipts: [{
 
       }]
     });
@@ -84,7 +84,8 @@ export async function buyStock(ticker, price, quantity) {
           ticker: ticker.toUpperCase(),
           amount: quantity,
           buyPrice: price,
-          isSold: false,
+          isClosed: false,
+          isValid: true,
           sellPrice: null,
           timebought: Date.now(),
           timesold: null
@@ -126,7 +127,8 @@ export async function getHoldings() {
       ticker: "HOLDINGS DOES NOT EXIST",
       amount: null,
       buyPrice: null,
-      isSold: false,
+      isClosed: false,
+      isValid: true,
       sellPrice: null,
       timebought: null,
       timesold: null
@@ -134,6 +136,41 @@ export async function getHoldings() {
     }];
   }
 }
+
+//get receipts
+export async function getReceipts() {
+  try {
+    const userUid = auth.currentUser.uid
+    const col = collection(db, "usersData")
+    const q = query(col, where("uid", "==", userUid))
+    const newArray = []
+
+    const querySnapshot = await getDocs(q)
+
+    for (let i = 0; i < querySnapshot.docs[0].data().receipts.length; i++) {
+      newArray.push(querySnapshot.docs[0].data().receipts[i])
+    }
+
+    console.log(newArray)
+
+    return newArray;
+  }
+  catch (e) {
+    return [{
+      ticker: "RECEIPTS DOES NOT EXIST",
+      amount: null,
+      buyPrice: null,
+      isValid: true,
+      isClosed: false,
+      sellPrice: null,
+      timebought: null,
+      timesold: null
+
+    }];
+  }
+}
+
+
 
 export async function sellStock(ticker, price, quantity) {
   // old
