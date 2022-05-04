@@ -186,7 +186,7 @@ export async function sellStock(ticker, price, quantity) {
           //flag as closed, create receipt
 
         //if holdings[i] !isClosed and holdings[i].quantitySold < quantity
-          //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price and date
+          //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price, original date, and remaining share quantity
 
         //if holdings[i] !isClosed and holdings[i].quantitySold > quantity
           //flag as closed, make a receipt, continue looping because there are more to be sold
