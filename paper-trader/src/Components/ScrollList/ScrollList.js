@@ -19,8 +19,10 @@ function ScrollList(props) {
     useEffect(() => {
         getUserWatchList().then(result => {
             //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-            setWatchlist(result)
-            console.log("get/set watchlist")
+            if(watchlist!==null){
+                setWatchlist(result)
+                console.log("get/set watchlist")
+            }
         });
     }, [])
 
@@ -38,7 +40,7 @@ function ScrollList(props) {
                     {/* //list of all stocks within the scroll list */}
 
 
-                    {watchlist.map((item) =>
+                    {watchlist.length>=1 && watchlist.map((item) =>
 
                         <ScrollListItem
                             // pulls stockname from users watchlist
