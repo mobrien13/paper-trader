@@ -29,3 +29,20 @@
     margin:0;
     padding:0;
 }
+
+.orders-content table{
+    /* width: 100%; */
+    text-align: center;
+    /* add another comma for max width */
+    width: min(100% - 2rem);
+    margin-inline: auto;
+
+    overflow: auto;
+}
+
+.orders-content table tr th{
+    padding: 10px;
+}
+.orders-content table tr td{
+    padding: 10px;
+}

@@ -70,10 +70,10 @@ function Dashboard() {
         {/* Orders/Holdings Component */}
         <Orders>
           {/* for now it has both open and closed orders. in the future, it should just show the open orders and have a separate menu to so the receipts */}
-          <ul>
-            {/* {userHoldings.map((item) => !item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-            {userHoldings.map((item) => item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)} */}
-          </ul>
+          {/* <ul>
+            {userHoldings.map((item) => !item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+            {userHoldings.map((item) => item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+          </ul> */}
         </Orders>
 
         {/* News Componenet With Placeholders*/}
