@@ -1,32 +1,48 @@
-import React, { Component } from "react";
-import CanvasJSReact from '../../canvasjs.stock.react';
-const CanvasJS = CanvasJSReact.CanvasJS;
-const CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
+import React, { useEffect, useState} from "react";
+import './Trending.css'
 
- //https://canvasjs.com/data/gallery/jquery/samsung-electronics-stock-price.json
- 
- //https://api.tdameritrade.com/v1/marketdata/`${props.ticker}`/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=2&frequencyType=daily&needExtendedHoursData=false
- 
-class Trending extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { dataPoints1: [], dataPoints2: [], isLoaded: false };
-  }
-}
+//Use axios to call trending method from yahoo finance API
 
-/*var axios = require("axios").default;
+ const Trending = () => {
+  var axios = require("axios").default;
+  const [ary, setAry] = useState([])
 
-var options = {
-  method: 'GET',
-  url: 'https://yfapi.net/v1/finance/trending/US',
-  params: {modules: 'defaultKeyStatistics,assetProfile'},
-  headers: {
-    'x-api-key': 'PLqDQn3va62W9uCxdBpx1a5eQpJxc9NCatyBeWcW'
-  }
-};
+  var options = {
+    method: 'GET',
+    url: 'https://yfapi.net/v1/finance/trending/US',
+    params: {modules: 'defaultKeyStatistics,assetProfile'},
+    headers: {
+      'x-api-key': 'VypvXxHoUD4phTAdK6H5xZvPWTcHzS9pn5jtCr90'
+    }
+  };
+  
+  useEffect(() => {
+    axios.request(options).then(function (response) {
+      console.log(response.data.finance.result[0].quotes);
+      let trending = response.data.finance.result[0].quotes;
+    for( let i =0; i < trending.length; i++){
+      ary.push(response.data.finance.result[0].quotes[i]);
+    }
+    console.log(ary[0].symbol)
+    }).catch(function (error) {
+      console.error(error);
+    }); 
+  },[])
 
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});*/
+   return (
+     <>
+          <div className='trendingContainer'>Trending
+            <ol className='trender'>
+              {ary.map((item, i) => {
+                if (i<10){
+                return(
+                  <li>{item.symbol}</li>
+                )
+                }
+              })}
+            </ol>
+          </div>  
+     </>
+   )
+ }
+export default Trending;
