@@ -7,6 +7,7 @@ import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
 import Trending from '../Trending/Trending'
 import { getHoldings } from '../../firebase';
+import Orders from '../Orders/Orders';
 
 
 
@@ -36,7 +37,7 @@ function Dashboard() {
     <>
       <div className='backround container'>
 
-        <h1 id='dashboardHeading'>Dashboard</h1>
+        {/* <h1 id='dashboardHeading'>Dashboard</h1> */}
 
         <div className='graphAndWatchlist'>
 
@@ -48,28 +49,42 @@ function Dashboard() {
           </div>
 
           {/* Watchlist placeholder*/}
-          <ScrollList title="Watch List"> </ScrollList>
+          <ScrollList title="Watchlist"> </ScrollList>
 
         </div>
 
         {/* holdings placeholder*/}
-        <div className='holdings'>
+        {/* <div className='holdings'>
           <div className='holdings-title'>
             <h3>Holdings:</h3>
           </div>
           <div className='holdings-body'>
             <ul>
-              {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-              {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+              {userHoldings.map((item) => !item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+              {userHoldings.map((item) => item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
             </ul>
           </div>
-        </div>
+        </div> */}
 
-        {/* News Componenet With Placeholders*/}
-        <Trending></Trending>
-        <News></News>
-        
+
+        {/* Orders/Holdings Component */}
+        <Orders>
+          {/* for now it has both open and closed orders. in the future, it should just show the open orders and have a separate menu to so the receipts */}
+          {/* <ul>
+            {userHoldings.map((item) => !item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
+            {userHoldings.map((item) => item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
+          </ul> */}
+        </Orders>
+
+    
+ 
+        {/* <News keyWord='stock market'></News> */}
+
       </div>
+
+      {/* Footer */}
+      <div className='spacer layer1' />
+
     </>
   );
 }

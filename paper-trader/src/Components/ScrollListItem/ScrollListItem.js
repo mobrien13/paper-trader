@@ -3,6 +3,7 @@ import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { usersDatabase } from '../../fakeDatabase.js';
 import { getUserWatchList, setUserWatchList } from '../../firebase';
 import { Link } from 'react-router-dom';
+import '../ScrollList/ScrollList.css';
 
 
 const ScrollListItem = (props) => {
@@ -32,12 +33,12 @@ const ScrollListItem = (props) => {
         for (let i = watchlist.length - 1; i >= 0; i--) {
             if (watchlist[i].toUpperCase() === props.stockName.toUpperCase()) {
                 // console.log('splicing')
-                watchlist.splice(i, 1);
+                setWatchlist(watchlist.splice(i, 1));
                 setUserWatchList(watchlist)
 
                 //updates parent list
                 props.changeWatchlist(watchlist)
-                props.changeLoading()
+                // props.changeLoading()
             }
         }
     }
@@ -76,7 +77,8 @@ const ScrollListItem = (props) => {
                     setPrice((Number(close[close.length - 1])).toFixed(2));
                 }
             )
-    }, []);
+            
+    }, [Location]);
 
 
 
@@ -97,10 +99,11 @@ const ScrollListItem = (props) => {
                 </Link>
 
                 {/* //generates graph */}
-                <Sparklines data={closes} width={100} height={30} limit={8}>
+                <Sparklines data={closes}  height={30} limit={8}>
                     <SparklinesLine color="white" style={{ fill: "none}" }} />
                 </Sparklines>
-                <div><i onClick={() => removeItem()} className="fa fa-minus-circle" aria-hidden="true"></i></div>
+                
+                <div className='watchListMinus'><i onClick={() => removeItem()} className="fa fa-minus-circle" aria-hidden="true"></i></div>
 
             </div>
 
