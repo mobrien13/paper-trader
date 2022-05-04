@@ -67,7 +67,7 @@ const Orders = (props) => {
                         {holdings.length >= 1 && holdings.map((item, i) => {
                             if (i > 0) {
                                 return (
-                                    <OrderItem key={i} ticker={item.ticker} buyPrice={item.buyPrice} amount={item.amount} cost={item.buyPrice * item.amount} date={item.timebought} ></OrderItem>
+                                    <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} ></OrderItem>
                                 )
                             }
                         }
@@ -76,23 +76,32 @@ const Orders = (props) => {
                 </div>
 
                 <br />
-                <Button onClick={() => modalRef.current.open()}>Show Older Orders</Button>
+                <Button onClick={() => modalRef.current.open()}>Show Past Orders</Button>
             </div>
 
             {/* Receipts Modal */}
             {/* probably need to add an overflow-y: scroll */}
             <Modal ref={modalRef} type='order'>
-                <ul>
+                <h2 className='ordersHeading'>Past Orders</h2>
+                <table>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Purchase Price</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                        <th>Total Profit</th>
+                        <th>Purcahse Date</th>
+                    </tr>
                     {
                         receipts.map((item, i) => {
                             if (i > 0) {
                                 return (
-                                    <li>{item.ticker}</li>
+                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} amount={item.quantity} cost={item.buyPrice * item.quantity}  profit={(item.sellPrice * item.amount) - (item.buyPrice * item.amount)} date={item.timebought} ></OrderItem>
                                 )
                             }
                         })
                     }
-                </ul>
+                </table>
             </Modal>
 
         </>

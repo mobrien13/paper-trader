@@ -82,7 +82,8 @@ export async function buyStock(ticker, price, quantity) {
       holdings: arrayUnion(
         {
           ticker: ticker.toUpperCase(),
-          amount: quantity,
+          quantity: quantity,
+          quantitySold: 0,
           buyPrice: price,
           isClosed: false,
           isValid: true,
@@ -173,22 +174,6 @@ export async function getReceipts() {
 
 
 export async function sellStock(ticker, price, quantity) {
-  // old
-  // console.log(ticker)
-  // ticker = ticker
-  // const userUid = auth.currentUser.uid
-  // const holdings = collection(db, "holdings")
-  // const q = query(holdings, where("uid", "==", userUid), where("ticker", "==", ticker))
-  // const querySnapshot = await getDocs(q)
-
-  // const docRef = doc(db, "holdings", querySnapshot.docs[0].id)
-
-  // await updateDoc(docRef, {
-  //   isSold: true,
-  //   sellPrice: price,
-  //   date: Timestamp.now()
-  // })
-
   //TODO:
 
   //get all of the holdings for the stock that they want to sell
@@ -217,27 +202,53 @@ export async function sellStock(ticker, price, quantity) {
     let totalSold = 0;
 
     for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
+      //only do anything inside the loop if the total sold is less than the quantity
       if (totalSold < quantity) {
 
-        //if holdings[i] !isClosed and holdings[i].quantitySold === quantity 
+        //only do anything if the ticker is correct
+        if (querySnapshot.docs[0].data().holdings[i].ticker === ticker) {
+
+          //if holdings[i] !isClosed and holdings[i].quantity === quantity && holdings[i].quantitySold === 0
           //flag as closed, create receipt
+          if (!querySnapshot.docs[0].data().holdings[i].isClosed
+            && querySnapshot.docs[0].data().holdings[i].quantity === quantity
+            && querySnapshot.docs[0].data().holdings[i].quantitySold === 0) {
+            //update the docs here
+          }
 
-        //if holdings[i] !isClosed and holdings[i].quantitySold < quantity
+          //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) < quantity
           //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price, original date, and remaining share quantity
+          //for this case they wont necessarily be in order still which will screw up fifo. need to think of a better way to do it. will implement it like this for now. sell order only matters if you are filing taxes 
+          if (!querySnapshot.docs[0].data().holdings[i].isClosed
+            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < quantity){
 
-        //if holdings[i] !isClosed and holdings[i].quantitySold > quantity
-          //flag as closed, make a receipt, continue looping because there are more to be sold
+            }
 
-        //if it gets passed the previous ones after the loops end, and total sold>0, then the user wants to short
-        //dissallow the short position for now, implement later
 
-        //doc is updated in here
-        await updateDoc(docRef, {
+            //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) > quantity
+            //flag as closed, make a receipt, continue looping because there are more to be sold
+            if (!querySnapshot.docs[0].data().holdings[i].isClosed
+              && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > quantity) {
+              //update the docs here
+            }
 
-        })
+          //doc is updated in here
+          await updateDoc(docRef, {
 
+          })
+        }
       }
     }
+
+    //if it gets passed the previous ones after the loops end, and total sold<quantity, then the user wants to short
+    //dissallow the short position for now, implement later
+    if (totalSold > quantity) {
+      //create a short position
+    }
+
+
+    //return true after everything is done
+    return true;
 
   }
   catch (e) {
