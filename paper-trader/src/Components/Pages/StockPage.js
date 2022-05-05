@@ -343,8 +343,22 @@ const StockPage = (props) => {
                         {!buy && sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
-                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
-                                <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price)}>Execute Market Order</Button>
+                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
+                                <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price, amount).then(result => {
+                                        if (result === true) {
+                                            //This is sent if the order successfully palces
+
+                                            alert("Order placed")
+
+                                        }
+                                        if (result === false) {
+                                            //This is sent if order fails
+
+                                            alert("Order failed")
+                                        }
+                                    })
+                                
+                                }>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); console.log(getHoldings()) }}>Back</Button>
                             </>

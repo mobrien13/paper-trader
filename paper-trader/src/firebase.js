@@ -195,8 +195,12 @@ export async function sellStock(ticker, price, quantity) {
 
     //sets consts for us later
     const docId = querySnapshot.docs[0].id
-    const docRef = doc(db, "userData", querySnapshot.docs[0].id)
+    const docRef = doc(db, "usersData", docId)
 
+    //temp holdings will store the modified holdings array that is pushed back into firestore
+    let tempHoldings = querySnapshot.docs[0].data().holdings;
+    //temp receipts will store the modified receipts array that is pushed back into firestore
+    let tempReceipts = querySnapshot.docs[0].data().receipts;
 
     let totalSold = 0;
 
@@ -207,37 +211,99 @@ export async function sellStock(ticker, price, quantity) {
         //only do anything if the ticker is correct
         if (querySnapshot.docs[0].data().holdings[i].ticker === ticker) {
 
-          //if holdings[i] !isClosed and holdings[i].quantity === quantity && holdings[i].quantitySold === 0
+          //if holdings[i] !isClosed and holdings[i].quantity -holdings[i].quantitySold === quantity 
           //flag as closed, create receipt
           if (!querySnapshot.docs[0].data().holdings[i].isClosed
-            && querySnapshot.docs[0].data().holdings[i].quantity === quantity
-            && querySnapshot.docs[0].data().holdings[i].quantitySold === 0) {
-            //update the docs here
+            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) === quantity - totalSold) {
+            //Update tempHoldings/Temp Receipts Here
 
+            let weightedAvgSellPrice;
+
+            if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+              weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+            }
+            else{
+              weightedAvgSellPrice = price;
+            }
+
+            //quanity sold is not correect
+
+            tempHoldings[i] = {
+              ticker: tempHoldings[i].ticker,
+              quantity: tempHoldings[i].quantity,
+              quantitySold: tempHoldings[i].quantitySold + quantity - totalSold,
+              buyPrice: tempHoldings[i].buyPrice,
+              isClosed: true,
+              isValid: true,
+              sellPrice: weightedAvgSellPrice,
+              timebought: tempHoldings[i].timebought,
+              timesold: Date.now()
+            };
+
+            totalSold = quantity;
           }
 
           //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) < quantity
-          //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price, original date, and remaining share quantity
-          //for this case they wont necessarily be in order still which will screw up fifo. need to think of a better way to do it. will implement it like this for now. sell order only matters if you are filing taxes 
+          else if (!querySnapshot.docs[0].data().holdings[i].isClosed
+            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < quantity - totalSold) {
+            //Update tempHoldings/Temp Receipts Here
+
+            let weightedAvgSellPrice;
+
+            if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+              weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+            }
+            else{
+              weightedAvgSellPrice = price;
+            }
+            
+            tempHoldings[i] = {
+              ticker: tempHoldings[i].ticker,
+              quantity: tempHoldings[i].quantity,
+              quantitySold: tempHoldings[i].quantity,
+              buyPrice: tempHoldings[i].buyPrice,
+              isClosed: true,
+              isValid: true,
+              sellPrice: weightedAvgSellPrice,
+              timebought: tempHoldings[i].timebought,
+              timesold: Date.now()
+            };
+
+            //adds to the total the previous quanitity - the previous quantity sold which is equal to the amount added to the quantity
+            totalSold += querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold;
+          }
+
+
+          //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) > quantity
+          //flag as not closed, make a receipt
           if (!querySnapshot.docs[0].data().holdings[i].isClosed
-            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < quantity){
-              //update the docs here
+            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > quantity - totalSold) {
+            //Update tempHoldings/Temp Receipts Here
 
+            //need to calculate the weighted average of the sell price and put it in here
+
+            let weightedAvgSellPrice;
+
+            if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+              weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+            }
+            else{
+              weightedAvgSellPrice = price;
             }
 
+            tempHoldings[i] = {
+              ticker: tempHoldings[i].ticker,
+              quantity: tempHoldings[i].quantity,
+              quantitySold: quantity-totalSold,
+              buyPrice: tempHoldings[i].buyPrice,
+              isClosed: false,
+              isValid: true,
+              sellPrice: weightedAvgSellPrice,
+              timebought: tempHoldings[i].timebought,
+              timesold: Date.now()
+            };
 
-            //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) > quantity
-            //flag as closed, make a receipt, continue looping because there are more to be sold
-            if (!querySnapshot.docs[0].data().holdings[i].isClosed
-              && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > quantity) {
-              //update the docs here
-
-            }
-
-          //doc is updated in here
-          await updateDoc(docRef, {
-
-          })
+          }
         }
       }
     }
@@ -248,6 +314,11 @@ export async function sellStock(ticker, price, quantity) {
       //create a short position
     }
 
+
+    //Update the doc with the new holdings and receipts
+    await updateDoc(docRef, {
+      holdings: tempHoldings
+    })
 
     //return true after everything is done
     return true;
