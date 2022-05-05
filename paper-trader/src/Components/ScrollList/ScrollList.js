@@ -4,6 +4,9 @@ import { usersDatabase } from '../../fakeDatabase.js';
 import { useEffect, useState } from 'react';
 import { getUserWatchList } from '../../firebase';
 import { renderMatches } from 'react-router-dom';
+import "react-toggle/style.css"
+import Toggle from 'react-toggle';
+import { stringify } from '@firebase/util';
 
 function ScrollList(props) {
 
@@ -15,47 +18,107 @@ function ScrollList(props) {
     const [watchlist, setWatchlist] = useState([]);
     // const [loadState, setLoadState] = useState(false);
 
+    const [type, setType] = useState(true)
+
+
     //get watchlist (async)
     useEffect(() => {
         getUserWatchList().then(result => {
             //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
-            if(watchlist!==null){
+            if (watchlist !== null) {
                 setWatchlist(result)
                 console.log("get/set watchlist")
             }
         });
     }, [])
 
+    var axios = require("axios").default;
+    const [ary, setAry] = useState([])
+
+    var options = {
+        method: 'GET',
+        url: 'https://yfapi.net/v1/finance/trending/US',
+        params: { modules: 'defaultKeyStatistics,assetProfile' },
+        headers: {
+            'x-api-key': 'VypvXxHoUD4phTAdK6H5xZvPWTcHzS9pn5jtCr90'
+        }
+    };
+
+    useEffect(() => {
+        axios.request(options).then(function (response) {
+            console.log(response.data.finance.result[0].quotes);
+            let trending = response.data.finance.result[0].quotes;
+            for (let i = 0; i < trending.length; i++) {
+                ary.push(response.data.finance.result[0].quotes[i]);
+            }
+            console.log(ary[0].symbol)
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }, [])
+
+
+
+
+
 
     //try making a function inn scrolllist that is called on stockpage button click 
-
     return (
         <>
             <div className='scroll-list-container'>
 
-                <div className='list-title'>{props.title}</div>
+                <div className='list-title'>
+                    <h2 className="list-title-name">
+                        {type && props.title}
+                        {!type && "Trending"}
+                    </h2>
+                    <label className="toggleSwitch">
+                        <Toggle
+                            icons={false}
+                            onChange={() => setType(!type)} />
+                        <span></span>
+                    </label>
+                </div>
 
                 <div className='scroll-list'>
 
-                    {/* //list of all stocks within the scroll list */}
+                    {!type &&
 
+                        ary.map((item, i) => {
+                            if (i < 10 && !item.symbol.includes('^')) {
+                                return (
+                                    <ScrollListItem
+                                        // pulls stockname from trending
+                                        stockName={item.symbol.toUpperCase()}
 
-                    {watchlist.length>=1 && watchlist.map((item) =>
+                                    ></ScrollListItem>
+                                )
+                            }
+                        })
 
-                        <ScrollListItem
-                            // pulls stockname from users watchlist
-                            stockName={item.toUpperCase()}
-
-                            //update parent list (this compoente) when child item (scrollListItem) is removed
-                            changeWatchlist={(newList) => setWatchlist(newList)}
-                        // changeLoading={() => setLoadState(true)}
-
-                        ></ScrollListItem>
-                    )
                     }
-                    
+                    {/* //list of all stocks within the scroll list */}
+                    {type &&
+
+
+                        watchlist.length >= 1 && watchlist.map((item) =>
+
+                            <ScrollListItem
+                                // pulls stockname from users watchlist
+                                stockName={item.toUpperCase()}
+
+                                //update parent list (this compoente) when child item (scrollListItem) is removed
+                                changeWatchlist={(newList) => setWatchlist(newList)}
+                            // changeLoading={() => setLoadState(true)}
+
+                            ></ScrollListItem>
+                        )
+
+                    }
+
+
                     <div className='blankItem'>
-                        
+
                     </div>
 
 

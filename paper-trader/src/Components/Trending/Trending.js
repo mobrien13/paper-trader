@@ -2,7 +2,6 @@ import React, { useEffect, useState} from "react";
 import './Trending.css'
 
 //Use axios to call trending method from yahoo finance API
-
  const Trending = () => {
   var axios = require("axios").default;
   const [ary, setAry] = useState([])
