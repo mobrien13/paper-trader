@@ -85,7 +85,7 @@ function ScrollList(props) {
                     {!type &&
 
                         ary.map((item, i) => {
-                            if (i < 10 && !item.symbol.includes('^')) {
+                            if (i < 10 && !item.symbol.includes('^') && !item.symbol.includes('=') && !item.symbol.includes('-')) {
                                 return (
                                     <ScrollListItem
                                         // pulls stockname from trending
