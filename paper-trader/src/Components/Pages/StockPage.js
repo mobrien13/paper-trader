@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef,useLayoutEffect } from 'react';
+import { React, useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
 import ScrollList from '../ScrollList/ScrollList';
@@ -9,11 +9,16 @@ import StockGraphLive from '../StockGraph/StockGraphLive';
 import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
-import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock } from '../../firebase';
+import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock, setUserWatchList } from '../../firebase';
 import { waitForPendingWrites } from 'firebase/firestore';
 
 
 const StockPage = (props) => {
+
+    const [success, setSuccess] = useState(null)
+
+    const [isInWatchlist, setIsInWatchlist] = useState(false)
+
     const modalRef = useRef();
 
     const location = useLocation();
@@ -33,7 +38,7 @@ const StockPage = (props) => {
     const [max, setMax] = useState(0)
     const [min52, setMin52] = useState(0)
     const [max52, setMax52] = useState(0)
-    
+
 
     //Name of company
     const [name, setName] = useState(null);
@@ -52,7 +57,43 @@ const StockPage = (props) => {
         fiftyTwoPercent: 1.0,
         name: "Name",
         ticker: "MMMM"
-        
+
+    }
+
+    //sets isInWatchlist when the location changes
+    useEffect(() => {
+        getUserWatchList().then((result) => {
+            for (let i = 0; i < result.length; i++) {
+                if (ticker.toUpperCase() === result[i].toUpperCase()) {
+                    setIsInWatchlist(true)
+                    return;
+                }
+            }
+            setIsInWatchlist(false)
+        })
+    }, [location])
+
+    //removes item from watchlist if minus is clicked in the title area
+    async function removeItem() {
+        // watchlist = removeByValue(props.stockName);
+
+        let tempWatchlist = []
+
+        //get watchlist (async)
+        await getUserWatchList().then(result => {
+            //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+            tempWatchlist = result
+        });
+
+        for (let i = tempWatchlist.length - 1; i >= 0; i--) {
+            if (tempWatchlist[i].toUpperCase() === ticker.toUpperCase()) {
+                tempWatchlist.splice(i, 1)
+            }
+        }
+
+        await setUserWatchList(tempWatchlist);
+
+        setKey(key + 1)
     }
 
     //sets data to 0 whenever the location changes
@@ -101,7 +142,7 @@ const StockPage = (props) => {
 
                     // TO DO MOVE TO BUY MODAL
                     setPrice((Number(close[close.length - 1])).toFixed(2))
-                    
+
                 }
             )
     }, [ticker]);
@@ -156,32 +197,32 @@ const StockPage = (props) => {
 
     // For 52 week range
     useEffect(() => {
-        let currentTime =  Date.now() -  (86400000)
-        fetch("https://api.tdameritrade.com/v1/marketdata/"+ Stock.ticker +"/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
+        let currentTime = Date.now() - (86400000)
+        fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=year&period=1&frequencyType=daily&frequency=1")
             .then(res => res.json())
             .then(
                 (data) => {
                     let ary = []
                     let min = 0, max = 0
-        
+
                     for (var i = 0; i < data.candles.length; i++) {
-                        if(new Date(data.candles[i].datetime) <= currentTime){
+                        if (new Date(data.candles[i].datetime) <= currentTime) {
                             ary.push(Number(data.candles[i].high))
                             ary.push(Number(data.candles[i].low))
-                        }   
+                        }
                     }
 
-                    for(let x = 0; x < ary.length; x++){
-                        if(ary[x] > max && x === 0){
+                    for (let x = 0; x < ary.length; x++) {
+                        if (ary[x] > max && x === 0) {
                             max = ary[x]
                             min = ary[x]
                         }
 
-                        if(ary[x] > max){
+                        if (ary[x] > max) {
                             max = ary[x]
                         }
 
-                        if(ary[x] < min){
+                        if (ary[x] < min) {
                             min = ary[x]
                         }
                     }
@@ -190,14 +231,14 @@ const StockPage = (props) => {
                 }
             )
 
-    },[ticker]);
-    Stock.fiftyTwoHigh =  max52
+    }, [ticker]);
+    Stock.fiftyTwoHigh = max52
     Stock.fiftyTwoLow = min52
-    console.log("Price -"+Stock.price)
-    console.log("high -"+Stock.fiftyTwoHigh)
+    console.log("Price -" + Stock.price)
+    console.log("high -" + Stock.fiftyTwoHigh)
     Stock.fiftyTwoPercent = (((Stock.price - Stock.fiftyTwoHigh) / Stock.fiftyTwoHigh) * 100).toFixed(2)
 
-/////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+    /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     useEffect(() => {
         getHoldings().then(result => {
@@ -218,13 +259,13 @@ const StockPage = (props) => {
                 {exists === 1 && <div className='stockPageTop'>
                     <h1 id='ticker'>{Stock.name}</h1>
 
-                    {/* Old Add To Watchlist Button */}
-                    {/* <Button onClick={() => addToWatchlist(ticker).then(() => {
-                        setKey(key + 1);
-                    })} buttonStyle='btn--primary--outline'>Watchlist</Button> */}
-
-                    {/* New Add To Watchlist Button */}
-                    <i onClick={() => addToWatchlist(ticker).then(() => { setKey(key + 1); })} className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                    {/* Add To Watchlist Button */}
+                    {!isInWatchlist &&
+                        <i onClick={() => addToWatchlist(ticker).then(() => { setKey(key + 1); })} className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                    }
+                    {isInWatchlist &&
+                        <i onClick={() => removeItem().then(() => { setKey(key + 1); })} className="fa fa-minus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                    }
 
 
                     {/* Hides historical button if the graph is in historical mode */}
@@ -270,15 +311,22 @@ const StockPage = (props) => {
                     <Box>
                         <div className='buyStockItem'>
                             {/* <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3> */}
-                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => modalRef.current.open()}>New Order</Button>
+                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => {modalRef.current.open(); setSuccess(null)} }>New Order</Button>
 
 
                         </div>
                         <div className='buyStockItem'>
                             <h3>Current Holdings: </h3>
                             <ul>
-                                {/* {userHoldings.map((item) => !item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-                                {userHoldings.map((item) => item.isSold && <li>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)} */}
+                                {
+                                    userHoldings.map((item, i) => {
+                                        if (i > 0 && item.ticker.toUpperCase() == ticker.toUpperCase() && !item.isClosed) {
+                                            return (
+                                                !item.isSold && <li>{item.quantity} Shares @ ${item.buyPrice}/share</li>
+                                            )
+                                        }
+                                    })
+                                }
                             </ul>
                         </div>
                         <div className='buyStockItem'>
@@ -319,35 +367,47 @@ const StockPage = (props) => {
                         {buy && !sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
+                                {success!==null && success && <p className='orderSuccess'>Order Successful!</p>}
+                                {success!==null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button onClick={async () => {
                                     //waits for buy stock to complete and sets error message
                                     await buyStock(ticker, Stock.price, amount).then(result => {
                                         if (result === true) {
                                             //This is sent if the order successfully palces
-
-                                            alert("Order placed")
-
+                                            setSuccess(true)
                                         }
                                         if (result === false) {
                                             //This is sent if order fails
-
-                                            alert("Order failed")
+                                            setSuccess(false)
                                         }
                                     })
-                                }} buttonStyle='btn--primary--outline'>Execute Market</Button>
+                                }} buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                                 <br />
-                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
+                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); setSuccess(null) }}>Back</Button>
                             </>
                         }
 
                         {!buy && sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
-                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" /><br />
-                                <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price)}>Execute Market Order</Button>
+                                {success!==null && success && <p className='orderSuccess'>Order Successful!</p>}
+                                {success!==null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
+                                <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
+                                <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price, amount).then(result => {
+                                    if (result === true) {
+                                        //This is sent if the order successfully palces
+                                        setSuccess(true)
+                                    }
+                                    if (result === false) {
+                                        //This is sent if order fails
+                                        setSuccess(true)
+                                    }
+                                })
+
+                                }>Execute Market Order</Button>
                                 <p className='buySellParagraph'>Warning: if you sell a quantity more than what you currently own, you will be entering a short position. Shorting a stock is risky</p>
-                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); console.log(getHoldings()) }}>Back</Button>
+                                <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false); setSuccess(null) }}>Back</Button>
                             </>
                         }
 

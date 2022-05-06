@@ -1,7 +1,14 @@
-a{
+a {
     color: black;
 }
-.container{
-    padding-left:5%;
-    padding-right:5%;
-  }
+
+.container {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+@media screen and (max-width: 1000px) {
+    .container{
+        padding-top: 20px;
+    }
+}

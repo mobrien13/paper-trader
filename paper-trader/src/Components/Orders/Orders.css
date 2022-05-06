@@ -1,11 +1,11 @@
-.orders-container{
+.orders-container {
     /* sizing */
     min-height: 20vh;
 
     /* margins */
-    margin-top: 10px;    
+    margin-top: 10px;
     margin-bottom: 20px;
-     
+
     /* looks */
     border-radius: 10px;
     padding: 20px;
@@ -14,35 +14,44 @@
     background-color: var(--bg);
     /* should this be var(--bg) */
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+
+    text-align: center;
 }
-.ordersHeading{
+
+.ordersHeading {
     margin-top: 0px;
     padding-left: 10px;
 }
 
-.ordersItem{
+.ordersItem {
     padding: 10px;
     border-radius: 10px;
 }
-.orders-container ul{
+
+.orders-container ul {
     list-style-type: none;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 
-.orders-content table{
-    /* width: 100%; */
-    text-align: center;
-    /* add another comma for max width */
-    width: min(100% - 2rem);
-    margin-inline: auto;
-
-    overflow: auto;
+.orders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /* grid-template-columns: 150px 150px 150px 150px 150px 150px 150px; */
+    place-items: center;
 }
 
-.orders-content table tr th{
-    padding: 10px;
+.pastOrdersBox {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
 }
-.orders-content table tr td{
-    padding: 10px;
+
+.pastOrdersGrid {
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
+    grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;
+    place-items: center;
 }

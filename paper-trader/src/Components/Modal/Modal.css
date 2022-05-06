@@ -1,15 +1,15 @@
-.modal-backdrop{
+.modal-backdrop {
     position: fixed;
     height: 100vh;
     width: 100vw;
     top: 0;
     left: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
 }
 
-.modal-content-wrapper{
+.modal-content-wrapper {
     position: fixed;
-    width:fit-content;
+    width: fit-content;
     height: fit-content;
     background: white;
     margin: auto;
@@ -18,30 +18,39 @@
     left: 0;
     right: 0;
     padding: 50px 50px 50px 50px;
-    border-radius: 20px;;
+    border-radius: 20px;
+    ;
     text-align: center;
 }
-.order{
-    width: 25vw;
-    height: 40vh;
+
+.holdingsModal {
+    width: 85vw;
+    height: 50vh;
+    /* overflow-y: scroll; */
 }
 
-@media screen and (max-width: 1500px){
-    .order{
+.order{
+    height: 40vh;
+    width: 25vw;
+}
+
+
+@media screen and (max-width: 1500px) {
+    .order {
         width: 55vw;
         height: 55vh;
     }
 }
 
-@media screen and (max-width: 1000px){
-    .order{
+@media screen and (max-width: 1000px) {
+    .order {
         width: 40vw;
         height: 55vh;
     }
 }
 
-@media screen and (max-width: 680px){
-    .order{
+@media screen and (max-width: 680px) {
+    .order {
         width: 50vw;
         height: 60vh;
     }

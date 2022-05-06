@@ -28,6 +28,11 @@ const user = {
 const auth = getAuth();
 
 
+
+/* ----------------------- START FIRESTORE FUNCTIONS ----------------------- */
+
+
+
 //add user to usersData - this function is called in signup directly after an account is created successfully
 export async function addUserToUsersData() {
   try {
@@ -40,18 +45,6 @@ export async function addUserToUsersData() {
       funds: 1000,
       watchlist: ["TSLA", "BDX"],
       holdings: [{}],
-      // holdings: [{
-      //   ticker: "tsla",
-      //   amount: 1,
-      //   buyPrice: 420,
-      //   isSold: false,
-      //   sellPrice: null,
-      //   timebought: Date.now(),
-      //   timesold: null
-      // }],
-      receipts: [{
-
-      }]
     });
     console.log("Successfully added user to usersData");
   } catch (e) {
@@ -61,6 +54,11 @@ export async function addUserToUsersData() {
 
 //buy stock 
 export async function buyStock(ticker, price, quantity) {
+  //checks if the quantity contains any letters
+  if(/[a-z]/i.test(quantity)){
+    return false;
+  }
+
   try {
     //setup query
     const userUid = auth.currentUser.uid
@@ -71,9 +69,6 @@ export async function buyStock(ticker, price, quantity) {
     //query
     const querySnapshot = await getDocs(q)
 
-    //old holdings
-    // oldHoldings = querySnapshot.docs[0].data().orders.holdings;
-
     //create docRef
     const docRef = doc(db, "usersData", querySnapshot.docs[0].id);
 
@@ -82,9 +77,9 @@ export async function buyStock(ticker, price, quantity) {
       holdings: arrayUnion(
         {
           ticker: ticker.toUpperCase(),
-          quantity: quantity,
-          quantitySold: 0,
-          buyPrice: price,
+          quantity: quantity * 1.0,
+          quantitySold: 0 * 1.0,
+          buyPrice: price * 1.0,
           isClosed: false,
           isValid: true,
           sellPrice: null,
@@ -93,16 +88,14 @@ export async function buyStock(ticker, price, quantity) {
         }
       )
     });
-
-
+    //returns true if the action was completed
     return true;
   }
   catch (e) {
-    console.log(e.toString());
+    //returns false and console logs error if it was unsuccessful
+    console.log(e);
     return false;
   }
-
-
 }
 
 //get holdings
@@ -118,8 +111,6 @@ export async function getHoldings() {
     for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
       newArray.push(querySnapshot.docs[0].data().holdings[i])
     }
-
-    console.log(newArray)
 
     return newArray;
   }
@@ -137,8 +128,8 @@ export async function getHoldings() {
   }
 }
 
-//get receipts
-export async function getReceipts() {
+//Get past orders function returns the closed orders - Note: this function replaces the obsolete get receipts function
+export async function getPastOrders() {
   try {
     const userUid = auth.currentUser.uid
     const col = collection(db, "usersData")
@@ -147,45 +138,61 @@ export async function getReceipts() {
 
     const querySnapshot = await getDocs(q)
 
-    for (let i = 0; i < querySnapshot.docs[0].data().receipts.length; i++) {
-      newArray.push(querySnapshot.docs[0].data().receipts[i])
+    //loops through all of the closed holdings and adds them to an array
+    for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
+      if(querySnapshot.docs[0].data().holdings[i].isClosed){
+        newArray.push(querySnapshot.docs[0].data().holdings[i])
+      }
     }
 
-    console.log(newArray)
-
+    //returns the array
     return newArray;
   }
+
   catch (e) {
     return [{
-      ticker: "RECEIPTS DOES NOT EXIST",
+      ticker: "DOES NOT EXIST",
       quantity: null,
       buyPrice: null,
-      isValid: true,
+      isValid: false,
       isClosed: false,
       sellPrice: null,
       timebought: null,
       timesold: null
-
     }];
   }
 }
 
-
-
 export async function sellStock(ticker, price, quantity) {
-  //TODO:
 
-  //get all of the holdings for the stock that they want to sell
-  //for now, no shorting
+  /* ------------------- HOW THIS FUNCTION WORKS ------------------- */
+  /* ------------------- READ BEFORE MODIFYING ------------------- */
 
-  //sell from the holdings that were purchased first, then sell subsequent holdings
 
-  //create a receipt for each holding sold
+  /*
 
-  //return true, when complete
+  1. Gets the entire holdings array from the database and assigns it to a temporary array that we modify and later send back to database
+
+  2. Iterates through the array of holdings. Does logic when it finds a matching ticker
+    -This process occurs IN ORDER by PURCHASE DATE. This is how it needs to be in order for the portfolio graph to work
+    -DO NOT commit any code that will UNSORT the holdings array
+    -The logic is explained at each if statement
+
+  3. UNIMPLEMENTED: If shares remain, the last if-statement before the return will be triggered
+    -This should cause a NEW short selling position to be created. This will require changes to the BUY function
+    -Will implement at later date if time allows
+
+  4. Return true when complete. If at any time an error is caught, return false. This is used to generate a success or error message in the BUY/SELL Modal
+
+  */
+
+  //added a check to see if the quantity contains letters
+  if(/[a-z]/i.test(quantity)){
+    return false;
+  }
 
   try {
-    //sets up query
+    //sets up initial query
     const userUid = auth.currentUser.uid
     const col = collection(db, "usersData")
     const q = query(col, where("uid", "==", userUid))
@@ -195,65 +202,140 @@ export async function sellStock(ticker, price, quantity) {
 
     //sets consts for us later
     const docId = querySnapshot.docs[0].id
-    const docRef = doc(db, "userData", querySnapshot.docs[0].id)
+    const docRef = doc(db, "usersData", docId)
 
+    //temp holdings will store the modified holdings array that is pushed back into firestore
+    let tempHoldings = querySnapshot.docs[0].data().holdings;
 
+    //this var is an summation of all of the shares sold as the loop iterates
     let totalSold = 0;
 
+    //loops through all of the indidual holding objects in the holdings array
     for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
-      //only do anything inside the loop if the total sold is less than the quantity
+      //Only does any code if there are remaining shares to be sold
       if (totalSold < quantity) {
 
-        //only do anything if the ticker is correct
+        //If the ticker matches, continue. Else loop again
         if (querySnapshot.docs[0].data().holdings[i].ticker === ticker) {
 
-          //if holdings[i] !isClosed and holdings[i].quantity === quantity && holdings[i].quantitySold === 0
-          //flag as closed, create receipt
-          if (!querySnapshot.docs[0].data().holdings[i].isClosed
-            && querySnapshot.docs[0].data().holdings[i].quantity === quantity
-            && querySnapshot.docs[0].data().holdings[i].quantitySold === 0) {
-            //update the docs here
+          //If the current holding is not closed, continue. Else, loop again
+          if (!querySnapshot.docs[0].data().holdings[i].isClosed) {
 
+            //If the quantity in the database minus the quantity already sold in the database is equal to the quantity minus the total sold
+            //Flag the order as closed, sell all the remaining shares
+            if ((querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) === (quantity - totalSold)) {
+              //First, calculated the weighted average sell price (the average of the previous sales combined with the average of this sale, while accounting for the number of shares sold each time)
+              let weightedAvgSellPrice;
+
+              if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+                weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+              }
+              else {
+                weightedAvgSellPrice = price;
+              }
+
+              //use the weighted avg sell price to update the sell price
+
+              tempHoldings[i] = {
+                ticker: tempHoldings[i].ticker,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0, //the quantity sold needs the * 1.0 to ensure that it typecasts to numbers before adding and subtracting. prior to doing this it would concatinate them as strings sometimes. i hate javascript for not being strongly typed 
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
+                isClosed: true,
+                isValid: true,
+                sellPrice: weightedAvgSellPrice * 1.0,
+                timebought: tempHoldings[i].timebought,
+                timesold: Date.now()
+              };
+
+              //update the total amount sold
+              totalSold = quantity;
+            }
+
+            //If the quantity in the database minus the quantity sold in the database is less than the quantity
+            //The order should be closed and the remaining stocks sold. Then it should continue looping and try to sell the rest on other orders
+            else if ((querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < (quantity - totalSold)) {
+              //see previous comments
+              let weightedAvgSellPrice;
+
+              if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+                weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+              }
+              else {
+                weightedAvgSellPrice = price;
+              }
+
+              tempHoldings[i] = {
+                ticker: tempHoldings[i].ticker,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantity * 1.0,
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
+                isClosed: true,
+                isValid: true,
+                sellPrice: weightedAvgSellPrice * 1.0,
+                timebought: tempHoldings[i].timebought,
+                timesold: Date.now()
+              };
+
+              totalSold += querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold;
+            }
+
+
+            //If the quantity in the database minus the quantity sold in the database is greater than the quanity remaining to sell
+            //Sell some of the shares, but do not mark as closed because the user still owns some number of shares
+            else if ((querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > (quantity - totalSold)) {
+              //see previous comments
+
+              let weightedAvgSellPrice;
+
+              if (tempHoldings[i].quantitySold > 0 && tempHoldings[i].quantitySold !== null) {
+                weightedAvgSellPrice = ((tempHoldings[i].sellPrice * tempHoldings[i].quantitySold) + (price * (quantity - totalSold))) / (quantity - totalSold + tempHoldings[i].quantitySold);
+              }
+              else {
+                weightedAvgSellPrice = price;
+              }
+
+              tempHoldings[i] = {
+                ticker: tempHoldings[i].ticker,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0,
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
+                isClosed: false,
+                isValid: true,
+                sellPrice: weightedAvgSellPrice * 1.0,
+                timebought: tempHoldings[i].timebought,
+                timesold: Date.now()
+              };
+
+              //adds to the total the previous quanitity - the previous quantity sold which is equal to the amount added to the quantity
+              totalSold = quantity;
+            }
           }
-
-          //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) < quantity
-          //flag as closed, flag as invalid, make a receipt for the shares sold, make a new order with original buy price, original date, and remaining share quantity
-          //for this case they wont necessarily be in order still which will screw up fifo. need to think of a better way to do it. will implement it like this for now. sell order only matters if you are filing taxes 
-          if (!querySnapshot.docs[0].data().holdings[i].isClosed
-            && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) < quantity){
-              //update the docs here
-
-            }
-
-
-            //if holdings[i] !isClosed and (holdings[i].quantity-holdings[i].quantitySold) > quantity
-            //flag as closed, make a receipt, continue looping because there are more to be sold
-            if (!querySnapshot.docs[0].data().holdings[i].isClosed
-              && (querySnapshot.docs[0].data().holdings[i].quantity - querySnapshot.docs[0].data().holdings[i].quantitySold) > quantity) {
-              //update the docs here
-
-            }
-
-          //doc is updated in here
-          await updateDoc(docRef, {
-
-          })
         }
+      }
+      //breaks out of the loop if the totalSold is greater than or equal to the quantity the user is trying to sell. this is here for the sole purpose of improving speed ever so slightly
+      else {
+        break;
       }
     }
 
     //if it gets passed the previous ones after the loops end, and total sold<quantity, then the user wants to short
-    //dissallow the short position for now, implement later
+    //dissallow the short position for now (do nothing), implement later
     if (totalSold > quantity) {
       //create a short position
     }
 
+    //Update the doc with the new holdings and receipts
+    await updateDoc(docRef, {
+      holdings: tempHoldings
+    })
 
     //return true after everything is done
     return true;
 
   }
   catch (e) {
+    //logs error to console then returns false
     console.log(e)
     return false;
   }
@@ -345,6 +427,16 @@ export async function addToWatchlist(ticker) {
     watchlist: watchlist
   });
 }
+
+
+
+/* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */
+
+
+
+/* ----------------------- START FIREBASE AUTHENTICATION FUNCTIONS ----------------------- */
+
+
 
 //simplified signup function
 export function signup(email, password) {

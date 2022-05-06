@@ -52,3 +52,20 @@
     margin-right: 10px; */
     width: 250px;
 }
+.buyStockItem ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.orderSuccess{
+    padding: 10px;
+    background-color: #22cf36;
+    border-radius: 10px;
+    color: white;
+}
+.orderNotSuccess{
+    padding: 10px;
+    background-color: crimson;
+    border-radius: 10px;
+    color: white;
+}
