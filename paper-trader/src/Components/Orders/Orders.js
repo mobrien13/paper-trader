@@ -95,13 +95,6 @@ const Orders = (props) => {
                                 )
                             })
                         }
-                        {
-                            pastOrders.map((item, i) => {
-                                return (
-                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} sellPrice={item.sellPrice} cost={item.buyPrice * item.quantity} profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
-                                )
-                            })
-                        }
 
                     </div>
                 </div>

@@ -54,6 +54,11 @@ export async function addUserToUsersData() {
 
 //buy stock 
 export async function buyStock(ticker, price, quantity) {
+  //checks if the quantity contains any letters
+  if(/[a-z]/i.test(quantity)){
+    return false;
+  }
+
   try {
     //setup query
     const userUid = auth.currentUser.uid
@@ -180,6 +185,11 @@ export async function sellStock(ticker, price, quantity) {
   4. Return true when complete. If at any time an error is caught, return false. This is used to generate a success or error message in the BUY/SELL Modal
 
   */
+
+  //added a check to see if the quantity contains letters
+  if(/[a-z]/i.test(quantity)){
+    return false;
+  }
 
   try {
     //sets up initial query
