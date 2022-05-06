@@ -82,9 +82,9 @@ export async function buyStock(ticker, price, quantity) {
       holdings: arrayUnion(
         {
           ticker: ticker.toUpperCase(),
-          quantity: quantity,
+          quantity: quantity * 1.0,
           quantitySold: 0,
-          buyPrice: price,
+          buyPrice: price * 1.0,
           isClosed: false,
           isValid: true,
           sellPrice: null,
@@ -242,12 +242,12 @@ export async function sellStock(ticker, price, quantity) {
 
               tempHoldings[i] = {
                 ticker: tempHoldings[i].ticker,
-                quantity: tempHoldings[i].quantity,
-                quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold, //the quantity sold needs the * 1.0 to ensure that it typecasts to numbers before adding and subtracting. prior to doing this it would concatinate them as strings sometimes. i hate javascript for not being strongly typed 
-                buyPrice: tempHoldings[i].buyPrice,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0, //the quantity sold needs the * 1.0 to ensure that it typecasts to numbers before adding and subtracting. prior to doing this it would concatinate them as strings sometimes. i hate javascript for not being strongly typed 
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: true,
                 isValid: true,
-                sellPrice: weightedAvgSellPrice,
+                sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
               };
@@ -271,12 +271,12 @@ export async function sellStock(ticker, price, quantity) {
 
               tempHoldings[i] = {
                 ticker: tempHoldings[i].ticker,
-                quantity: tempHoldings[i].quantity,
-                quantitySold: tempHoldings[i].quantity,
-                buyPrice: tempHoldings[i].buyPrice,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantity * 1.0,
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: true,
                 isValid: true,
-                sellPrice: weightedAvgSellPrice,
+                sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
               };
@@ -301,12 +301,12 @@ export async function sellStock(ticker, price, quantity) {
 
               tempHoldings[i] = {
                 ticker: tempHoldings[i].ticker,
-                quantity: tempHoldings[i].quantity,
-                quantitySold: tempHoldings[i].quantitySold + quantity * 1.0 - totalSold,
-                buyPrice: tempHoldings[i].buyPrice,
+                quantity: tempHoldings[i].quantity * 1.0,
+                quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0,
+                buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: false,
                 isValid: true,
-                sellPrice: weightedAvgSellPrice,
+                sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
               };
