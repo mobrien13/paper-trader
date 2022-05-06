@@ -4,7 +4,7 @@ import { usersDatabase } from '../../fakeDatabase.js';
 import { useEffect, useState } from 'react';
 import { getUserWatchList } from '../../firebase';
 import { renderMatches } from 'react-router-dom';
-import "react-toggle/style.css"
+// import "react-toggle/style.css"
 import Toggle from 'react-toggle';
 import { stringify } from '@firebase/util';
 
