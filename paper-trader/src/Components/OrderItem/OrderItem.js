@@ -10,9 +10,9 @@ const OrderItem = (props) => {
             {props.type === "order" &&
                 <>
                     <p>{props.ticker}</p>
-                    <p>${props.buyPrice}/share</p>
+                    <p>${props.buyPrice.toFixed(2)}/share</p>
                     <p>{props.quantity} shares</p>
-                    <p>${props.cost}</p>
+                    <p>${props.cost.toFixed(2)}</p>
                     <p>{new Date(props.date).toDateString()}</p>
                 </>
             }

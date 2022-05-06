@@ -24,7 +24,7 @@ const Orders = (props) => {
     useEffect(() => {
         getHoldings().then((result) => {
             if (result !== null && result.length >= 1) {
-                setHoldings(result)
+                setHoldings(result.reverse())
                 console.log("setting holdings" + holdings);
             }
         })
@@ -37,7 +37,7 @@ const Orders = (props) => {
     useEffect(() => {
         getPastOrders().then((result) => {
             if (result !== null && result.length >= 1) {
-                setPastOrders(result)
+                setPastOrders(result.reverse())
             }
         })
     }, [])
@@ -49,7 +49,6 @@ const Orders = (props) => {
             <div className='orders-container'>
                 <h2 className='ordersHeading'>Holdings</h2>
                 <button onClick={() => addUserToUsersData()}>add user</button>
-                <button onClick={() => buyStock("tsla", 69, 6969)}>Buy Test</button>
                 <br /><br />
                 <div className='orders-grid'>
 
@@ -60,7 +59,7 @@ const Orders = (props) => {
                     <h3>Purcahse Date</h3>
 
                     {holdings.length >= 1 && holdings.map((item, i) => {
-                        if (i > 0 && !holdings[i].isClosed) {
+                        if (i < (holdings.length - 1) && !holdings[i].isClosed) {
                             return (
                                 <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} ></OrderItem>
                             )
