@@ -73,7 +73,7 @@ export async function buyStock(ticker, price, quantity) {
         {
           ticker: ticker.toUpperCase(),
           quantity: quantity * 1.0,
-          quantitySold: 0,
+          quantitySold: 0 * 1.0,
           buyPrice: price * 1.0,
           isClosed: false,
           isValid: true,

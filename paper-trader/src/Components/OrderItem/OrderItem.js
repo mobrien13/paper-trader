@@ -9,25 +9,22 @@ const OrderItem = (props) => {
         <>
             {props.type === "order" &&
                 <>
-                    <tr key={props.key}>
-                        <td>{props.ticker}</td>
-                        <td>${props.buyPrice}/share</td>
-                        <td>{props.quantity} shares</td>
-                        <td>${props.cost}</td>
-                        <td>{new Date(props.date).toDateString()}</td>
-                    </tr>
+                    <p>{props.ticker}</p>
+                    <p>${props.buyPrice}/share</p>
+                    <p>{props.quantity} shares</p>
+                    <p>${props.cost}</p>
+                    <p>{new Date(props.date).toDateString()}</p>
                 </>
             }
             {props.type === "receipt" &&
                 <>
-                    <tr key={props.key}>
-                        <td>{props.ticker}</td>
-                        <td>${props.buyPrice}/share</td>
-                        <td>{props.quantity} shares</td>
-                        <td>${props.cost}</td>
-                        <td>${props.profit}</td>
-                        <td>{new Date(props.date).toDateString()}</td>
-                    </tr>
+                    <p>{props.ticker}</p>
+                    <p>${props.buyPrice.toFixed(2)}/share</p>
+                    <p>{props.quantity} shares</p>
+                    <p>${props.cost.toFixed(2)}</p>
+                    <p>${props.sellPrice}</p>
+                    <p>${props.profit.toFixed(2)}</p>
+                    <p>{new Date(props.date).toDateString()}</p>
                 </>
             }
         </>

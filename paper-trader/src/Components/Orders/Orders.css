@@ -14,6 +14,8 @@
     background-color: var(--bg);
     /* should this be var(--bg) */
     box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3);
+
+    text-align: center;
 }
 .ordersHeading{
     margin-top: 0px;
@@ -30,19 +32,17 @@
     padding:0;
 }
 
-.orders-content table{
-    /* width: 100%; */
-    text-align: center;
-    /* add another comma for max width */
-    width: min(100% - 2rem);
-    margin-inline: auto;
-
-    overflow: auto;
+.orders-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /* grid-template-columns: 150px 150px 150px 150px 150px 150px 150px; */
+    place-items: center;
 }
 
-.orders-content table tr th{
-    padding: 10px;
-}
-.orders-content table tr td{
-    padding: 10px;
+
+.pastOrdersGrid{
+    display: grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
+    grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;
+    place-items: center;
 }
