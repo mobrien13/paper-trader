@@ -31,10 +31,10 @@ const Orders = (props) => {
         })
     }, [])
 
-    //receipts state array
+    //past orders state array
     const [pastOrders, setPastOrders] = useState([])
 
-    //gets the receipts array from firestore
+    //gets the past orders array from firestore
     useEffect(() => {
         getPastOrders().then((result) => {
             if (result !== null && result.length >= 1) {
@@ -64,7 +64,7 @@ const Orders = (props) => {
                             <th>Purcahse Date</th>
                         </tr>
                         {holdings.length >= 1 && holdings.map((item, i) => {
-                            if (i > 0) {
+                            if (i > 0 && !holdings[i].isClosed) {
                                 return (
                                     <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} ></OrderItem>
                                 )
@@ -93,11 +93,9 @@ const Orders = (props) => {
                     </tr>
                     {
                         pastOrders.map((item, i) => {
-                            if (i > 0) {
-                                return (
-                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity}  profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
-                                )
-                            }
+                            return (
+                                <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
+                            )
                         })
                     }
                 </table>

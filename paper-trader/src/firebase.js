@@ -107,8 +107,6 @@ export async function getHoldings() {
       newArray.push(querySnapshot.docs[0].data().holdings[i])
     }
 
-    console.log(newArray)
-
     return newArray;
   }
   catch (e) {
@@ -141,6 +139,7 @@ export async function getPastOrders() {
         newArray.push(querySnapshot.docs[0].data().holdings[i])
       }
     }
+
     //returns the array
     return newArray;
   }
