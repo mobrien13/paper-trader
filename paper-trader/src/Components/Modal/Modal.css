@@ -26,11 +26,10 @@
 .holdingsModal {
     width: 85vw;
     height: 50vh;
-    /* overflow-y: scroll; */
 }
 
 .order{
-    height: 40vh;
+    height: 45vh;
     width: 25vw;
 }
 
