@@ -14,6 +14,9 @@ const OrderItem = (props) => {
                     <p>{props.quantity} shares</p>
                     <p>${props.cost.toFixed(2)}</p>
                     <p>{new Date(props.date).toDateString()}</p>
+                    <p>{props.quantitySold} shares</p>
+                    <p>${props.sellPrice.toFixed(2)}</p>
+                    <p>{props.sellDate !== null && new Date(props.sellDate).toDateString()}{props.sellDate === null && "N/A"}</p>
                 </>
             }
             {props.type === "receipt" &&

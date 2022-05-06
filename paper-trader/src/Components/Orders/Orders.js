@@ -57,12 +57,23 @@ const Orders = (props) => {
                     <h3>Quantity</h3>
                     <h3>Total Cost</h3>
                     <h3>Purcahse Date</h3>
+                    <h3>Quantity Sold</h3>
+                    <h3>Sell Price</h3>
+                    <h3>Sell Date</h3>
 
                     {holdings.length >= 1 && holdings.map((item, i) => {
                         if (i < (holdings.length - 1) && !holdings[i].isClosed) {
-                            return (
-                                <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} ></OrderItem>
-                            )
+
+                            if(item.sellPrice === null){
+                                return (
+                                    <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} quantitySold={0} sellPrice={0} sellDate={null}></OrderItem>
+                                )
+                            }
+                            else{
+                                return (
+                                    <OrderItem type="order" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity} date={item.timebought} quantitySold={item.quantitySold} sellPrice={item.sellPrice} sellDate={item.timesold}></OrderItem>
+                                )
+                            }
                         }
                     }
                     )}
