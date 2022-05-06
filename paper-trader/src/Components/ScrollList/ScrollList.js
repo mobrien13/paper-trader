@@ -20,7 +20,6 @@ function ScrollList(props) {
 
     const [type, setType] = useState(true)
 
-
     //get watchlist (async)
     useEffect(() => {
         getUserWatchList().then(result => {
@@ -44,6 +43,10 @@ function ScrollList(props) {
         }
     };
 
+    /* --------------- GETS THE TRENDING DATA. UNCOMMMENT BEFORE PRESENTATION --------------- */
+
+    /*--------------- DO NOT DELETE ---------------
+
     useEffect(() => {
         axios.request(options).then(function (response) {
             console.log(response.data.finance.result[0].quotes);
@@ -51,12 +54,12 @@ function ScrollList(props) {
             for (let i = 0; i < trending.length; i++) {
                 ary.push(response.data.finance.result[0].quotes[i]);
             }
-            console.log(ary[0].symbol)
         }).catch(function (error) {
             console.error(error);
         });
     }, [])
 
+    */
 
 
 
