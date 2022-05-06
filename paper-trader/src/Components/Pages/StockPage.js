@@ -334,7 +334,7 @@ const StockPage = (props) => {
                                             alert("Order failed")
                                         }
                                     })
-                                }} buttonStyle='btn--primary--outline'>Execute Market</Button>
+                                }} buttonStyle='btn--primary--outline'>Execute Market Order</Button>
                                 <br />
                                 <Button buttonStyle='btn--primary--solid' onClick={() => { setSell(false); setBuy(false) }}>Back</Button>
                             </>

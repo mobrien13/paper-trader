@@ -75,29 +75,36 @@ const Orders = (props) => {
             </div>
 
             {/* Receipts Modal */}
-            <Modal ref={modalRef} type='order'>
+            <Modal ref={modalRef} type='holdingsModal'>
                 <h2 className='ordersHeading'>Past Orders</h2>
+                <div className='pastOrdersBox'>
+                    <div className='pastOrdersGrid'>
 
-                <div className='pastOrdersGrid'>
+                        <h3>Ticker</h3>
+                        <h3>Purchase Price</h3>
+                        <h3>Quantity</h3>
+                        <h3>Total Cost</h3>
+                        <h3>Sell Price</h3>
+                        <h3>Total Profit</h3>
+                        <h3>Purcahse Date</h3>
 
-                    <h3>Ticker</h3>
-                    <h3>Purchase Price</h3>
-                    <h3>Quantity</h3>
-                    <h3>Total Cost</h3>
-                    <h3>Sell Price</h3>
-                    <h3>Total Profit</h3>
-                    <h3>Purcahse Date</h3>
+                        {
+                            pastOrders.map((item, i) => {
+                                return (
+                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} sellPrice={item.sellPrice} cost={item.buyPrice * item.quantity} profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
+                                )
+                            })
+                        }
+                        {
+                            pastOrders.map((item, i) => {
+                                return (
+                                    <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} sellPrice={item.sellPrice} cost={item.buyPrice * item.quantity} profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
+                                )
+                            })
+                        }
 
-                    {
-                        pastOrders.map((item, i) => {
-                            return (
-                                <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} sellPrice={item.sellPrice} cost={item.buyPrice * item.quantity} profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>
-                            )
-                        })
-                    }
-
+                    </div>
                 </div>
-
             </Modal>
 
         </>

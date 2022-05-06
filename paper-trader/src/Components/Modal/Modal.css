@@ -23,10 +23,15 @@
     text-align: center;
 }
 
-.order {
+.holdingsModal {
     width: 85vw;
     height: 50vh;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+}
+
+.order{
+    height: 40vh;
+    width: 25vw;
 }
 
 
