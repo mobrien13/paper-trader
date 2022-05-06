@@ -33,6 +33,10 @@ function Dashboard() {
     )
   }, [])
 
+  
+
+
+
   return (
     <>
       <div className='backround container'>
@@ -48,7 +52,7 @@ function Dashboard() {
 
           </div>
 
-          {/* Watchlist placeholder*/}
+          {/* Watchlist*/}
           <ScrollList title="Watchlist"> </ScrollList>
 
         </div>
