@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Orders.css';
-import { getHoldings, addUserToUsersData, buyStock, getReceipts } from '../../firebase';
+import { getHoldings, addUserToUsersData, buyStock, getPastOrders } from '../../firebase';
 import Button from '../Button/Button';
 import OrderItem from '../OrderItem/OrderItem';
 import Modal from '../Modal/Modal';
@@ -32,14 +32,13 @@ const Orders = (props) => {
     }, [])
 
     //receipts state array
-    const [receipts, setReceipts] = useState([])
+    const [pastOrders, setPastOrders] = useState([])
 
     //gets the receipts array from firestore
     useEffect(() => {
-        getReceipts().then((result) => {
+        getPastOrders().then((result) => {
             if (result !== null && result.length >= 1) {
-                setReceipts(result)
-                console.log("setting receipts" + receipts);
+                setPastOrders(result)
             }
         })
     }, [])
@@ -93,7 +92,7 @@ const Orders = (props) => {
                         <th>Purcahse Date</th>
                     </tr>
                     {
-                        receipts.map((item, i) => {
+                        pastOrders.map((item, i) => {
                             if (i > 0) {
                                 return (
                                     <OrderItem type="receipt" key={i} ticker={item.ticker} buyPrice={item.buyPrice} quantity={item.quantity} cost={item.buyPrice * item.quantity}  profit={(item.sellPrice * item.quantity) - (item.buyPrice * item.quantity)} date={item.timebought} ></OrderItem>

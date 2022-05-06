@@ -28,6 +28,11 @@ const user = {
 const auth = getAuth();
 
 
+
+/* ----------------------- START FIRESTORE FUNCTIONS ----------------------- */
+
+
+
 //add user to usersData - this function is called in signup directly after an account is created successfully
 export async function addUserToUsersData() {
   try {
@@ -40,18 +45,6 @@ export async function addUserToUsersData() {
       funds: 1000,
       watchlist: ["TSLA", "BDX"],
       holdings: [{}],
-      // holdings: [{
-      //   ticker: "tsla",
-      //   amount: 1,
-      //   buyPrice: 420,
-      //   isSold: false,
-      //   sellPrice: null,
-      //   timebought: Date.now(),
-      //   timesold: null
-      // }],
-      receipts: [{
-
-      }]
     });
     console.log("Successfully added user to usersData");
   } catch (e) {
@@ -70,9 +63,6 @@ export async function buyStock(ticker, price, quantity) {
 
     //query
     const querySnapshot = await getDocs(q)
-
-    //old holdings
-    // oldHoldings = querySnapshot.docs[0].data().orders.holdings;
 
     //create docRef
     const docRef = doc(db, "usersData", querySnapshot.docs[0].id);
@@ -93,16 +83,14 @@ export async function buyStock(ticker, price, quantity) {
         }
       )
     });
-
-
+    //returns true if the action was completed
     return true;
   }
   catch (e) {
-    console.log(e.toString());
+    //returns false and console logs error if it was unsuccessful
+    console.log(e);
     return false;
   }
-
-
 }
 
 //get holdings
@@ -137,8 +125,8 @@ export async function getHoldings() {
   }
 }
 
-//get receipts
-export async function getReceipts() {
+//Get past orders function returns the closed orders - Note: this function replaces the obsolete get receipts function
+export async function getPastOrders() {
   try {
     const userUid = auth.currentUser.uid
     const col = collection(db, "usersData")
@@ -147,30 +135,29 @@ export async function getReceipts() {
 
     const querySnapshot = await getDocs(q)
 
-    for (let i = 0; i < querySnapshot.docs[0].data().receipts.length; i++) {
-      newArray.push(querySnapshot.docs[0].data().receipts[i])
+    //loops through all of the closed holdings and adds them to an array
+    for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
+      if(querySnapshot.docs[0].data().holdings[i].isClosed){
+        newArray.push(querySnapshot.docs[0].data().holdings[i])
+      }
     }
-
-    console.log(newArray)
-
+    //returns the array
     return newArray;
   }
+
   catch (e) {
     return [{
-      ticker: "RECEIPTS DOES NOT EXIST",
+      ticker: "DOES NOT EXIST",
       quantity: null,
       buyPrice: null,
-      isValid: true,
+      isValid: false,
       isClosed: false,
       sellPrice: null,
       timebought: null,
       timesold: null
-
     }];
   }
 }
-
-
 
 export async function sellStock(ticker, price, quantity) {
 
@@ -431,6 +418,16 @@ export async function addToWatchlist(ticker) {
     watchlist: watchlist
   });
 }
+
+
+
+/* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */
+
+
+
+/* ----------------------- START FIREBASE AUTHENTICATION FUNCTIONS ----------------------- */
+
+
 
 //simplified signup function
 export function signup(email, password) {
