@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword,  } from 'firebase/auth'
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, arrayUnion, } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
@@ -21,10 +21,6 @@ const db = getFirestore(app);
 
 //authorizes user
 const auth = getAuth();
-
-
-
-
 
 /* ----------------------- START FIRESTORE FUNCTIONS ----------------------- */
 
@@ -468,20 +464,29 @@ export function useAuth() {
 }
 
 //all of these get the users data
+export function getUserEmail(){ 
+  return auth.currentUser.email
+}
 
 export async function updateUserPassword(password) {
+  //makes sure current user is being selected
   const userForPassword = auth.currentUser
 
-  if (updatePassword(userForPassword, password)) {
-    return true
-  }
 
-  return false
+  //if password is correctly updated a new password is passed to firebase
+  try {
+    updatePassword(userForPassword, password)
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
 export async function updateUserEmail(email) {
   const userForEmail = auth.currentUser
 
+
+  //if email is correctly updated a new email is passed to firebase
   try {
     updateEmail(userForEmail, email)
     return true

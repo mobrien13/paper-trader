@@ -3,11 +3,13 @@ import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
-import { updateUserEmail, updateUserPassword } from '../../firebase';
+import { getUserEmail, updateUserEmail, updateUserPassword} from '../../firebase';
 
 
 
-function Settings() {
+function Settings() {   
+    const currentEmail = getUserEmail();
+
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePass, setChangePass] = useState(false);
     const [personalInfo, setPersonalInfo] = useState(true);
@@ -31,8 +33,20 @@ function Settings() {
 
 
     const [password, setPassword] = useState("")
-    const [secondPass, setSecondPass] = useState("")
-    const [passSuccess, setPassSuccess] = useState("")
+    const [secondPassword, setSecondPassword] = useState("")
+    const [passSuccess, setPassSuccess] = useState(null)
+    async function handlePasswordUpdate() {
+
+        if (password === secondPassword) {
+            await updateUserPassword(password).then( (result)=> { 
+                if (result) { 
+                    setPassSuccess(true)
+                }
+            })
+        } else { 
+            setPassSuccess(false)
+        }
+    }
 
 
 
@@ -58,7 +72,7 @@ function Settings() {
 
                     {changeEmail &&
                         <>
-                            <p>Current Email: { }</p>
+                            <p>Current Email: {currentEmail}</p>
                             {emailSuccess !== null && emailSuccess && <p className='orderSuccess'>Email updated</p>}
                             {emailSuccess !== null && !emailSuccess && <p className='orderNotSuccess'>Email not updated</p>}
                             <input className='signInFields' placeholder="New Email" onChange={event => setEmail(event.target.value)} />
@@ -67,8 +81,7 @@ function Settings() {
 
                             <Button buttonStyle='btn--primary--outline' onClick={() => {
                                 handleEmailUpdate()
-                            }
-                            }>Update Email</Button>
+                            }}>Update Email</Button>
                         </>
                     }
 
@@ -84,12 +97,14 @@ function Settings() {
 
                     {changePass &&
                         <>
-                            <input className='signInFields' placeholder="Current Password" type='password' />
+                            {passSuccess !== null && passSuccess && <p className='orderSuccess'>Password Updated</p>}
+                            {passSuccess !== null && !passSuccess && <p className='orderNotSuccess'>Password not Updated</p>}
+                            <input className='signInFields' placeholder="New Password" type='password' onChange={event => setPassword(event.target.value)} />
                             <br />
-                            <input className='signInFields' placeholder="New Password" type='password' />
-                            <br />
-                            <input className='signInFields' placeholder="Confirm New Password" type='password' />
-                            <Button buttonStyle='btn--primary--outline'>Change Password</Button>
+                            <input className='signInFields' placeholder="Confirm New Password" type='password' onChange={event => setSecondPassword(event.target.value)} />
+                            <Button buttonStyle='btn--primary--outline' onClick={() =>{
+                                handlePasswordUpdate()
+                            }}>Change Password</Button>
                         </>
                     }
                 </>
