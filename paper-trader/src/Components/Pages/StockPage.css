@@ -20,7 +20,9 @@
 }
 
 .noExist{
-    margin-bottom: 40vh;
+    margin-bottom: 10vh;
+    text-align: center;
+    color: black;
 }
 
 .addToWatchlistButton:hover{

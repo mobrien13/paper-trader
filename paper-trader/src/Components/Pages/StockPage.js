@@ -11,6 +11,7 @@ import News from '../News/News';
 import Box from '../Box/Box';
 import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock, setUserWatchList } from '../../firebase';
 import { waitForPendingWrites } from 'firebase/firestore';
+import image404 from '../../images/404-error-3.png'
 
 
 const StockPage = (props) => {
@@ -311,7 +312,7 @@ const StockPage = (props) => {
                     <Box>
                         <div className='buyStockItem'>
                             {/* <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3> */}
-                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => {modalRef.current.open(); setSuccess(null)} }>New Order</Button>
+                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => { modalRef.current.open(); setSuccess(null) }}>New Order</Button>
 
 
                         </div>
@@ -367,8 +368,8 @@ const StockPage = (props) => {
                         {buy && !sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
-                                {success!==null && success && <p className='orderSuccess'>Order Successful!</p>}
-                                {success!==null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
+                                {success !== null && success && <p className='orderSuccess'>Order Successful!</p>}
+                                {success !== null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button onClick={async () => {
                                     //waits for buy stock to complete and sets error message
@@ -391,8 +392,8 @@ const StockPage = (props) => {
                         {!buy && sell &&
                             <>
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
-                                {success!==null && success && <p className='orderSuccess'>Order Successful!</p>}
-                                {success!==null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
+                                {success !== null && success && <p className='orderSuccess'>Order Successful!</p>}
+                                {success !== null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price, amount).then(result => {
                                     if (result === true) {
@@ -417,7 +418,10 @@ const StockPage = (props) => {
 
                 {/* Stock Does Not Exist Error */}
                 {exists === 2 &&
-                    <h1 className='noExist'>Stock Does Not Exist. Enter a Valid Ticker</h1>
+                    <div className='noExist'>
+                        <h1>Stock Does Not Exist. Enter a Valid Ticker</h1>
+                        <img src={image404} />
+                    </div>
                 }
 
             </div>
