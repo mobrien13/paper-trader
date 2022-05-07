@@ -17,22 +17,21 @@ class PortfolioGraph extends Component {
   }
 
   componentDidMount() {
-    var aryx = []
-    var aryy = []
-    var ary = []
+    let aryx = []
+    let aryy = []
+    let ary = []
     let final = []
-    let acum = 2000
+    let acum = 0
 
 
     getHoldings().then((result) => {
       for (let i = 1; i < result.length; i++) {
         if (result[i].sellPrice !== 0 && result[i].sellPrice !== null) {
-          aryx.push( new Date(result[i].timesold))
-          aryy.push((result[i].quantitySold * result[i].sellPrice) - (result[i].buyPrice *  result[i].quantitySold))
+          aryx.push(new Date(result[i].timesold))
+          aryy.push((result[i].quantitySold * result[i].sellPrice) - (result[i].buyPrice * result[i].quantitySold))
         }
       }
 
-    
       //bad splicing
 
       // let prev =  Date.parse(aryx[0])
@@ -40,7 +39,7 @@ class PortfolioGraph extends Component {
       // for(let i = 0; i <= aryx.length; i++){
       //   let next =  Date.parse(aryx[i])
       //   next = new Date(next).setHours(0,0,0,0)
-        
+
       //   if(prev === next){
       //     aryy[i] = aryy[i-1] + aryy[i]
       //     aryy.splice(i-1,1)
@@ -49,9 +48,10 @@ class PortfolioGraph extends Component {
       //   prev = next
       // }
 
-      for(let i = 1 ; i < aryx.length; i++){
+
+      for (let i = 1; i < aryx.length; i++) {
         //splice out if undefined
-        if(aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0){
+        if (aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0) {
           aryx.splice(i, 1)
           aryy.splice(i, 1)
           i--;
@@ -60,25 +60,28 @@ class PortfolioGraph extends Component {
 
 
       //fix splicing
-      for(let i = 1 ; i < aryx.length; i++){
+      for (let i = 1; i < aryx.length; i++) {
 
         //setup dates
         let currentDay = Date.parse(aryx[i]);
-        currentDay = new Date(currentDay).setHours(0,0,0,0)
-        let prevDay = Date.parse(aryx[i-1]);
-        prevDay = new Date(prevDay).setHours(0,0,0,0);
+        currentDay = new Date(currentDay).setHours(0, 0, 0, 0)
+        let prevDay = Date.parse(aryx[i - 1]);
+        prevDay = new Date(prevDay).setHours(0, 0, 0, 0);
 
         //splice out if day matches
-         if(currentDay === prevDay){
-          console.log(aryx)
-          console.log(aryy)
-          console.log("Splicing")
+        if (currentDay === prevDay) {
           aryx.splice(i, 1)
-          aryy[i] = aryy[i]*1.0 + aryy.splice(i, 1)*1.0
+          aryy[i - 1] = aryy[i - 1] * 1.0 + aryy[i] * 1.0
+          aryy.splice(i, 1)
           i--
         }
       }
 
+      //accumulator
+      for (let i = 0; i < aryx.length; i++) {
+        aryy[i] += acum;
+        acum = aryy[i]
+      }
 
 
       //push results
@@ -86,16 +89,16 @@ class PortfolioGraph extends Component {
         ary.push({ x: aryx[i], y: aryy[i] })
       }
 
+      //set state
       console.log(ary)
       this.setState({
         isLoaded: true,
         data: ary
       });
     })
-
   }
 
- 
+
   render() {
     const options = {
       theme: "light1",
