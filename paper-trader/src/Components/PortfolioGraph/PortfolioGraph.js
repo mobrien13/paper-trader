@@ -33,38 +33,61 @@ class PortfolioGraph extends Component {
       }
 
     
-      //fix splicing
+      //bad splicing
 
-      let prev =  Date.parse(aryx[0])
-      prev = new Date(prev).setHours(0,0,0,0)
-      for(let i = 0; i <= aryx.length; i++){
-        let next =  Date.parse(aryx[i])
-        next = new Date(next).setHours(0,0,0,0)
+      // let prev =  Date.parse(aryx[0])
+      // prev = new Date(prev).setHours(0,0,0,0)
+      // for(let i = 0; i <= aryx.length; i++){
+      //   let next =  Date.parse(aryx[i])
+      //   next = new Date(next).setHours(0,0,0,0)
         
-        if(prev === next){
-          aryy[i] = aryy[i-1] + aryy[i]
-          aryy.splice(i-1,1)
-          aryx.splice(i-1,1)
+      //   if(prev === next){
+      //     aryy[i] = aryy[i-1] + aryy[i]
+      //     aryy.splice(i-1,1)
+      //     aryx.splice(i-1,1)
+      //   }
+      //   prev = next
+      // }
+
+
+      //fix splicing
+      for(let i = 1 ; i < aryx.length; i++){
+
+        //setup dates
+        let currentDay = Date.parse(aryx[i]);
+        currentDay = new Date(currentDay).setHours(0,0,0,0)
+        let prevDay = Date.parse(aryx[i-1]);
+        prevDay = new Date(prevDay).setHours(0,0,0,0);
+
+        //splice out if undefined
+        if(aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0){
+          aryx.splice(i, 1)
+          aryy.splice(i, 1)
+          i--;
         }
-        prev = next
+        
+        //splice out if day matches
+        else if(currentDay === prevDay){
+          console.log("Splicing")
+          aryx.splice(i, 1)
+          aryy[i] = aryy[i] + aryy.splice(i, 1)
+          i--
+        }
       }
 
 
-      for (let i = 0; i <= aryx.length; i++) {
+
+      //push results
+      for (let i = 0; i < aryx.length; i++) {
         ary.push({ x: aryx[i], y: aryy[i] })
       }
 
-      console.log("here")
-      //console.log(Date.parse(aryx[0]).setHours(0,0,0,0))
       console.log(ary)
       this.setState({
         isLoaded: true,
         data: ary
       });
     })
-
-
-
 
   }
 
