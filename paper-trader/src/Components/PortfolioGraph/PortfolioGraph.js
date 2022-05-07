@@ -1,21 +1,8 @@
 import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
-import {getHoldings, getPastOrders} from '../../firebase';
+import { getHoldings, getPastOrders } from '../../firebase';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
-
-
-
-// { x: new Date("2018-02-01"), y: 340 },
-// { x: new Date("2018-03-01"), y: 220 },
-// { x: new Date("2018-04-01"), y: 270 },
-// { x: new Date("2018-05-01"), y: 300 },
-// { x: new Date("2018-06-01"), y: 370 },
-// { x: new Date("2018-07-01"), y: 290 },
-// { x: new Date("2018-08-01"), y: 290 },
-// { x: new Date("2018-09-01"), y: 300 },
-// { x: new Date("2018-10-01"), y: 140 },
-// { x: new Date("2018-11-01"), y: 300 }
 
 CanvasJS.addColorSet("colors",
   [//colorSet Array 
@@ -26,62 +13,76 @@ CanvasJS.addColorSet("colors",
 class PortfolioGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoaded: false, data:[] };
+    this.state = { isLoaded: false, data: [] };
   }
 
   componentDidMount() {
-   let current = []
-  // let past = []
-   
-
-
+    var aryx = []
+    var aryy = []
+    var ary = []
+    let final = []
+    let acum = 2000
 
 
     getHoldings().then((result) => {
-      for (let i = 1; i <= result.length; i++){
-        current.push({x: new Date((new Date (result[i].timebought)).setHours(0,0,0,0)), y: (result[i].buyPrice * result[i].quantity)})
+      for (let i = 1; i < result.length; i++) {
+        if (result[i].sellPrice !== 0 && result[i].sellPrice !== null) {
+          aryx.push( new Date(result[i].timesold))
+          aryy.push((result[i].quantitySold * result[i].sellPrice) - (result[i].buyPrice *  result[i].quantitySold))
+        }
       }
 
-      let prev = current[0].x
-      for(let i = 1; i <= current.length; i++){
-        let next = current[i].x
+    
+      //fix splicing
+
+      let prev =  Date.parse(aryx[0])
+      prev = new Date(prev).setHours(0,0,0,0)
+      for(let i = 0; i <= aryx.length; i++){
+        let next =  Date.parse(aryx[i])
+        next = new Date(next).setHours(0,0,0,0)
         
         if(prev === next){
-          current[i].y = current[i-1].y + current[i].y 
-          current.splice(i-1,1)
+          aryy[i] = aryy[i-1] + aryy[i]
+          aryy.splice(i-1,1)
+          aryx.splice(i-1,1)
         }
-
         prev = next
       }
 
-     //.toDateString()
-      
+
+      for (let i = 0; i <= aryx.length; i++) {
+        ary.push({ x: aryx[i], y: aryy[i] })
+      }
+
+      console.log("here")
+      //console.log(Date.parse(aryx[0]).setHours(0,0,0,0))
+      console.log(ary)
+      this.setState({
+        isLoaded: true,
+        data: ary
+      });
     })
 
-  
-    
-    
-    
 
 
 
-    this.setState({
-      isLoaded: true,
-      data: current
-    });
   }
 
+ 
   render() {
     const options = {
       theme: "light1",
       animationEnabled: "True",
       animationDuration: 1200,
-      colorSet:"colors",
+      colorSet: "colors",
 
-
+      axisX: {
+        minimum: 0,
+      },
 
       charts: [{
         xaxis: {
+          viewportMinimum: 0,
           lineThickness: 3,
           tickLength: 0,
           lineColor: "#242526",
@@ -129,7 +130,7 @@ class PortfolioGraph extends Component {
       },
 
       rangeSelector: {
-        selectedRangeButtonIndex: 5,
+        selectedRangeButtonIndex: 3,
         buttonStyle: {
           backgroundColor: "#ffffff",
           backgroundColorOnHover: "#06f",
@@ -145,6 +146,23 @@ class PortfolioGraph extends Component {
             fontColor: "#242526",
           }
         },
+        buttons: [{
+          rangeType: "all",
+          label: "All",
+        },
+        {
+          range: 1,
+          rangeType: "year",
+          label: "1 Year"
+        }, {
+          range: 1,
+          rangeType: "month",
+          label: "1 Month"
+        }, {
+          range: 1,
+          rangeType: "week",
+          label: "1 Week"
+        },],
       }
 
     };
@@ -159,12 +177,12 @@ class PortfolioGraph extends Component {
       <div>
         {this.state.isLoaded &&
           <CanvasJSStockChart
-          options={options}
-          containerProps={containerProps}
-          onRef={ref => this.stockChart = ref}
-        />
+            options={options}
+            containerProps={containerProps}
+            onRef={ref => this.stockChart = ref}
+          />
         }
-        
+
       </div>
     );
   }
