@@ -417,7 +417,7 @@ const StockPage = (props) => {
 
                 {/* Stock Does Not Exist Error */}
                 {exists === 2 &&
-                    <h1>Stock Does Not Exist. Enter a Valid Ticker</h1>
+                    <h1 className='noExist'>Stock Does Not Exist. Enter a Valid Ticker</h1>
                 }
 
             </div>
