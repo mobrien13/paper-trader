@@ -2,20 +2,39 @@ import React, { useState } from 'react';
 import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
-import { User, usersDatabase } from '../../fakeDatabase.js';
 import { Link } from 'react-router-dom';
+import { updateUserEmail, updateUserPassword } from '../../firebase';
+
+
 
 function Settings() {
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePass, setChangePass] = useState(false);
-    const [changeFunds, setChangeFunds] = useState(false);
-
     const [personalInfo, setPersonalInfo] = useState(true);
-    const [funds, setFunds] = useState(true);
 
-    //fake database
-    const email = usersDatabase[0].email;
-    const currentFunds = usersDatabase[0].funds;
+
+    const [email, setEmail] = useState("")
+    const [secondEmail, setSecondEmail] = useState("")
+    const [emailSuccess, setEmailSuccess] = useState(null)
+    async function handleEmailUpdate() {
+
+        if (email === secondEmail) {
+            await updateUserEmail(email).then( (result)=> { 
+                if (result) { 
+                    setEmailSuccess(true)
+                }
+            })
+        } else { 
+            setEmailSuccess(false)
+        }
+    }
+
+
+    const [password, setPassword] = useState("")
+    const [secondPass, setSecondPass] = useState("")
+    const [passSuccess, setPassSuccess] = useState("")
+
+
 
     return (
         <div className='container'>
@@ -39,12 +58,17 @@ function Settings() {
 
                     {changeEmail &&
                         <>
-                            <p>Current Email: {email}</p>
-
-                            <input className='signInFields' placeholder="New Email" />
+                            <p>Current Email: { }</p>
+                            {emailSuccess !== null && emailSuccess && <p className='orderSuccess'>Email updated</p>}
+                            {emailSuccess !== null && !emailSuccess && <p className='orderNotSuccess'>Email not updated</p>}
+                            <input className='signInFields' placeholder="New Email" onChange={event => setEmail(event.target.value)} />
                             <br />
-                            <input className='signInFields' placeholder="Confirm New Email" />
-                            <Button buttonStyle='btn--primary--outline'>Update Email</Button>
+                            <input className='signInFields' placeholder="Confirm New Email" onChange={event => setSecondEmail(event.target.value)} />
+
+                            <Button buttonStyle='btn--primary--outline' onClick={() => {
+                                handleEmailUpdate()
+                            }
+                            }>Update Email</Button>
                         </>
                     }
 
@@ -71,18 +95,6 @@ function Settings() {
                 </>
             }
 
-            {funds &&
-                <>
-                    <h2>Funds</h2>
-                    <h3>Add or Remove Funds</h3>
-                    <p>Current Funds: {currentFunds}</p>
-                    <input className='signInFields' placeholder="Add Funds" />
-                    <Button buttonStyle='btn--primary--outline'>Add Funds</Button>
-                </>
-            }
-
-            <br/>
-            <br/>
             <Link to='/test'><Button>Run Tests</Button></Link>
 
         </div>

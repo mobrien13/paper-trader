@@ -1,7 +1,6 @@
-import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc, Timestamp, arrayUnion } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth'
+import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, arrayUnion, } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -18,14 +17,12 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-//creates user object to be called everywhere 
-const user = {
-  firestname: String,
-  lastname: String,
-}
+
 
 //authorizes user
 const auth = getAuth();
+
+
 
 
 
@@ -55,7 +52,7 @@ export async function addUserToUsersData() {
 //buy stock 
 export async function buyStock(ticker, price, quantity) {
   //checks if the quantity contains any letters
-  if(/[a-z]/i.test(quantity)){
+  if (/[a-z]/i.test(quantity)) {
     return false;
   }
 
@@ -140,7 +137,7 @@ export async function getPastOrders() {
 
     //loops through all of the closed holdings and adds them to an array
     for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
-      if(querySnapshot.docs[0].data().holdings[i].isClosed){
+      if (querySnapshot.docs[0].data().holdings[i].isClosed) {
         newArray.push(querySnapshot.docs[0].data().holdings[i])
       }
     }
@@ -187,7 +184,7 @@ export async function sellStock(ticker, price, quantity) {
   */
 
   //added a check to see if the quantity contains letters
-  if(/[a-z]/i.test(quantity)){
+  if (/[a-z]/i.test(quantity)) {
     return false;
   }
 
@@ -468,5 +465,28 @@ export function useAuth() {
 
   return currentUser;
 
+}
+
+//all of these get the users data
+
+export async function updateUserPassword(password) {
+  const userForPassword = auth.currentUser
+
+  if (updatePassword(userForPassword, password)) {
+    return true
+  }
+
+  return false
+}
+
+export async function updateUserEmail(email) {
+  const userForEmail = auth.currentUser
+
+  try {
+    updateEmail(userForEmail, email)
+    return true
+  } catch (e) {
+    return false
+  }
 }
 
