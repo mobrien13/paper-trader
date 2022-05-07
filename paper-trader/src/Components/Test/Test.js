@@ -56,28 +56,44 @@ function Test() {
   const [holdingsPass, setHoldingsPass] = useState(true);
   const [testingHoldings, setTestingHoldings] = useState(true);
 
+  // getHoldings().then(result => {
+  //   //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
+  //   setHoldings(result)
+  //   holdingsTest()
+  //   setTestingHoldings(false)
+  // });
+
+  // function holdingsTest() {
+  //   if (1004.94 != holdings[0].buyPrice) {
+  //     setHoldingsPass(false);
+  //   }
+  //   if (holdings[0].isSold !== false) {
+  //     setHoldingsPass(false);
+  //   }
+  //   if (holdings[0].quantity != 10) {
+  //     setHoldingsPass(false);
+  //   }
+  //   if (holdings[0].sellPrice !== 0) {
+  //     setHoldingsPass(false);
+  //   }
+  //   if (holdings[0].ticker !== 'tsla') {
+  //     setHoldingsPass(false);
+  //   }
+  // }
+
+  //Holdings Tests
   getHoldings().then(result => {
-    //setting watchlist to watchlist vaslue, changes app state and will reload component with new watchlist
     setHoldings(result)
-    holdingsTest()
+    holdingsTester()
     setTestingHoldings(false)
   });
 
-  function holdingsTest() {
-    if (1004.94 != holdings[0].buyPrice) {
-      setHoldingsPass(false);
+  function holdingsTester(){
+    if (holdings[1].ticker.toUpperCase() === 'TSLA' && holdings[1].quantity === 10){
+      setHoldingsPass(true)
     }
-    if (holdings[0].isSold !== false) {
-      setHoldingsPass(false);
-    }
-    if (holdings[0].quantity != 10) {
-      setHoldingsPass(false);
-    }
-    if (holdings[0].sellPrice !== 0) {
-      setHoldingsPass(false);
-    }
-    if (holdings[0].ticker !== 'tsla') {
-      setHoldingsPass(false);
+    else{
+      setHoldingsPass(false)
     }
   }
 
