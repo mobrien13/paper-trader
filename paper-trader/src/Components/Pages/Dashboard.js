@@ -29,8 +29,8 @@ function Dashboard() {
   useEffect(() => {
     getHoldings().then(result => {
       setUserHoldings(result)
-    }
-    )
+    })
+    
   }, [])
 
   
@@ -48,7 +48,7 @@ function Dashboard() {
           <div className='graph-box'>
 
             {/*generates graph from test data this will need to be changed for graph */}
-            <PortfolioGraph title='Portfolio Performance'></PortfolioGraph>
+            <PortfolioGraph title='Portfolio Performance' ></PortfolioGraph>
 
           </div>
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
+import { getHoldings, getPastOrders } from '../../firebase';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
@@ -10,17 +11,108 @@ CanvasJS.addColorSet("colors",
 
 
 class PortfolioGraph extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isLoaded: false, data: [] };
+  }
+
+  componentDidMount() {
+    let aryx = []
+    let aryy = []
+    let ary = []
+    let final = []
+    let acum = 0
+
+
+    getHoldings().then((result) => {
+      for (let i = 1; i < result.length; i++) {
+        if (result[i].sellPrice !== 0 && result[i].sellPrice !== null) {
+          aryx.push(new Date(result[i].timesold))
+          aryy.push((result[i].quantitySold * result[i].sellPrice) - (result[i].buyPrice * result[i].quantitySold))
+        }
+      }
+
+      //bad splicing
+
+      // let prev =  Date.parse(aryx[0])
+      // prev = new Date(prev).setHours(0,0,0,0)
+      // for(let i = 0; i <= aryx.length; i++){
+      //   let next =  Date.parse(aryx[i])
+      //   next = new Date(next).setHours(0,0,0,0)
+
+      //   if(prev === next){
+      //     aryy[i] = aryy[i-1] + aryy[i]
+      //     aryy.splice(i-1,1)
+      //     aryx.splice(i-1,1)
+      //   }
+      //   prev = next
+      // }
+
+
+      for (let i = 1; i < aryx.length; i++) {
+        //splice out if undefined
+        if (aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0) {
+          aryx.splice(i, 1)
+          aryy.splice(i, 1)
+          i--;
+        }
+      }
+
+
+      //fix splicing
+      for (let i = 1; i < aryx.length; i++) {
+
+        //setup dates
+        let currentDay = Date.parse(aryx[i]);
+        currentDay = new Date(currentDay).setHours(0, 0, 0, 0)
+        let prevDay = Date.parse(aryx[i - 1]);
+        prevDay = new Date(prevDay).setHours(0, 0, 0, 0);
+
+        //splice out if day matches
+        if (currentDay === prevDay) {
+          aryx.splice(i, 1)
+          aryy[i - 1] = aryy[i - 1] * 1.0 + aryy[i] * 1.0
+          aryy.splice(i, 1)
+          i--
+        }
+      }
+
+      //accumulator
+      for (let i = 0; i < aryx.length; i++) {
+        aryy[i] += acum;
+        acum = aryy[i]
+      }
+
+
+      //push results
+      for (let i = 0; i < aryx.length; i++) {
+        ary.push({ x: aryx[i], y: aryy[i] })
+      }
+
+      //set state
+      console.log(ary)
+      this.setState({
+        isLoaded: true,
+        data: ary
+      });
+    })
+  }
+
+
   render() {
     const options = {
       theme: "light1",
       animationEnabled: "True",
       animationDuration: 1200,
-      colorSet:"colors",
+      colorSet: "colors",
 
-
+      axisX: {
+        minimum: 0,
+      },
 
       charts: [{
         xaxis: {
+          viewportMinimum: 0,
           lineThickness: 3,
           tickLength: 0,
           lineColor: "#242526",
@@ -34,7 +126,7 @@ class PortfolioGraph extends Component {
         },
         axisY: {
           lineThickness: 1,
-          title: "Portfolio Value USD",
+          title: "Total Profit USD",
           prefix: "$",
           tickLength: 0,
           lineColor: "#242526",
@@ -55,32 +147,7 @@ class PortfolioGraph extends Component {
           lineThickness: "2.8",
           lineColor: "#06F",
           fillOpacity: .5,
-          dataPoints: [
-            { x: new Date("2018-01-01"), y: 100 },
-            { x: new Date("2018-02-01"), y: 340 },
-            { x: new Date("2018-03-01"), y: 220 },
-            { x: new Date("2018-04-01"), y: 270 },
-            { x: new Date("2018-05-01"), y: 300 },
-            { x: new Date("2018-06-01"), y: 370 },
-            { x: new Date("2018-07-01"), y: 290 },
-            { x: new Date("2018-08-01"), y: 290 },
-            { x: new Date("2018-09-01"), y: 300 },
-            { x: new Date("2018-10-01"), y: 140 },
-            { x: new Date("2018-11-01"), y: 300 },
-            { x: new Date("2018-12-01"), y: 290 },
-            { x: new Date("2019-01-01"), y: 270 },
-            { x: new Date("2019-02-01"), y: 190 },
-            { x: new Date("2019-03-01"), y: 140 },
-            { x: new Date("2019-04-01"), y: 290 },
-            { x: new Date("2019-05-01"), y: 140 },
-            { x: new Date("2019-06-01"), y: 360 },
-            { x: new Date("2019-07-01"), y: 290 },
-            { x: new Date("2019-08-01"), y: 300 },
-            { x: new Date("2019-09-01"), y: 200 },
-            { x: new Date("2019-10-01"), y: 300 },
-            { x: new Date("2019-11-01"), y: 140 },
-            { x: new Date("2019-12-01"), y: 190 }
-          ]
+          dataPoints: this.state.data
         }]
       }],
 
@@ -93,7 +160,7 @@ class PortfolioGraph extends Component {
       },
 
       rangeSelector: {
-        selectedRangeButtonIndex: 5,
+        selectedRangeButtonIndex: 0,
         buttonStyle: {
           backgroundColor: "#ffffff",
           backgroundColorOnHover: "#06f",
@@ -109,6 +176,23 @@ class PortfolioGraph extends Component {
             fontColor: "#242526",
           }
         },
+        buttons: [{
+          rangeType: "all",
+          label: "All",
+        },
+        {
+          range: 1,
+          rangeType: "year",
+          label: "1 Year"
+        }, {
+          range: 1,
+          rangeType: "month",
+          label: "1 Month"
+        }, {
+          range: 1,
+          rangeType: "week",
+          label: "1 Week"
+        },],
       }
 
     };
@@ -121,11 +205,14 @@ class PortfolioGraph extends Component {
     };
     return (
       <div>
-        <CanvasJSStockChart
-          options={options}
-          containerProps={containerProps}
-          onRef={ref => this.stockChart = ref}
-        />
+        {this.state.isLoaded &&
+          <CanvasJSStockChart
+            options={options}
+            containerProps={containerProps}
+            onRef={ref => this.stockChart = ref}
+          />
+        }
+
       </div>
     );
   }
