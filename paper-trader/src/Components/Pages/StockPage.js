@@ -359,6 +359,7 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()}</h2>
                                 <p>Select Order Type</p>
+                                <p>Current Price: ${Stock.price}</p>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setBuy(true)}>Buy</Button>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setSell(true)}>Sell</Button>
                             </>
