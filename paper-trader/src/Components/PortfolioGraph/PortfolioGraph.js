@@ -49,6 +49,15 @@ class PortfolioGraph extends Component {
       //   prev = next
       // }
 
+      for(let i = 1 ; i < aryx.length; i++){
+        //splice out if undefined
+        if(aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0){
+          aryx.splice(i, 1)
+          aryy.splice(i, 1)
+          i--;
+        }
+      }
+
 
       //fix splicing
       for(let i = 1 ; i < aryx.length; i++){
@@ -59,18 +68,13 @@ class PortfolioGraph extends Component {
         let prevDay = Date.parse(aryx[i-1]);
         prevDay = new Date(prevDay).setHours(0,0,0,0);
 
-        //splice out if undefined
-        if(aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0){
-          aryx.splice(i, 1)
-          aryy.splice(i, 1)
-          i--;
-        }
-        
         //splice out if day matches
-        else if(currentDay === prevDay){
+         if(currentDay === prevDay){
+          console.log(aryx)
+          console.log(aryy)
           console.log("Splicing")
           aryx.splice(i, 1)
-          aryy[i] = aryy[i] + aryy.splice(i, 1)
+          aryy[i] = aryy[i]*1.0 + aryy.splice(i, 1)*1.0
           i--
         }
       }
@@ -153,7 +157,7 @@ class PortfolioGraph extends Component {
       },
 
       rangeSelector: {
-        selectedRangeButtonIndex: 3,
+        selectedRangeButtonIndex: 0,
         buttonStyle: {
           backgroundColor: "#ffffff",
           backgroundColorOnHover: "#06f",
