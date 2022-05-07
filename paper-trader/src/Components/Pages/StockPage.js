@@ -10,9 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import News from '../News/News';
 import Box from '../Box/Box';
 import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock, setUserWatchList } from '../../firebase';
-import { waitForPendingWrites } from 'firebase/firestore';
 import image404 from '../../images/404-error-3.png'
-
 
 const StockPage = (props) => {
 
@@ -59,6 +57,51 @@ const StockPage = (props) => {
         name: "Name",
         ticker: "MMMM"
 
+    }
+
+    function updatePrice(){
+        let currentTime = Date.now() - (86400000)
+
+        fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    let ary = [], close = []
+                    let min = 0, max = 0
+
+                    for (var i = 0; i < data.candles.length; i++) {
+                        if (new Date(data.candles[i].datetime) <= currentTime) {
+                            ary.push(Number(data.candles[i].high))
+                            ary.push(Number(data.candles[i].low))
+                            close.push(Number(data.candles[i].close))
+                        }
+                    }
+
+                    for (let x = 0; x < ary.length; x++) {
+                        if (ary[x] > max && x === 0) {
+                            max = ary[x]
+                            min = ary[x]
+                        }
+
+                        if (ary[x] > max) {
+                            max = ary[x]
+                        }
+
+                        if (ary[x] < min) {
+                            min = ary[x]
+                        }
+                    }
+
+                    setMax(max.toFixed(2))
+                    setMin(min.toFixed(2))
+
+                    setPrice((Number(close[close.length - 1])).toFixed(2))
+
+                }
+            )
+            Stock.price = price
+            Stock.dayHigh = max
+            Stock.dayLow = min   
     }
 
     //sets isInWatchlist when the location changes
@@ -312,7 +355,7 @@ const StockPage = (props) => {
                     <Box>
                         <div className='buyStockItem'>
                             {/* <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3> */}
-                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => { modalRef.current.open(); setSuccess(null) }}>New Order</Button>
+                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => {modalRef.current.open(); setSuccess(null); updatePrice();} }>New Order</Button>
 
 
                         </div>
@@ -360,6 +403,7 @@ const StockPage = (props) => {
                             <>
                                 <h2>{Stock.ticker.toUpperCase()}</h2>
                                 <p>Select Order Type</p>
+                                <p>Current Price: ${Stock.price}</p>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setBuy(true)}>Buy</Button>
                                 <Button buttonStyle='btn--primary--outline' onClick={() => setSell(true)}>Sell</Button>
                             </>
