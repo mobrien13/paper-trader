@@ -53,13 +53,13 @@ const Orders = (props) => {
                 <div className='orders-grid'>
 
                     <h3>Ticker</h3>
-                    <h3>Purchase Price</h3>
+                    <h3 className='hiddenOnMobile'>Purchase Price</h3>
                     <h3>Quantity</h3>
-                    <h3>Total Cost</h3>
-                    <h3>Purcahse Date</h3>
+                    <h3 className='hiddenOnMobile'>Total Cost</h3>
+                    <h3 className='hiddenOnMobile'>Purcahse Date</h3>
                     <h3>Quantity Sold</h3>
-                    <h3>Sell Price</h3>
-                    <h3>Sell Date</h3>
+                    <h3 className='hiddenOnMobile'>Sell Price</h3>
+                    <h3 className='hiddenOnMobile'>Sell Date</h3>
 
                     {holdings.length >= 1 && holdings.map((item, i) => {
                         if (i < (holdings.length - 1) && !holdings[i].isClosed) {
@@ -91,12 +91,12 @@ const Orders = (props) => {
                     <div className='pastOrdersGrid'>
 
                         <h3>Ticker</h3>
-                        <h3>Purchase Price</h3>
-                        <h3>Quantity</h3>
+                        <h3 className='hiddenOnMobile'>Purchase Price</h3>
+                        <h3 className='hiddenOnMobile'>Quantity</h3>
                         <h3>Total Cost</h3>
-                        <h3>Sell Price</h3>
+                        <h3 className='hiddenOnMobile'>Sell Price</h3>
                         <h3>Total Profit</h3>
-                        <h3>Purcahse Date</h3>
+                        <h3 className='hiddenOnMobile'>Purcahse Date</h3>
 
                         {
                             pastOrders.map((item, i) => {

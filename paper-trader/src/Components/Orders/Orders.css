@@ -55,3 +55,29 @@
     grid-template-columns: 150px 150px 150px 150px 150px 150px 150px;
     place-items: center;
 }
+
+@media screen and (max-width: 1200px) {
+    .hiddenOnMobile{
+        display: none;
+    }
+
+    .orders-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        place-items: center;
+    }
+      
+    .pastOrdersGrid {
+        display: grid;
+        grid-template-columns: 150px 150px 150px;
+        place-items: center;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .pastOrdersGrid {
+        display: grid;
+        grid-template-columns: 80px 80px 80px;
+        place-items: center;
+    }
+}

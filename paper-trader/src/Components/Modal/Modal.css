@@ -24,7 +24,7 @@
 }
 
 .holdingsModal {
-    width: 85vw;
+    width: min-content;
     height: 50vh;
 }
 
@@ -38,6 +38,10 @@
     .order {
         width: 55vw;
         height: 55vh;
+    }
+    .holdingsModal{
+        width: 60vw;
+        padding: none;
     }
 }
 
