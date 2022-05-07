@@ -18,12 +18,6 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-//creates user object to be called everywhere 
-const user = {
-  firestname: String,
-  lastname: String,
-}
-
 //authorizes user
 const auth = getAuth();
 
