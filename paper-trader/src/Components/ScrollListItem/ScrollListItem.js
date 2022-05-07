@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
-import { usersDatabase } from '../../fakeDatabase.js';
 import { getUserWatchList, setUserWatchList } from '../../firebase';
 import { Link } from 'react-router-dom';
 import '../ScrollList/ScrollList.css';
 
 
 const ScrollListItem = (props) => {
-    //fake database
-    // const user = usersDatabase[0];
-    // const watchlist = user.watchlist;
 
     //real database
     const [watchlist, setWatchlist] = useState([]);

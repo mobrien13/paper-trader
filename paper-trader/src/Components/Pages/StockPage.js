@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { React, useEffect, useState, useRef} from 'react';
 import { useLocation } from 'react-router-dom';
 import './StockPage.css';
 import ScrollList from '../ScrollList/ScrollList';
@@ -6,8 +6,7 @@ import Button from '../Button/Button.js';
 import Modal from '../Modal/Modal';
 import StockGraph from '../StockGraph/StockGraph';
 import StockGraphLive from '../StockGraph/StockGraphLive';
-import { AnimatePresence, motion } from 'framer-motion';
-import News from '../News/News';
+//import News from '../News/News';
 import Box from '../Box/Box';
 import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock, setUserWatchList } from '../../firebase';
 
@@ -16,9 +15,7 @@ import { addToWatchlist, getUserWatchList, buyStock, getHoldings, sellStock, set
 const StockPage = (props) => {
 
     const [success, setSuccess] = useState(null)
-
     const [isInWatchlist, setIsInWatchlist] = useState(false)
-
     const modalRef = useRef();
 
     const location = useLocation();
@@ -28,8 +25,6 @@ const StockPage = (props) => {
     const [sell, setSell] = useState(false);
     const [amount, setAmount] = useState(0);
     const [price, setPrice] = useState(0);
-    const [errorMessage, setErrorMessage] = useState("");
-
     // Data defines whether StockGraph is defining live or historical data (0 = historical, 1 = live)
     const [data, setData] = useState(0);
 
@@ -57,7 +52,6 @@ const StockPage = (props) => {
         fiftyTwoPercent: 1.0,
         name: "Name",
         ticker: "MMMM"
-
     }
 
     function updatePrice(){
@@ -95,9 +89,7 @@ const StockPage = (props) => {
 
                     setMax(max.toFixed(2))
                     setMin(min.toFixed(2))
-
                     setPrice((Number(close[close.length - 1])).toFixed(2))
-
                 }
             )
             Stock.price = price
@@ -121,7 +113,6 @@ const StockPage = (props) => {
     //removes item from watchlist if minus is clicked in the title area
     async function removeItem() {
         // watchlist = removeByValue(props.stockName);
-
         let tempWatchlist = []
 
         //get watchlist (async)
@@ -184,8 +175,6 @@ const StockPage = (props) => {
 
                     setMax(max.toFixed(2))
                     setMin(min.toFixed(2))
-
-                    // TO DO MOVE TO BUY MODAL
                     setPrice((Number(close[close.length - 1])).toFixed(2))
 
                 }
@@ -237,9 +226,6 @@ const StockPage = (props) => {
     }, [ticker]);
     Stock.name = name
 
-
-    /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
-
     // For 52 week range
     useEffect(() => {
         let currentTime = Date.now() - (86400000)
@@ -283,7 +269,7 @@ const StockPage = (props) => {
     console.log("high -" + Stock.fiftyTwoHigh)
     Stock.fiftyTwoPercent = (((Stock.price - Stock.fiftyTwoHigh) / Stock.fiftyTwoHigh) * 100).toFixed(2)
 
-    /////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
+ ///////////////////////////////////////////////////////////////////////END FETCH CALLS//////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
     useEffect(() => {
         getHoldings().then(result => {
@@ -349,8 +335,6 @@ const StockPage = (props) => {
                     </div>
                 }
 
-
-
                 {/* Stock Details and Order Button */}
                 {exists === 1 &&
                     <Box>
@@ -365,7 +349,7 @@ const StockPage = (props) => {
                             <ul>
                                 {
                                     userHoldings.map((item, i) => {
-                                        if (i > 0 && item.ticker.toUpperCase() == ticker.toUpperCase() && !item.isClosed) {
+                                        if (i > 0 && item.ticker.toUpperCase() === ticker.toUpperCase() && !item.isClosed) {
                                             return (
                                                 !item.isSold && <li>{item.quantity} Shares @ ${item.buyPrice}/share</li>
                                             )
@@ -386,12 +370,8 @@ const StockPage = (props) => {
                         </div>
                     </Box>
                 }
-                {/* <div className='buyStockBox'>
-
-                </div> */}
-
-
-                {/* News Component with Dummy Values */}
+             
+                {/* News Component */}
                 {/* {exists === 1 &&
                     <News keyWord={Stock.ticker}></News>
                 } */}
