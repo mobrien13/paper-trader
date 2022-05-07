@@ -472,26 +472,22 @@ export async function updateUserPassword(password) {
   //makes sure current user is being selected
   const userForPassword = auth.currentUser
 
-
   //if password is correctly updated a new password is passed to firebase
-  try {
-    updatePassword(userForPassword, password)
-    return true
-  } catch (e) {
-    return false
+    updatePassword(userForPassword, password).then(() => { 
+      return true
+    }).catch((error) => {
+      return false
+    })
   }
-}
 
 export async function updateUserEmail(email) {
   const userForEmail = auth.currentUser
 
-
   //if email is correctly updated a new email is passed to firebase
-  try {
-    updateEmail(userForEmail, email)
+  updateEmail(userForEmail, email).then(() => { 
     return true
-  } catch (e) {
+  }).catch((error) => {
     return false
-  }
+  })
 }
 

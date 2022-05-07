@@ -18,10 +18,10 @@ function Settings() {
     const [email, setEmail] = useState("")
     const [secondEmail, setSecondEmail] = useState("")
     const [emailSuccess, setEmailSuccess] = useState(null)
-    async function handleEmailUpdate() {
+    function handleEmailUpdate() {
 
         if (email === secondEmail) {
-            await updateUserEmail(email).then( (result)=> { 
+            updateUserEmail(email).then( (result)=> { 
                 if (result) { 
                     setEmailSuccess(true)
                 }
@@ -35,10 +35,10 @@ function Settings() {
     const [password, setPassword] = useState("")
     const [secondPassword, setSecondPassword] = useState("")
     const [passSuccess, setPassSuccess] = useState(null)
-    async function handlePasswordUpdate() {
+    function handlePasswordUpdate() {
 
         if (password === secondPassword) {
-            await updateUserPassword(password).then( (result)=> { 
+            updateUserPassword(password).then( (result)=> { 
                 if (result) { 
                     setPassSuccess(true)
                 }
