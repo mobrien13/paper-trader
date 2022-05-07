@@ -126,7 +126,7 @@ class PortfolioGraph extends Component {
         },
         axisY: {
           lineThickness: 1,
-          title: "Portfolio Value USD",
+          title: "Total Profit USD",
           prefix: "$",
           tickLength: 0,
           lineColor: "#242526",
