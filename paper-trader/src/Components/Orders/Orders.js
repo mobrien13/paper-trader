@@ -48,8 +48,8 @@ const Orders = (props) => {
 
             <div className='orders-container'>
                 <h2 className='ordersHeading'>Holdings</h2>
-                <button onClick={() => addUserToUsersData()}>add user</button>
-                <br /><br />
+                {/* <button onClick={() => addUserToUsersData()}>add user</button> */}
+                {/* <br /><br /> */}
                 <div className='orders-grid'>
 
                     <h3>Ticker</h3>
