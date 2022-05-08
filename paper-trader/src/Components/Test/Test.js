@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList, getHoldings, buyStock } from '../../firebase.js';
+import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList, getHoldings, buyStock, getUserName } from '../../firebase.js';
 
 
 
@@ -122,6 +122,26 @@ function Test() {
       setSellPass(false)
     }
   }
+
+  //Name test
+  const [name, setName] = useState([]);
+  const [namePass, setNamePass] = useState(true);
+  const [testingName, setTestingName] = useState(true);
+
+  getUserName().then(result => {
+    setName(result)
+    nameTest()
+    setTestingName(false)
+  });
+
+  function nameTest(){
+    if (name[0] === 'John'){
+      setNamePass(true)
+    }
+    else{
+      setNamePass(false)
+    }
+  }
   
   // //Buy tests
   // const [buy, setBuy] = useState();
@@ -163,15 +183,15 @@ function Test() {
 
         </div>
 
-        <h1>Holdings</h1>
+        <h1>Holdings/Buy Stock</h1>
 
         <div>
 
           {testingHoldings && <p>Holdings test is currently running</p>}
 
-          {!testingHoldings && holdingsPass && <p style={{ color: 'green' }}>Firebase.js: getHoldings() Test - Passes</p>}
+          {!testingHoldings && holdingsPass && <p style={{ color: 'green' }}>Firebase.js: getHoldings()/buyStock(ticker, price, quantity) Test - Passes</p>}
 
-          {!testingHoldings && !holdingsPass && <p style={{ color: 'red' }}>Firebase.js: getHoldings() Test - Fails</p>}
+          {!testingHoldings && !holdingsPass && <p style={{ color: 'red' }}>Firebase.js: getHoldings()/buyStock(ticker, price, quantity) Test - Fails</p>}
 
         </div>
 
@@ -184,6 +204,18 @@ function Test() {
           {!testingSell && sellPass && <p style={{ color: 'green' }}>Firebase.js: sellStock(ticker, price, quantity) Test - Passes</p>}
 
           {!testingSell && !sellPass && <p style={{ color: 'red' }}>Firebase.js: sellStock(ticker, price, quantity) Test - Fails</p>}
+
+        </div>
+
+        <h1>User Name</h1>
+
+        <div>
+
+          {testingName && <p>Name test is currently running</p>}
+
+          {!testingName && namePass && <p style={{ color: 'green' }}>Firebase.js: getUserName() Test - Passes</p>}
+
+          {!testingName && !namePass && <p style={{ color: 'red' }}>Firebase.js: getUserName() Test - Fails</p>}
 
         </div>
 
