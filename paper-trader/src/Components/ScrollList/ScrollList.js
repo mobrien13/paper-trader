@@ -47,6 +47,7 @@ function ScrollList(props) {
 
     /*--------------- DO NOT DELETE ---------------
 
+    
     useEffect(() => {
         axios.request(options).then(function (response) {
             console.log(response.data.finance.result[0].quotes);

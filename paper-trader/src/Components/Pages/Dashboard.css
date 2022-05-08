@@ -3,19 +3,27 @@
     justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
+    height: 75vh;
+    margin-bottom: 30px;
 }
-.test{
+.dashboardHeadingBox{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
     flex-direction: row;
     flex-wrap: wrap;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 15px 2px rgba(0, 0, 0, 0.3);
+    height: 10vh;
+    align-content: center;
 }
-.dashboardHeading{
-    margin: 10px;
+
+.headingAndGraph{
+    width: 68vw;
 }
-.dashboardHeading2{
-    margin: 10px;
-}
+
 
 .backround{
     margin-top: 15px;
@@ -31,10 +39,10 @@
 
     /* is this width not working correctly??? */
 
-    width: 65vw;
-    height: 60vh;
+    /* width: 65vw; */
+    /* height: 60vh; */
     margin-top: 10px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     margin-bottom: 10px;
 
     /* float:left; */
@@ -86,3 +94,15 @@
   }
 
 
+@media screen and (max-width: 1350px) {
+    .headingAndGraph{
+        height: fit-content;
+        width: 100%;
+    }
+    .graphAndWatchlist{
+        height: fit-content;
+    }
+    .dashboardHeadingBox{
+        height: fit-content;
+    }
+}

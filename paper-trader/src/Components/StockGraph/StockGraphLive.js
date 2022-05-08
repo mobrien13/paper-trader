@@ -216,7 +216,7 @@ class StockGraphLive extends Component {
     };
     const containerProps = {
       width: "100%",
-      height: "60vh",
+      height: "65vh",
       margin: "auto",
 
     };

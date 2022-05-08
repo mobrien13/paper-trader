@@ -59,7 +59,7 @@ const StockPage = (props) => {
 
     }
 
-    function updatePrice(){
+    function updatePrice() {
         let currentTime = Date.now() - (86400000)
 
         fetch("https://api.tdameritrade.com/v1/marketdata/" + Stock.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=3&frequencyType=minute&frequency=1&needExtendedHoursData=false")
@@ -99,9 +99,9 @@ const StockPage = (props) => {
 
                 }
             )
-            Stock.price = price
-            Stock.dayHigh = max
-            Stock.dayLow = min   
+        Stock.price = price
+        Stock.dayHigh = max
+        Stock.dayLow = min
     }
 
     //sets isInWatchlist when the location changes
@@ -299,55 +299,68 @@ const StockPage = (props) => {
         <>
             <div className='stockPageContent container'>
 
-                {/* Page Title */}
-                {exists === 1 && <div className='stockPageTop'>
-                    <h1 id='ticker'>{Stock.name}</h1>
+                <div className='graphAndWatchlist'>
 
-                    {/* Add To Watchlist Button */}
-                    {!isInWatchlist &&
-                        <i onClick={() => {addToWatchlist(ticker).then(() => { setKey(key + 1); }); setIsInWatchlist(true)} } className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
-                    }
-                    {isInWatchlist &&
-                        <i onClick={() => {removeItem().then(() => { setKey(key + 1); }); setIsInWatchlist(false) }} className="fa fa-minus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
-                    }
+                    <div className='headingAndGraph'>
 
+                        {/* Page Title */}
+                        {exists === 1 && <div className='stockPageTop'>
+                            <div className='stockPageHeading'>
+                                <h1 id='ticker'>{Stock.name}</h1>
 
-                    {/* Hides historical button if the graph is in historical mode */}
-
-                    {data === 1 &&
-                        <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
-                    }
-
-                    {/* Hides live button if the graph is in live mode */}
-
-                    {data === 0 &&
-                        <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
-                    }
-
-                </div>
-                }
-
-                {/* Graph and Watchlist Div */}
-                {exists === 1 &&
-                    <div className='graphAndWatchlist'>
-
-                        <div className='graph-box'>
-
-                            {/*generates graph from test data this will need to be changed for graph */}
-                            {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
-
-                            {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} data={data} ></StockGraphLive>}
+                                {/* Add To Watchlist Button */}
+                                {!isInWatchlist &&
+                                    <i onClick={() => { addToWatchlist(ticker).then(() => { setKey(key + 1); }); setIsInWatchlist(true) }} className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                                }
+                                {isInWatchlist &&
+                                    <i onClick={() => { removeItem().then(() => { setKey(key + 1); }); setIsInWatchlist(false) }} className="fa fa-minus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                                }
 
 
+
+
+                                {/* Hides historical button if the graph is in historical mode */}
+
+                                <div className='dumbButton'>
+                                    {data === 1 &&
+                                        <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                                    }
+
+                                    {/* Hides live button if the graph is in live mode */}
+
+                                    {data === 0 &&
+                                        <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
+                                    }
+
+                                </div>
+                            </div>
                         </div>
+                        }
+
+                        {/* Graph and Watchlist Div */}
+                        {exists === 1 &&
+                            // <div className='graphAndWatchlist'>
+
+                            <div className='graph-box'>
+
+                                {/*generates graph from test data this will need to be changed for graph */}
+                                {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
+
+                                {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} data={data} ></StockGraphLive>}
 
 
-                        {/* Watchlist placeholder*/}
-                        <ScrollList title="Watchlist" key={key}> </ScrollList>
+                            </div>
+
+                            // </div>
+
+                        }
 
                     </div>
-                }
 
+                    {/* Watchlist placeholder*/}
+                    <ScrollList title="Watchlist" key={key}> </ScrollList>
+
+                </div>
 
 
                 {/* Stock Details and Order Button */}
@@ -355,7 +368,7 @@ const StockPage = (props) => {
                     <Box>
                         <div className='buyStockItem'>
                             {/* <h3>{Stock.ticker.toUpperCase()}: ${Stock.price}</h3> */}
-                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => {modalRef.current.open(); setSuccess(null); updatePrice();} }>New Order</Button>
+                            <Button buttonSize='btn--medium' buttonStyle='btn--primary--solid' onClick={() => { modalRef.current.open(); setSuccess(null); updatePrice(); }}>New Order</Button>
 
 
                         </div>

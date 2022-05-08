@@ -33,7 +33,7 @@ export async function addUserToUsersData() {
       uid: userUid,
       firstName: "John",
       lastName: "Doe",
-      funds: 1000,
+      profit: 0,
       watchlist: ["TSLA", "BDX"],
       holdings: [{}],
     });
@@ -72,7 +72,6 @@ export async function buyStock(ticker, price, quantity) {
           quantitySold: 0 * 1.0,
           buyPrice: price * 1.0,
           isClosed: false,
-          isValid: true,
           sellPrice: null,
           timebought: Date.now(),
           timesold: null
@@ -111,7 +110,6 @@ export async function getHoldings() {
       quantity: null,
       buyPrice: null,
       isClosed: false,
-      isValid: true,
       sellPrice: null,
       timebought: null,
       timesold: null
@@ -145,7 +143,6 @@ export async function getPastOrders() {
       ticker: "DOES NOT EXIST",
       quantity: null,
       buyPrice: null,
-      isValid: false,
       isClosed: false,
       sellPrice: null,
       timebought: null,
@@ -233,7 +230,6 @@ export async function sellStock(ticker, price, quantity) {
                 quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0, //the quantity sold needs the * 1.0 to ensure that it typecasts to numbers before adding and subtracting. prior to doing this it would concatinate them as strings sometimes. i hate javascript for not being strongly typed 
                 buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: true,
-                isValid: true,
                 sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
@@ -262,7 +258,6 @@ export async function sellStock(ticker, price, quantity) {
                 quantitySold: tempHoldings[i].quantity * 1.0,
                 buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: true,
-                isValid: true,
                 sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
@@ -292,7 +287,6 @@ export async function sellStock(ticker, price, quantity) {
                 quantitySold: tempHoldings[i].quantitySold * 1.0 + quantity * 1.0 - totalSold * 1.0,
                 buyPrice: tempHoldings[i].buyPrice * 1.0,
                 isClosed: false,
-                isValid: true,
                 sellPrice: weightedAvgSellPrice * 1.0,
                 timebought: tempHoldings[i].timebought,
                 timesold: Date.now()
@@ -430,12 +424,52 @@ export async function getUserName() {
 
     const querySnapshot = await getDocs(q);
 
-    return querySnapshot.docs[0].data().firstName;
+    return [querySnapshot.docs[0].data().firstName,querySnapshot.docs[0].data().lastName];
   }
   catch (e) {
-    return "";
+    return ["",""];
   }
 }
+
+//get profit
+export async function getProfit() {
+  try {
+    //create collection ref
+    const usersDataRef = collection(db, "usersData");
+
+    //query the collection
+    const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs[0].data().profit.toFixed(2);
+  }
+  catch (e) {
+    return 0.00;
+  }
+}
+
+//set profit
+export async function setProfit(profit) {
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //overwrite the funds
+  await updateDoc(docRef, {
+    profit: profit
+  });
+}
+
 
 
 /* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */

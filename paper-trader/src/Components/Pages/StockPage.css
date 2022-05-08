@@ -1,14 +1,3 @@
-#ticker{
-    margin: 12px;
-}
-.stockPageTop{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: left;
-    width: 87vw;
-}
-
 .addToWatchlistButton{
     color: var(--bc);
     margin-right: 5px;
@@ -19,49 +8,42 @@
     border-radius: 10px;
 }
 
+.stockPageContent{
+    margin-top: 15px;
+}
+
+.stockPageTop{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 15px 2px rgba(0, 0, 0, 0.3);
+    height: 10vh;
+    align-content: center;
+}
+
+.stockPageHeading{
+    display: flex;
+    align-items: center;
+}
+
 .noExist{
     margin-bottom: 10vh;
     text-align: center;
     color: black;
 }
 
+.dumbButton{
+    margin-top: -10px;
+}
+
 .addToWatchlistButton:hover{
     color: white;
     background-color: var(--bc);
-}
-
-.buyStockBox{
-    /* sizing */
-    /* width: 86vw;
-    margin-right: auto;
-    margin-left: auto; */
-
-    /* margin-bottom: 20px; */
-    
-    /* looks */
-    /* border-radius: 10px;
-    padding: 20px; */
-    
-    /* color */
-    /* color: white;
-    background-color: var(--bg-accent);
-    box-shadow: 5px 10px 20px 1px rgba(0, 0, 0, 0.3); */
-    
-    /* flex display settings */
-    /* display:flex;
-    justify-content: space-between; 
-    flex-direction: row;
-    flex-wrap: wrap; */
-}
-.buyStockItem{
-    /* margin-left: 10px;
-    margin-right: 10px; */
-    width: 250px;
-}
-.buyStockItem ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
 }
 .orderSuccess{
     padding: 10px;
