@@ -304,9 +304,8 @@ const StockPage = (props) => {
                     <div className='headingAndGraph'>
 
                         {/* Page Title */}
-                        {/* {exists === 1 && <div className='stockPageTop'> */}
-                        {exists === 1 && <div className='dashboardHeadingBox'>
-                            <div className='dashboardHeading'>
+                        {exists === 1 && <div className='stockPageTop'>
+                            <div className='stockPageHeading'>
                                 <h1 id='ticker'>{Stock.name}</h1>
 
                                 {/* Add To Watchlist Button */}
@@ -319,20 +318,22 @@ const StockPage = (props) => {
 
 
 
+
                                 {/* Hides historical button if the graph is in historical mode */}
 
-                                {data === 1 &&
-                                    <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
-                                }
+                                <div className='dumbButton'>
+                                    {data === 1 &&
+                                        <Button onClick={() => setData(0)} buttonStyle='btn--primary--outline'>Historical</Button>
+                                    }
 
-                                {/* Hides live button if the graph is in live mode */}
+                                    {/* Hides live button if the graph is in live mode */}
 
-                                {data === 0 &&
-                                    <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
-                                }
+                                    {data === 0 &&
+                                        <Button onClick={() => setData(1)} buttonStyle='btn--primary--outline'>Live</Button>
+                                    }
 
+                                </div>
                             </div>
-
                         </div>
                         }
 
@@ -340,15 +341,15 @@ const StockPage = (props) => {
                         {exists === 1 &&
                             // <div className='graphAndWatchlist'>
 
-                                <div className='graph-box'>
+                            <div className='graph-box'>
 
-                                    {/*generates graph from test data this will need to be changed for graph */}
-                                    {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
+                                {/*generates graph from test data this will need to be changed for graph */}
+                                {data === 0 && <StockGraph title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()}></StockGraph>}
 
-                                    {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} data={data} ></StockGraphLive>}
+                                {data === 1 && <StockGraphLive title={Stock.ticker.toUpperCase()} ticker={Stock.ticker.toUpperCase()} data={data} ></StockGraphLive>}
 
 
-                                </div>
+                            </div>
 
                             // </div>
 
