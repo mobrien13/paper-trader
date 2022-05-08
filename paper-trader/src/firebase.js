@@ -33,7 +33,7 @@ export async function addUserToUsersData() {
       uid: userUid,
       firstName: "John",
       lastName: "Doe",
-      funds: 1000,
+      profit: 0,
       watchlist: ["TSLA", "BDX"],
       holdings: [{}],
     });
@@ -436,6 +436,46 @@ export async function getUserName() {
     return "";
   }
 }
+
+//get profit
+export async function getProfit() {
+  try {
+    //create collection ref
+    const usersDataRef = collection(db, "usersData");
+
+    //query the collection
+    const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs[0].data().profit;
+  }
+  catch (e) {
+    return 0;
+  }
+}
+
+//set profit
+export async function setProfit(profit) {
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //overwrite the funds
+  await updateDoc(docRef, {
+    profit: profit
+  });
+}
+
 
 
 /* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */

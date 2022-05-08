@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CanvasJSReact from '../../canvasjs.stock.react';
-import { getHoldings, getPastOrders } from '../../firebase';
+import { getHoldings, setProfit } from '../../firebase';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
@@ -32,23 +32,7 @@ class PortfolioGraph extends Component {
         }
       }
 
-      //bad splicing
-
-      // let prev =  Date.parse(aryx[0])
-      // prev = new Date(prev).setHours(0,0,0,0)
-      // for(let i = 0; i <= aryx.length; i++){
-      //   let next =  Date.parse(aryx[i])
-      //   next = new Date(next).setHours(0,0,0,0)
-
-      //   if(prev === next){
-      //     aryy[i] = aryy[i-1] + aryy[i]
-      //     aryy.splice(i-1,1)
-      //     aryx.splice(i-1,1)
-      //   }
-      //   prev = next
-      // }
-
-
+      //removes any zero or undefined values
       for (let i = 1; i < aryx.length; i++) {
         //splice out if undefined
         if (aryx[i] === undefined || aryx[i] === 0 || aryy[i] === undefined || aryy[i] === 0) {
@@ -58,8 +42,7 @@ class PortfolioGraph extends Component {
         }
       }
 
-
-      //fix splicing
+      //splices out the values that share dates and adds them
       for (let i = 1; i < aryx.length; i++) {
 
         //setup dates
@@ -83,7 +66,6 @@ class PortfolioGraph extends Component {
         acum = aryy[i]
       }
 
-
       //push results
       for (let i = 0; i < aryx.length; i++) {
         ary.push({ x: aryx[i], y: aryy[i] })
@@ -95,6 +77,10 @@ class PortfolioGraph extends Component {
         isLoaded: true,
         data: ary
       });
+
+      //sets profit in firestore
+      setProfit(aryy[aryy.length - 1]);
+
     })
   }
 
