@@ -1,7 +1,6 @@
-import { async } from "@firebase/util";
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { getFirestore, collection, addDoc, getDoc, query, where, getDocs, deleteField, updateDoc, doc, setDoc, Timestamp, arrayUnion } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword,  } from 'firebase/auth'
+import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, arrayUnion, } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 //struct for firebase data DO NOT TOUCH THIS
@@ -20,8 +19,6 @@ const db = getFirestore(app);
 
 //authorizes user
 const auth = getAuth();
-
-
 
 /* ----------------------- START FIRESTORE FUNCTIONS ----------------------- */
 
@@ -49,7 +46,7 @@ export async function addUserToUsersData() {
 //buy stock 
 export async function buyStock(ticker, price, quantity) {
   //checks if the quantity contains any letters
-  if(/[a-z]/i.test(quantity)){
+  if (/[a-z]/i.test(quantity)) {
     return false;
   }
 
@@ -134,7 +131,7 @@ export async function getPastOrders() {
 
     //loops through all of the closed holdings and adds them to an array
     for (let i = 0; i < querySnapshot.docs[0].data().holdings.length; i++) {
-      if(querySnapshot.docs[0].data().holdings[i].isClosed){
+      if (querySnapshot.docs[0].data().holdings[i].isClosed) {
         newArray.push(querySnapshot.docs[0].data().holdings[i])
       }
     }
@@ -181,7 +178,7 @@ export async function sellStock(ticker, price, quantity) {
   */
 
   //added a check to see if the quantity contains letters
-  if(/[a-z]/i.test(quantity)){
+  if (/[a-z]/i.test(quantity)) {
     return false;
   }
 
@@ -466,9 +463,6 @@ export function logout() {
 
 //Custom hook for userAuth refresh
 export function useAuth() {
-  //this is complicated so no touchy 
-  //it gets user and sets user 
-  //it has embedded functions which are confusing
 
   const [currentUser, setCurrentUser] = useState();
 
@@ -481,3 +475,46 @@ export function useAuth() {
 
 }
 
+export async function updateUserPassword(password) {
+  //makes sure current user is being selected
+  const userForPassword = auth.currentUser
+
+  //if password is correctly updated a new password is passed to firebase
+    updatePassword(userForPassword, password).then(() => { 
+      return true
+    }).catch((error) => {
+      return false
+    })
+  }
+
+export async function updateUserEmail(email) {
+  const userForEmail = auth.currentUser
+
+  //if email is correctly updated a new email is passed to firebase
+  updateEmail(userForEmail, email).then(() => { 
+    return true
+  }).catch((error) => {
+    return false
+  })
+}
+
+export async function updateUsername(firstName, lastName){
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //chantes first name
+  await updateDoc(docRef, {
+    firstName: firstName,
+    lastName: lastName
+  });
+}
