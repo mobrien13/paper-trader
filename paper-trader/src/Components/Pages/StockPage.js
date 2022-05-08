@@ -305,10 +305,10 @@ const StockPage = (props) => {
 
                     {/* Add To Watchlist Button */}
                     {!isInWatchlist &&
-                        <i onClick={() => addToWatchlist(ticker).then(() => { setKey(key + 1); })} className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                        <i onClick={() => {addToWatchlist(ticker).then(() => { setKey(key + 1); }); setIsInWatchlist(true)} } className="fa fa-plus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
                     }
                     {isInWatchlist &&
-                        <i onClick={() => removeItem().then(() => { setKey(key + 1); })} className="fa fa-minus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
+                        <i onClick={() => {removeItem().then(() => { setKey(key + 1); }); setIsInWatchlist(false) }} className="fa fa-minus-circle fa-3x addToWatchlistButton" aria-hidden="true"></i>
                     }
 
 
@@ -414,6 +414,7 @@ const StockPage = (props) => {
                                 <h2>{Stock.ticker.toUpperCase()} - Buy Order</h2>
                                 {success !== null && success && <p className='orderSuccess'>Order Successful!</p>}
                                 {success !== null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
+                                {success === null && <p>Subtotal: ${Stock.price * amount}</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button onClick={async () => {
                                     //waits for buy stock to complete and sets error message
@@ -438,6 +439,7 @@ const StockPage = (props) => {
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
                                 {success !== null && success && <p className='orderSuccess'>Order Successful!</p>}
                                 {success !== null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
+                                {success === null && <p>Subtotal: ${Stock.price * amount}</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price, amount).then(result => {
                                     if (result === true) {

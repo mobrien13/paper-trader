@@ -68,31 +68,10 @@ function Dashboard() {
 
         </div>
 
-        {/* holdings placeholder*/}
-        {/* <div className='holdings'>
-          <div className='holdings-title'>
-            <h3>Holdings:</h3>
-          </div>
-          <div className='holdings-body'>
-            <ul>
-              {userHoldings.map((item) => !item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-              {userHoldings.map((item) => item.isSold && <li>{item.ticker}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
-            </ul>
-          </div>
-        </div> */}
-
-
         {/* Orders/Holdings Component */}
-        <Orders>
-          {/* for now it has both open and closed orders. in the future, it should just show the open orders and have a separate menu to so the receipts */}
-          {/* <ul>
-            {userHoldings.map((item) => !item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share</li>)}
-            {userHoldings.map((item) => item.isSold && <li className='ordersItem'>{item.ticker.toUpperCase()}: {item.quantity} Shares @ ${item.buyPrice}/share Sold @ ${item.sellPrice}/share</li>)}
-          </ul> */}
-        </Orders>
+        <Orders></Orders>
 
-    
- 
+         {/* DO NOT DELETE  */}
         {/* <News keyWord='stock market'></News> */}
 
       </div>
