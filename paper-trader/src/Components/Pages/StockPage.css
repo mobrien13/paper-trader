@@ -1,5 +1,5 @@
 #ticker{
-    margin: 12px;
+    width: 40vw;
 }
 .stockPageTop{
     display: flex;
@@ -15,7 +15,7 @@
     transition: cubic-bezier(0.165, 0.84, 0.44, 1);
     transition-duration: 0.5s;
     padding:5px;
-    margin: 5px;
+    /* margin: 5px; */
     border-radius: 10px;
 }
 

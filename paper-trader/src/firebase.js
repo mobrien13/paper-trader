@@ -448,10 +448,10 @@ export async function getProfit() {
 
     const querySnapshot = await getDocs(q);
 
-    return querySnapshot.docs[0].data().profit;
+    return querySnapshot.docs[0].data().profit.toFixed(2);
   }
   catch (e) {
-    return 0;
+    return 0.00;
   }
 }
 

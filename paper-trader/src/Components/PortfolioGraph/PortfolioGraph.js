@@ -186,8 +186,8 @@ class PortfolioGraph extends Component {
 
     const containerProps = {
       width: "100%",
-      height: "60vh",
-      margin: "auto"
+      height: "65vh",
+      margin: "auto",
     };
     return (
       <div>

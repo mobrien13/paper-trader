@@ -39,19 +39,22 @@ function Dashboard() {
     <>
       <div className='backround container'>
 
-        {/* <h1 id='dashboardHeading'>Dashboard</h1> */}
-        <div className='test'>
-          <h1 id='dashboardHeading'>Hello, { userName }</h1>
-          <h1 id='dashboardHeading2'>Total Profit: ${ daProfit }</h1>
-        </div>
-
         <div className='graphAndWatchlist'>
 
-          <div className='graph-box'>
 
-            {/*generates graph from test data this will need to be changed for graph */}
-            <PortfolioGraph title='Portfolio Performance' ></PortfolioGraph>
+          <div className='headingAndGraph'>
 
+            <div className='dashboardHeadingBox'>
+              <h1 className='dashboardHeading'>Hello, {userName}</h1>
+              <h1 className='dashboardHeading'>Total Profit: ${daProfit}</h1>
+            </div>
+
+            <div className='graph-box'>
+
+              {/*generates graph from test data this will need to be changed for graph */}
+              <PortfolioGraph title='Portfolio Performance' ></PortfolioGraph>
+
+            </div>
           </div>
 
           {/* Watchlist*/}
