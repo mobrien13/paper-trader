@@ -3,13 +3,14 @@ import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
-import { updateUserEmail, updateUserPassword, updateUsername} from '../../firebase';
+import { updateUserEmail, updateUserPassword, updateUsername } from '../../firebase';
 
 
 
-function Settings() {   
+function Settings() {
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePass, setChangePass] = useState(false);
+    const [changeName, setChangeName] = useState(false);
     const [personalInfo, setPersonalInfo] = useState(true);
 
 
@@ -19,12 +20,12 @@ function Settings() {
     function handleEmailUpdate() {
 
         if (email === secondEmail) {
-            updateUserEmail(email).then( (result)=> { 
-                if (result) { 
+            updateUserEmail(email).then((result) => {
+                if (result) {
                     setEmailSuccess(true)
                 }
             })
-        } else { 
+        } else {
             setEmailSuccess(false)
         }
     }
@@ -36,12 +37,12 @@ function Settings() {
     function handlePasswordUpdate() {
 
         if (password === secondPassword) {
-            updateUserPassword(password).then( (result)=> { 
-                if (result) { 
+            updateUserPassword(password).then((result) => {
+                if (result) {
                     setPassSuccess(true)
                 }
             })
-        } else { 
+        } else {
             setPassSuccess(false)
         }
     }
@@ -49,17 +50,16 @@ function Settings() {
     const [firstname, setFirstname] = useState("")
     const [lastname, setLastname] = useState("")
     const [nameSuccess, setNamesucceess] = useState(null)
-    function handleNameChange(){
-        console.log(firstname, lastname)
-        if((firstname && lastname) !== ""){ 
-            updateUsername(firstname, lastname).then((result)=> { 
-                if(result){ 
+    function handleNameChange() {
+        if ((firstname && lastname) !== "") {
+            updateUsername(firstname, lastname).then((result) => {
+                if (result) {
                     setNamesucceess(true)
-                } else { 
+                } else {
                     setNamesucceess(false)
                 }
             })
-        } else { 
+        } else {
             setNamesucceess(false)
         }
     }
@@ -68,15 +68,39 @@ function Settings() {
 
     return (
         <div className='container'>
-            
-            <button onClick={() => setFirstname("matthew") }>set first name</button>
-            <button onClick={() => setLastname("obrien") }>set last name</button>
-            <button onClick={() => handleNameChange()}>UpdateName</button>
+
             <h1>Settings</h1>
 
             {personalInfo &&
                 <>
                     <h2>Account Security</h2>
+
+
+                    <div onClick={() => setChangeName(!changeName)} className='settingsIcons' >
+                        <h3>Change Username</h3>
+                        {!changeEmail &&
+                            <i className="fa fa-plus-circle iconBlack" aria-hidden="true"></i>
+                        }
+                        {changeEmail &&
+                            <i className="fa fa-minus-circle iconBlack" aria-hidden="true"></i>
+                        }
+                    </div>
+
+                    {changeName &&
+                        <>
+                            <p>Current name: { }</p>
+                            {nameSuccess !== null && nameSuccess && <p className='orderSuccess'>Username Updated</p>}
+                            {nameSuccess !== null && !nameSuccess && <p className='orderNotSuccess'>Username not Updated</p>}
+                            <input className='signInFields' placeholder="Firstname" onChange={event => setFirstname(event.target.value)} />
+                            <br />
+                            <input className='signInFields' placeholder="Lastname" onChange={event => setLastname(event.target.value)} />
+
+                            <Button buttonStyle='btn--primary--outline' onClick={() => {
+                                handleNameChange()
+                            }}>Update Username</Button>
+                        </>
+                    }
+
 
                     <div onClick={() => setChangeEmail(!changeEmail)} className='settingsIcons' >
                         <h3>Change Email</h3>
@@ -88,11 +112,9 @@ function Settings() {
                         }
                     </div>
 
-
-
                     {changeEmail &&
                         <>
-                            <p>Current Email: {}</p>
+                            <p>Current Email: { }</p>
                             {emailSuccess !== null && emailSuccess && <p className='orderSuccess'>Email updated</p>}
                             {emailSuccess !== null && !emailSuccess && <p className='orderNotSuccess'>Email not updated</p>}
                             <input className='signInFields' placeholder="New Email" onChange={event => setEmail(event.target.value)} />
@@ -122,7 +144,7 @@ function Settings() {
                             <input className='signInFields' placeholder="New Password" type='password' onChange={event => setPassword(event.target.value)} />
                             <br />
                             <input className='signInFields' placeholder="Confirm New Password" type='password' onChange={event => setSecondPassword(event.target.value)} />
-                            <Button buttonStyle='btn--primary--outline' onClick={() =>{
+                            <Button buttonStyle='btn--primary--outline' onClick={() => {
                                 handlePasswordUpdate()
                             }}>Change Password</Button>
                         </>
