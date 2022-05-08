@@ -299,6 +299,14 @@ const StockPage = (props) => {
         <>
             <div className='stockPageContent container'>
 
+                {/* Stock Does Not Exist Error */}
+                {exists === 2 &&
+                    <div className='noExist'>
+                        <h1>Stock Does Not Exist. Enter a Valid Ticker</h1>
+                        <img src={image404} />
+                    </div>
+                }
+
                 <div className='graphAndWatchlist'>
 
                     <div className='headingAndGraph'>
@@ -339,7 +347,6 @@ const StockPage = (props) => {
 
                         {/* Graph and Watchlist Div */}
                         {exists === 1 &&
-                            // <div className='graphAndWatchlist'>
 
                             <div className='graph-box'>
 
@@ -351,14 +358,14 @@ const StockPage = (props) => {
 
                             </div>
 
-                            // </div>
-
                         }
 
                     </div>
 
-                    {/* Watchlist placeholder*/}
-                    <ScrollList title="Watchlist" key={key}> </ScrollList>
+                    {/* Watchlist*/}
+                    {exists === 1 &&
+                        <ScrollList title="Watchlist" key={key}> </ScrollList>
+                    }
 
                 </div>
 
@@ -473,14 +480,6 @@ const StockPage = (props) => {
 
 
                     </Modal>
-                }
-
-                {/* Stock Does Not Exist Error */}
-                {exists === 2 &&
-                    <div className='noExist'>
-                        <h1>Stock Does Not Exist. Enter a Valid Ticker</h1>
-                        <img src={image404} />
-                    </div>
                 }
 
             </div>
