@@ -1,0 +1,15 @@
+{
+    "short_name": "PaperTrader",
+    "name": "PaperTrader - Stock Market Simulator",
+    "icons": [
+      {
+        "src": "/images/papertraderIcon.ico",
+        "type": "image/x-icon"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#06f",
+    "background_color": "#ffffff"
+  }
+  

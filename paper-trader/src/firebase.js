@@ -17,8 +17,6 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
-
 //authorizes user
 const auth = getAuth();
 
@@ -421,6 +419,23 @@ export async function addToWatchlist(ticker) {
   });
 }
 
+//get user name
+export async function getUserName() {
+  try {
+    //create collection ref
+    const usersDataRef = collection(db, "usersData");
+
+    //query the collection
+    const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs[0].data().firstName;
+  }
+  catch (e) {
+    return "";
+  }
+}
 
 
 /* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */

@@ -19,6 +19,12 @@
     border-radius: 10px;
 }
 
+.noExist{
+    margin-bottom: 10vh;
+    text-align: center;
+    color: black;
+}
+
 .addToWatchlistButton:hover{
     color: white;
     background-color: var(--bc);
