@@ -483,3 +483,23 @@ export async function updateUserEmail(email) {
   })
 }
 
+export async function updateUsername(firstName, lastName){
+  //create collection ref
+  const usersDataRef = collection(db, "usersData");
+
+  //query database to get usersData document id
+  const q = query(usersDataRef, where("uid", "==", auth.currentUser.uid));
+
+  const querySnapshot = await getDocs(q);
+
+  const docId = querySnapshot.docs[0].id;
+
+  //create new ref to the specific document
+  const docRef = doc(db, "usersData", docId);
+
+  //chantes first name
+  await updateDoc(docRef, {
+    firstName: firstName,
+    lastName: lastName
+  });
+}

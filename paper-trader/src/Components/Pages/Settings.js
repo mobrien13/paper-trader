@@ -3,17 +3,11 @@ import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
-import { updateUserEmail, updateUserPassword} from '../../firebase';
+import { updateUserEmail, updateUserPassword, updateUsername} from '../../firebase';
 
 
 
 function Settings() {   
-    //gets all data for current user
-    //email, firstname, lastname, uid
-
-
-    
-
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePass, setChangePass] = useState(false);
     const [personalInfo, setPersonalInfo] = useState(true);
@@ -52,10 +46,32 @@ function Settings() {
         }
     }
 
+    const [firstname, setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [nameSuccess, setNamesucceess] = useState(null)
+    function handleNameChange(){
+        console.log(firstname, lastname)
+        if((firstname && lastname) !== ""){ 
+            updateUsername(firstname, lastname).then((result)=> { 
+                if(result){ 
+                    setNamesucceess(true)
+                } else { 
+                    setNamesucceess(false)
+                }
+            })
+        } else { 
+            setNamesucceess(false)
+        }
+    }
+
 
 
     return (
         <div className='container'>
+            
+            <button onClick={() => setFirstname("matthew") }>set first name</button>
+            <button onClick={() => setLastname("obrien") }>set last name</button>
+            <button onClick={() => handleNameChange()}>UpdateName</button>
             <h1>Settings</h1>
 
             {personalInfo &&
