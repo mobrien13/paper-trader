@@ -448,9 +448,6 @@ export function logout() {
 
 //Custom hook for userAuth refresh
 export function useAuth() {
-  //this is complicated so no touchy 
-  //it gets user and sets user 
-  //it has embedded functions which are confusing
 
   const [currentUser, setCurrentUser] = useState();
 
@@ -461,11 +458,6 @@ export function useAuth() {
 
   return currentUser;
 
-}
-
-//all of these get the users data
-export function getUserEmail(){ 
-  return auth.currentUser.email
 }
 
 export async function updateUserPassword(password) {

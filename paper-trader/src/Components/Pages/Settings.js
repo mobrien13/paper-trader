@@ -3,12 +3,16 @@ import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
-import { getUserEmail, updateUserEmail, updateUserPassword} from '../../firebase';
+import { updateUserEmail, updateUserPassword} from '../../firebase';
 
 
 
 function Settings() {   
-    const currentEmail = getUserEmail();
+    //gets all data for current user
+    //email, firstname, lastname, uid
+
+
+    
 
     const [changeEmail, setChangeEmail] = useState(false);
     const [changePass, setChangePass] = useState(false);
@@ -72,7 +76,7 @@ function Settings() {
 
                     {changeEmail &&
                         <>
-                            <p>Current Email: {currentEmail}</p>
+                            <p>Current Email: {}</p>
                             {emailSuccess !== null && emailSuccess && <p className='orderSuccess'>Email updated</p>}
                             {emailSuccess !== null && !emailSuccess && <p className='orderNotSuccess'>Email not updated</p>}
                             <input className='signInFields' placeholder="New Email" onChange={event => setEmail(event.target.value)} />
