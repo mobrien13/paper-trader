@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList, getHoldings } from '../../firebase.js';
+import { login, logout, useAuth, getAuth, firebaseConfig, signup, getUserWatchList, getHoldings, buyStock } from '../../firebase.js';
 
 
 
@@ -84,11 +84,11 @@ function Test() {
   //Holdings Tests
   getHoldings().then(result => {
     setHoldings(result)
-    holdingsTester()
+    holdingsTest()
     setTestingHoldings(false)
   });
 
-  function holdingsTester(){
+  function holdingsTest(){
     if (holdings[1].ticker.toUpperCase() === 'TSLA' && holdings[1].quantity === 10){
       setHoldingsPass(true)
     }
@@ -96,6 +96,52 @@ function Test() {
       setHoldingsPass(false)
     }
   }
+
+  //Sell test
+  const [sell, setSell] = useState();
+  const [sellPass, setSellPass] = useState(true);
+  const [testingSell, setTestingSell] = useState(true);
+
+  // sellStock("AAPL", 100, 10).then(result => {
+  //     setSell(result)
+  //     sellTest()
+  //     setTestingSell(false)
+  //   });
+
+  getHoldings().then(result => {
+    setHoldings(result)
+    sellTest()
+    setTestingSell(false)
+  });
+
+  function sellTest(){
+    if (holdings[2].ticker.toUpperCase() === 'AAPL' && holdings[2].quantitySold === 10){
+      setSellPass(true)
+    }
+    else{
+      setSellPass(false)
+    }
+  }
+  
+  // //Buy tests
+  // const [buy, setBuy] = useState();
+  // const [buyPass, setBuyPass] = useState(true);
+  // const [testingBuy, setTestingBuy] = useState(true);
+
+  // buyStock("APPL", 100, 10).then(result => {
+  //   setBuy(result)
+  //   buyTest()
+  //   setTestingBuy(false)
+  // });
+
+  // function buyTest(){
+  //   if (buy){
+  //     setBuyPass(true)
+  //   }
+  //   else{
+  //     setBuyPass(false)
+  //   }
+  // }
 
   return (
     <>
@@ -128,6 +174,30 @@ function Test() {
           {!testingHoldings && !holdingsPass && <p style={{ color: 'red' }}>Firebase.js: getHoldings() Test - Fails</p>}
 
         </div>
+
+        <h1>Sell Stock</h1>
+
+        <div>
+
+          {testingSell && <p>Sell test is currently running</p>}
+
+          {!testingSell && sellPass && <p style={{ color: 'green' }}>Firebase.js: sellStock(ticker, price, quantity) Test - Passes</p>}
+
+          {!testingSell && !sellPass && <p style={{ color: 'red' }}>Firebase.js: sellStock(ticker, price, quantity) Test - Fails</p>}
+
+        </div>
+
+        {/* <h1>Buy Stock</h1>
+
+        <div>
+
+          {testingBuy && <p>Buy test is currently running</p>}
+
+          {!testingBuy && buyPass && <p style={{ color: 'green' }}>Firebase.js: buyStock(ticker, price, quantity) Test - Passes</p>}
+
+          {!testingBuy && !buyPass && <p style={{ color: 'red' }}>Firebase.js: buyStock(ticker, price, quantity) Test - Fails</p>}
+
+        </div> */}
 
         {/* <h1>Buy/Sell</h1>
 
