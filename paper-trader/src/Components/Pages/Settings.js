@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Settings.css';
 import './Pages.css';
 import Button from '../Button/Button';
 import { Link } from 'react-router-dom';
-import { updateUserEmail, updateUserPassword, updateUsername } from '../../firebase';
+import { updateUserEmail, updateUserPassword, updateUsername, getUserName } from '../../firebase';
 
 
 
@@ -13,10 +13,12 @@ function Settings() {
     const [changeName, setChangeName] = useState(false);
     const [personalInfo, setPersonalInfo] = useState(true);
 
+    const [name, setName] = useState(["", ""])
 
     const [email, setEmail] = useState("")
     const [secondEmail, setSecondEmail] = useState("")
     const [emailSuccess, setEmailSuccess] = useState(null)
+
     function handleEmailUpdate() {
 
         if (email === secondEmail) {
@@ -65,6 +67,13 @@ function Settings() {
     }
 
 
+    useEffect(() => {
+        getUserName().then(result => {
+            setName(result)
+        }
+        )
+    }, [])
+
 
     return (
         <div className='container'>
@@ -78,17 +87,17 @@ function Settings() {
 
                     <div onClick={() => setChangeName(!changeName)} className='settingsIcons' >
                         <h3>Change Username</h3>
-                        {!changeEmail &&
+                        {!changeName &&
                             <i className="fa fa-plus-circle iconBlack" aria-hidden="true"></i>
                         }
-                        {changeEmail &&
+                        {changeName &&
                             <i className="fa fa-minus-circle iconBlack" aria-hidden="true"></i>
                         }
                     </div>
 
                     {changeName &&
                         <>
-                            <p>Current name: { }</p>
+                            <p>Current Username: {name[0]} {name[1]}</p>
                             {nameSuccess !== null && nameSuccess && <p className='orderSuccess'>Username Updated</p>}
                             {nameSuccess !== null && !nameSuccess && <p className='orderNotSuccess'>Username not Updated</p>}
                             <input className='signInFields' placeholder="Firstname" onChange={event => setFirstname(event.target.value)} />

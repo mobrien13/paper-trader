@@ -22,7 +22,7 @@ function Dashboard() {
 
   useEffect(() => {
     getUserName().then(result => {
-      setUserName(result)
+      setUserName(result[0])
     }
     )
   }, [])
