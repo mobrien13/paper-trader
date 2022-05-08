@@ -6,7 +6,7 @@ import PortfolioGraph from '../PortfolioGraph/PortfolioGraph';
 import { usersDatabase } from '../../fakeDatabase.js';
 import News from '../News/News';
 import Trending from '../Trending/Trending'
-import { getHoldings } from '../../firebase';
+import { getHoldings, getUserName } from '../../firebase';
 import Orders from '../Orders/Orders';
 
 
@@ -25,6 +25,7 @@ function Dashboard() {
   // const userHoldings = user.holdings;
 
   const [userHoldings, setUserHoldings] = useState([])
+  const [userName, setUserName] = useState("")
 
   useEffect(() => {
     getHoldings().then(result => {
@@ -33,8 +34,14 @@ function Dashboard() {
     
   }, [])
 
-  
+  useEffect(() => {
+    getUserName().then(result => {
+      setUserName(result)
+    }
+    )
+  }, [])
 
+  
 
 
   return (
@@ -42,6 +49,10 @@ function Dashboard() {
       <div className='backround container'>
 
         {/* <h1 id='dashboardHeading'>Dashboard</h1> */}
+        <div className='test'>
+          <h1 id='dashboardHeading'>Hello, {userName}</h1>
+          <h1 id='dashboardHeading2'>Total Profit: {}</h1>
+        </div>
 
         <div className='graphAndWatchlist'>
 

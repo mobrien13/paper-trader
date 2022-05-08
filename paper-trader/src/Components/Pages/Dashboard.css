@@ -4,7 +4,16 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
-#dashboardHeading{
+.test{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.dashboardHeading{
+    margin: 10px;
+}
+.dashboardHeading2{
     margin: 10px;
 }
 
