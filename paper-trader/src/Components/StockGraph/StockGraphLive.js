@@ -22,7 +22,7 @@ class StockGraphLive extends Component {
 
 
   componentDidMount() {
-    const currentTime = Date.now() - (86400000)
+    const currentTime = Date.now() - (86400000 * 3) - (7200000)
     fetch("https://api.tdameritrade.com/v1/marketdata/" + this.props.ticker + "/pricehistory?apikey=LSVZWEQEHTTZGGWUYS1ZKNA0OAQCCVDD&periodType=day&period=1&frequencyType=minute&frequency=1&needExtendedHoursData=false")
       .then(res => res.json())
       .then(
@@ -80,7 +80,7 @@ class StockGraphLive extends Component {
 
 
   updateChart() {
-    const Time = Date.now() - (86400000)
+    const Time = Date.now() - (86400000 * 3) - (7200000)
 
     for (var i = 0; i < this.state.tempy.length; i++) {
       if (new Date(this.state.tempy[i].ary[0]) < Time) {
