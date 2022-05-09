@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword,  } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, } from 'firebase/auth'
 import { getFirestore, collection, addDoc, query, where, getDocs, updateDoc, doc, arrayUnion, } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
@@ -310,8 +310,12 @@ export async function sellStock(ticker, price, quantity) {
       //create a short position
     }
 
-    //Update the doc with the new holdings and receipts
+    //getProfit
+    let profit = querySnapshot.docs[0].data().profit
+
+    //Update the doc with the new holdings and profit
     await updateDoc(docRef, {
+      profit: profit * 1.0 + (totalSold * price),
       holdings: tempHoldings
     })
 
@@ -424,10 +428,10 @@ export async function getUserName() {
 
     const querySnapshot = await getDocs(q);
 
-    return [querySnapshot.docs[0].data().firstName,querySnapshot.docs[0].data().lastName];
+    return [querySnapshot.docs[0].data().firstName, querySnapshot.docs[0].data().lastName];
   }
   catch (e) {
-    return ["",""];
+    return ["", ""];
   }
 }
 
@@ -469,7 +473,6 @@ export async function setProfit(profit) {
     profit: profit
   });
 }
-
 
 
 /* ----------------------- END FIRESTORE FUNCTIONS ----------------------- */
@@ -514,25 +517,25 @@ export async function updateUserPassword(password) {
   const userForPassword = auth.currentUser
 
   //if password is correctly updated a new password is passed to firebase
-    updatePassword(userForPassword, password).then(() => { 
-      return true
-    }).catch((error) => {
-      return false
-    })
-  }
-
-export async function updateUserEmail(email) {
-  const userForEmail = auth.currentUser
-
-  //if email is correctly updated a new email is passed to firebase
-  updateEmail(userForEmail, email).then(() => { 
+  updatePassword(userForPassword, password).then(() => {
     return true
   }).catch((error) => {
     return false
   })
 }
 
-export async function updateUsername(firstName, lastName){
+export async function updateUserEmail(email) {
+  const userForEmail = auth.currentUser
+
+  //if email is correctly updated a new email is passed to firebase
+  updateEmail(userForEmail, email).then(() => {
+    return true
+  }).catch((error) => {
+    return false
+  })
+}
+
+export async function updateUsername(firstName, lastName) {
   //create collection ref
   const usersDataRef = collection(db, "usersData");
 

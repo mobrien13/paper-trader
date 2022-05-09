@@ -43,28 +43,35 @@ class PortfolioGraph extends Component {
       }
 
       //splices out the values that share dates and adds them
-      for (let i = 1; i < aryx.length; i++) {
+      // for (let i = 1; i < aryx.length; i++) {
 
-        //setup dates
-        let currentDay = Date.parse(aryx[i]);
-        currentDay = new Date(currentDay).setHours(0, 0, 0, 0)
-        let prevDay = Date.parse(aryx[i - 1]);
-        prevDay = new Date(prevDay).setHours(0, 0, 0, 0);
+      //   //setup dates
+      //   let currentDay = Date.parse(aryx[i]);
+      //   currentDay = new Date(currentDay).setHours(0, 0, 0, 0)
+      //   let prevDay = Date.parse(aryx[i - 1]);
+      //   prevDay = new Date(prevDay).setHours(0, 0, 0, 0);
 
-        //splice out if day matches
-        if (currentDay === prevDay) {
-          aryx.splice(i, 1)
-          aryy[i - 1] = aryy[i - 1] * 1.0 + aryy[i] * 1.0
-          aryy.splice(i, 1)
-          i--
-        }
-      }
+      //   //splice out if day matches
+      //   if (currentDay === prevDay) {
+      //     aryx.splice(i, 1)
+      //     aryy[i - 1] = aryy[i - 1] * 1.0 + aryy[i] * 1.0
+      //     aryy.splice(i, 1)
+      //     i--
+      //   }
+      // }
 
       //accumulator
       for (let i = 0; i < aryx.length; i++) {
         aryy[i] += acum;
         acum = aryy[i]
       }
+
+      //transfer to start of each day
+      // for(let i = 0; i< aryx.length; i++){
+      //   let currentDay = Date.parse(aryx[i]);
+      //   currentDay = new Date(currentDay).setHours(0, 0, 0, 0)
+      //   aryx[i] = new Date(currentDay)
+      // }
 
       //push results
       for (let i = 0; i < aryx.length; i++) {
