@@ -411,9 +411,9 @@ const StockPage = (props) => {
 
 
                 {/* News Component with Dummy Values */}
-                {/* {exists === 1 &&
+                {exists === 1 &&
                     <News keyWord={Stock.ticker}></News>
-                } */}
+                }
 
                 {/* Order Popup */}
                 {exists === 1 &&
@@ -459,7 +459,7 @@ const StockPage = (props) => {
                                 <h2>{Stock.ticker.toUpperCase()} - Sell Order</h2>
                                 {success !== null && success && <p className='orderSuccess'>Order Successful!</p>}
                                 {success !== null && !success && <p className='orderNotSuccess'>Order Unsuccessful</p>}
-                                {success === null && <p>Subtotal: ${Stock.price * amount}</p>}
+                                {success === null && <p>Subtotal: ${(Stock.price * amount).toFixed(2)}</p>}
                                 <input autoFocus id='quantity' className='signInFields' placeholder="Quantity" onChange={event => setAmount(event.target.value)} /><br />
                                 <Button buttonStyle='btn--primary--outline' onClick={async () => await sellStock(Stock.ticker, Stock.price, amount).then(result => {
                                     if (result === true) {

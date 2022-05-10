@@ -66,7 +66,7 @@ function Dashboard() {
         <Orders></Orders>
 
         {/* DO NOT DELETE  */}
-        {/* <News keyWord='stock market'></News> */}
+        <News keyWord='stock market'></News>
 
       </div>
 

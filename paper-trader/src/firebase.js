@@ -310,12 +310,8 @@ export async function sellStock(ticker, price, quantity) {
       //create a short position
     }
 
-    //getProfit
-    let profit = querySnapshot.docs[0].data().profit
-
     //Update the doc with the new holdings and profit
     await updateDoc(docRef, {
-      profit: profit * 1.0 + (totalSold * price),
       holdings: tempHoldings
     })
 

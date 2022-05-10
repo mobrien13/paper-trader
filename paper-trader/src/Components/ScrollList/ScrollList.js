@@ -45,7 +45,7 @@ function ScrollList(props) {
 
     /* --------------- GETS THE TRENDING DATA. UNCOMMMENT BEFORE PRESENTATION --------------- */
 
-    /*--------------- DO NOT DELETE ---------------
+    // --------------- DO NOT DELETE ---------------
 
     
     useEffect(() => {
@@ -60,7 +60,7 @@ function ScrollList(props) {
         });
     }, [])
 
-    */
+    
 
 
 
