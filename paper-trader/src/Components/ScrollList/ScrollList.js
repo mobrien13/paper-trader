@@ -39,7 +39,7 @@ function ScrollList(props) {
         url: 'https://yfapi.net/v1/finance/trending/US',
         params: { modules: 'defaultKeyStatistics,assetProfile' },
         headers: {
-            'x-api-key': 'VypvXxHoUD4phTAdK6H5xZvPWTcHzS9pn5jtCr90'
+            'x-api-key': 'hvMz22kzID6KCjIRwAu4U3Z4h9p8ttLK9h4lz0Wy'
         }
     };
 
