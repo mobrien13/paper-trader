@@ -29,7 +29,7 @@ const News = (props) => {
 
           setArticles(tempArr)
 
-          if (data.results.length > 1) {
+          if (tempArr.length > 0) {
             setExists(true)
           }
         }
